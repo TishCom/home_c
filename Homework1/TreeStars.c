@@ -25,36 +25,38 @@
 #include <stdio.h>
 
 //Количество линий
-#define NUMBER_LINES 4
+#define MAX_LINES 4
 
 //Количество пробелов необходимых для симметрии
-#define SPACE_HHOHH ((NUMBER_LINES) - 3)
-#define SPACE_ZZZZZ ((NUMBER_LINES) - 3)
+#define SPACE_HHOHH ((MAX_LINES) - 3)
+#define SPACE_ZZZZZ ((MAX_LINES) - 3)
 
 //Количество звезд в текущей линии
-#define STARS_LINE(current_line) (current_line * 2 - 1)
+#define CHARACTER_IN_LINE(current_line) ((current_line) * 2 - 1)
+//Количество пробелов в текущей линии
+#define SPACE_IN_LINE(current_line) ((MAX_LINES) - (current_line))
 
 //Символ для отображения
-#define SYMBOL '*'
+#define CHARACTER '*'
 
 int main(int argc, char **argv)
 {
-	for (int current_line = 1; current_line <= NUMBER_LINES; current_line++)
+	for (int current_line = 1; current_line <= MAX_LINES; current_line++)
 	{
-		for (int space = 1; space <= NUMBER_LINES - current_line; space++)
+		for (int space = 0; space < SPACE_IN_LINE(current_line); space++)
 			printf(" ");
 		
-		for (int star = 1; star <= STARS_LINE(current_line); star++)
-			printf("%c", SYMBOL);
+		for (int character = 0; character < CHARACTER_IN_LINE(current_line); character++)
+			printf("%c", CHARACTER);
 		
 		printf("\n");
 	}
 	
-	for (int space = 1; space <= SPACE_HHOHH; space++)
+	for (int space = 0; space < SPACE_HHOHH; space++)
 		printf(" ");
 	printf("HHOHH\n");
 	
-	for (int space = 1; space <= SPACE_ZZZZZ; space++)
+	for (int space = 0; space < SPACE_ZZZZZ; space++)
 		printf(" ");
 	printf("ZZZZZ\n");
 	
