@@ -25,14 +25,14 @@
 #include <stdio.h>
 
 //Если нужна отладка обьявить константу DEBUG
-#define DEBUG	1
+//#define DEBUG					1
 
 //Входит ли введенное число в верхний предел
 #define UPPER_LIMIT(number)		(((number / 1000) == 0)? 1 : 0)
 //Входит ли введенное число в нижний предел
 #define LOWER_LIMIT(number)		((number > 100)? 1 : 0)
 //Входит ли введенное число в необходимые пределы
-#define ENTER_LIMIT(number)	(UPPER_LIMIT(number) && LOWER_LIMIT(number))
+#define ENTER_LIMIT(number)		(UPPER_LIMIT(number) && LOWER_LIMIT(number))
 
 int main(int argc, char **argv)
 {
