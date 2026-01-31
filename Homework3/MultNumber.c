@@ -41,14 +41,14 @@ int main(int argc, char **argv)
 #ifdef DEBUG
 	char exit = '\n';
 	
-	for(;exit == '\n';)
+	while(exit == '\n')
 	{
 #endif
 
 		scanf("%u", &number);
 		
 		if (!(ENTER_LIMIT(number)))
-			return 0;
+			return 1;
 		
 		mult *= number % 10;
 		mult *= (number / 10) % 10;
