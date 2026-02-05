@@ -25,24 +25,16 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-//Возвращяет максимальное из двух введенных чисел
-#define MAX(operand1, operand2)		((operand1) >= (operand2) ? (operand1) : (operand2))
-//Возвращяет минимальное из двух введенных чисел
-#define MIN(operand1, operand2)		((operand1) <= (operand2) ? (operand1) : (operand2))
+//Правда ли, что числа введены в порядке возрастания
+#define IS_ASCENDING_ORDER(operand1, operand2, operand3)		((operand1) < (operand2) && (operand2) < (operand3))
 
 int main(int argc, char **argv)
 {
-	int32_t number1, number2, number3, max, min;
+	int32_t number1, number2, number3;
 	
 	scanf("%d%d%d", &number1, &number2, &number3);
 	
-	max = MAX(number1, number2);
-	max = MAX(max, number3);
-	
-	min = MIN(number1, number2);
-	min = MIN(min, number3);
-	
-	if(number1 == min && number3 == max && min != max)
+	if(IS_ASCENDING_ORDER(number1, number2, number3))
 		printf("YES");
 	else
 		printf("NO");

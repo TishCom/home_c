@@ -25,10 +25,27 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+//Названия месяцев
+enum Month
+{
+	JANUARY = 1,
+	FEBRUARY,
+	MARCH,
+	APRIL,
+	MAY,
+	JUNE,
+	JULY,
+	AUGUST,
+	SEPTEMBER,
+	OCTOBER,
+	NOVEMBER,
+	DECEMBER
+};
+
 //Входит ли введенное число в верхний предел
-#define UPPER_LIMIT(number)		((number) <= 12)
+#define UPPER_LIMIT(number)		((number) <= DECEMBER)
 //Входит ли введенное число в нижний предел
-#define LOWER_LIMIT(number)		((number) >= 1)
+#define LOWER_LIMIT(number)		((number) >= JANUARY)
 //Входит ли введенное число в необходимые пределы
 #define ENTER_LIMIT(number)		(UPPER_LIMIT(number) && LOWER_LIMIT(number))
 
@@ -41,11 +58,11 @@ int main(int argc, char **argv)
 	if (!(ENTER_LIMIT(month)))
 			return 1;
 			
-	if(month >= 3 && month <= 5)
+	if(month >= MARCH && month <= MAY)
 		printf("spring");
-	else if(month >= 6 && month <= 8)
+	else if(month >= JUNE && month <= AUGUST)
 		printf("summer");
-	else if(month >= 9 && month <= 11)
+	else if(month >= SEPTEMBER && month <= NOVEMBER)
 		printf("autumn");
 	else 
 		printf("winter");

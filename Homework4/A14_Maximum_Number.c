@@ -36,7 +36,15 @@
 #define MAX(operand1, operand2)					((operand1) >= (operand2) ? (operand1) : (operand2))
 
 //Возвращяет цифру находящуюся в разряде digit числа number
-#define RETURN_DIGIT_NUMBER(number, digit)		(((number) / (1 * (digit))) % 10)
+#define RETURN_DIGIT_NUMBER(number, digit)		(((number) / (digit)) % 10)
+
+//Разряды введенного числа
+enum Place
+{
+	UNITS    = 1,
+	TENS     = 10,
+	HUNDREDS = 100
+};
 
 int main(int argc, char **argv)
 {
@@ -47,9 +55,9 @@ int main(int argc, char **argv)
 	if (!(ENTER_LIMIT(base)))
 			return 1;
 			
-	number1 = RETURN_DIGIT_NUMBER(base, 1);
-	number2 = RETURN_DIGIT_NUMBER(base, 10);
-	number3 = RETURN_DIGIT_NUMBER(base, 100);
+	number1 = RETURN_DIGIT_NUMBER(base, UNITS);
+	number2 = RETURN_DIGIT_NUMBER(base, TENS);
+	number3 = RETURN_DIGIT_NUMBER(base, HUNDREDS);
 	
 	max = MAX(number1, number2);
 	max = MAX(max, number3);
