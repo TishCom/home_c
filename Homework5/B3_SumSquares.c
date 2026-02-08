@@ -25,13 +25,24 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+//Максималное возможное входное значение
+#define MAX_NUMBER				100
+//Минимальное возможное входное значение
+#define MIN_NUMBER				0
+//Входит ли введенное число в верхний предел
+#define UPPER_LIMIT(number)		((number) <= MAX_NUMBER)
+//Входит ли введенное число в нижний предел
+#define LOWER_LIMIT(number)		((number) > MIN_NUMBER)
+//Входит ли введенное число в необходимые пределы
+#define ENTER_LIMIT(number)		(UPPER_LIMIT(number) && LOWER_LIMIT(number))
+
 int main(int argc, char **argv)
 {
 	int32_t numberA = 0, numberB = 0, sumSquares = 0;
 	
 	scanf("%d%d", &numberA, &numberB);
 	
-	if(numberA > numberB)
+	if(numberA > numberB || !(ENTER_LIMIT(numberA)))
 		return 1;
 		
 	for (int i = numberA; i <= numberB; i++)

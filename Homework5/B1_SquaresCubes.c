@@ -25,10 +25,14 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+//Максималное возможное входное значение
+#define MAX_NUMBER				100
+//Минимальное возможное входное значение
+#define MIN_NUMBER				0
 //Входит ли введенное число в верхний предел
-#define UPPER_LIMIT(number)		((number) <= 100)
+#define UPPER_LIMIT(number)		((number) <= MAX_NUMBER)
 //Входит ли введенное число в нижний предел
-#define LOWER_LIMIT(number)		((number) >= 1)
+#define LOWER_LIMIT(number)		((number) > MIN_NUMBER)
 //Входит ли введенное число в необходимые пределы
 #define ENTER_LIMIT(number)		(UPPER_LIMIT(number) && LOWER_LIMIT(number))
 

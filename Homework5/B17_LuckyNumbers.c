@@ -25,38 +25,61 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+//Максималное возможное входное значение
+#define MAX_NUMBER									100000
+//Минимальное возможное входное значение
+#define MIN_NUMBER									0
+//Входит ли введенное число в верхний предел
+#define UPPER_LIMIT(number)							((number) <= MAX_NUMBER)
+//Входит ли введенное число в нижний предел
+#define LOWER_LIMIT(number)							((number) >= MIN_NUMBER)
+//Входит ли введенное число в необходимые пределы
+#define ENTER_LIMIT(number)							(UPPER_LIMIT(number) && LOWER_LIMIT(number))
+
+//Возвращяет цифру находящуюся в разряде digit числа number
+#define RETURN_DIGIT_NUMBER(number, digit)			(((number) / (digit)) % 10)
+//Возвращяет десятичное число number сдвинутое вправо на digit разрядов
+#define SHIFT_DIGIT_NUMBER_RIGHT(number, digit)		((number) / ((digit) * 10))
+
+//Разряды введенного числа
+enum Place
+{
+	UNITS    = 1,
+	TENS     = 10,
+	HUNDREDS = 100
+};
+
 int main(int argc, char **argv)
 {
-	int32_t number = 0, sum = 0, mult = 1;
+	int32_t number = 0, temporary = 0, sum = 0, mult = 1;
 	
 	scanf("%d", &number);
 	
-	if (number < 10)
+	if (!(ENTER_LIMIT(number)))
 		return 1;
 	
 	for (int i = 10; i <= number; i++)
 	{
-		int temporary = i;
-		
-		while(temporary > 0)
-		{
-			sum += temporary % 10;
-			temporary /= 10;
-		}
-		
+		sum = 0;
 		temporary = i;
 		
 		while(temporary > 0)
 		{
-			mult *= temporary % 10;
-			temporary /= 10;
+			sum += RETURN_DIGIT_NUMBER(temporary, UNITS);
+			temporary = SHIFT_DIGIT_NUMBER_RIGHT(temporary, UNITS);
+		}
+		
+		mult = 1;
+		temporary = i;
+		
+		while(temporary > 0)
+		{
+			mult *= RETURN_DIGIT_NUMBER(temporary, UNITS);
+			temporary = SHIFT_DIGIT_NUMBER_RIGHT(temporary, UNITS);
 		}
 		
 		if (sum == mult)
 			printf("%d ", i);
-			
-		sum = 0;
-		mult = 1;
 	}
 	
 	return 0;

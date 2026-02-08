@@ -25,10 +25,14 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+//Максималное возможное входное значение
+#define MAX_NUMBER				999
+//Минимальное возможное входное значение
+#define MIN_NUMBER				99
 //Входит ли введенное число в верхний предел
-#define UPPER_LIMIT(number)		((number) < 1000)
+#define UPPER_LIMIT(number)		((number) <= MAX_NUMBER)
 //Входит ли введенное число в нижний предел
-#define LOWER_LIMIT(number)		((number) > 99)
+#define LOWER_LIMIT(number)		((number) > MIN_NUMBER)
 //Входит ли введенное число в необходимые пределы
 #define ENTER_LIMIT(number)		(UPPER_LIMIT(number) && LOWER_LIMIT(number))
 
@@ -38,10 +42,7 @@ int main(int argc, char **argv)
 	
 	scanf("%d", &number);
 	
-	if (ENTER_LIMIT(number))
-		printf("YES\n");
-	else 
-		printf("NO\n");
+	ENTER_LIMIT(number) ? printf("YES\n") : printf("NO\n");
 	
 	return 0;
 }

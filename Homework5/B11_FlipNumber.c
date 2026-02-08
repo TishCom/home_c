@@ -25,25 +25,52 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+//Максималное возможное входное значение
+#define MAX_NUMBER									100000
+//Минимальное возможное входное значение
+#define MIN_NUMBER									0
+//Входит ли введенное число в верхний предел
+#define UPPER_LIMIT(number)							((number) <= MAX_NUMBER)
+//Входит ли введенное число в нижний предел
+#define LOWER_LIMIT(number)							((number) >= MIN_NUMBER)
+//Входит ли введенное число в необходимые пределы
+#define ENTER_LIMIT(number)							(UPPER_LIMIT(number) && LOWER_LIMIT(number))
+
+//Возвращяет цифру находящуюся в разряде digit числа number
+#define RETURN_DIGIT_NUMBER(number, digit)			(((number) / (digit)) % 10)
+//Возвращяет десятичное число number сдвинутое вправо на digit разрядов
+#define SHIFT_DIGIT_NUMBER_RIGHT(number, digit)		((number) / ((digit) * 10))
+//Возвращяет десятичное число number сдвинутое влево на digit разрядов
+#define SHIFT_DIGIT_NUMBER_LEFT(number, digit)		((number) * ((digit) * 10))
+
+//Разряды введенного числа
+enum Place
+{
+	UNITS    = 1,
+	TENS     = 10,
+	HUNDREDS = 100
+};
+
 int main(int argc, char **argv)
 {
-	char charArray[20] = {0};
+	int32_t numberIN = 0, numberOUT = 0;
 	
-	int32_t i = 0, temporary = 0;
+	scanf("%d", &numberIN);
 	
-	for (;charArray[i - 1] != '\n'; i++)
-		scanf("%c", &charArray[i]);
-		
-	for (int a = 0, b = i - 2; b >= 0; b--, a++)
+	if (!(ENTER_LIMIT(numberIN)))
+		return 1;
+	
+	while(numberIN > 9)
 	{
-		temporary = charArray[a];
-		charArray[a] = charArray[b];
-		charArray[b] = temporary;
+		numberOUT += RETURN_DIGIT_NUMBER(numberIN, UNITS);
+		numberOUT = SHIFT_DIGIT_NUMBER_LEFT(numberOUT, UNITS);
+		numberIN = SHIFT_DIGIT_NUMBER_RIGHT(numberIN, UNITS);
 	}
 	
-	for (int a = i - 1; a >= 0; a--)
-		printf("%c", charArray[a]);
-
+	numberOUT += RETURN_DIGIT_NUMBER(numberIN, UNITS);
+	
+	printf("%d", numberOUT);
+	
 	return 0;
 }
 

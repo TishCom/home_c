@@ -25,6 +25,30 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+//Максималное возможное входное значение
+#define MAX_NUMBER									100000
+//Минимальное возможное входное значение
+#define MIN_NUMBER									0
+//Входит ли введенное число в верхний предел
+#define UPPER_LIMIT(number)							((number) <= MAX_NUMBER)
+//Входит ли введенное число в нижний предел
+#define LOWER_LIMIT(number)							((number) >= MIN_NUMBER)
+//Входит ли введенное число в необходимые пределы
+#define ENTER_LIMIT(number)							(UPPER_LIMIT(number) && LOWER_LIMIT(number))
+
+//Возвращяет цифру находящуюся в разряде digit числа number
+#define RETURN_DIGIT_NUMBER(number, digit)			(((number) / (digit)) % 10)
+//Возвращяет десятичное число number сдвинутое вправо на digit разрядов
+#define SHIFT_DIGIT_NUMBER_RIGHT(number, digit)		((number) / ((digit) * 10))
+
+//Разряды введенного числа
+enum Place
+{
+	UNITS    = 1,
+	TENS     = 10,
+	HUNDREDS = 100
+};
+
 //Возвращяет максимальное из двух введенных чисел
 #define MAX(operand1, operand2)		((operand1) >= (operand2) ? (operand1) : (operand2))
 //Возвращяет минимальное из двух введенных чисел
@@ -32,23 +56,23 @@
 
 int main(int argc, char **argv)
 {
-	char charArray[20] = {0};
-	char min = 0, max = 0;
+	int32_t number = 0, min = 0, max = 0;
 	
-	int32_t i = 0;
+	scanf("%d", &number);
 	
-	for (;charArray[i - 1] != '\n'; i++)
-		scanf("%c", &charArray[i]);
-		
-	min = max = charArray[0];
+	if (!(ENTER_LIMIT(number)))
+		return 1;
 	
-	for (int a = 0; a < i - 1; a++)
-		min = MIN(min, charArray[a]);
+	min = max = RETURN_DIGIT_NUMBER(number, UNITS);
 	
-	for (int a = 0; a < i - 1; a++)
-		max = MAX(max, charArray[a]);
-		
-	printf("%c %c\n", min, max);
+	while (number > 0)
+	{
+		min = MIN(min, RETURN_DIGIT_NUMBER(number, UNITS));
+		max = MAX(max, RETURN_DIGIT_NUMBER(number, UNITS));
+		number = SHIFT_DIGIT_NUMBER_RIGHT(number, UNITS);
+	}
+	
+	printf("%d %d\n", min, max);
 	
 	return 0;
 }

@@ -27,13 +27,13 @@
 
 int main(int argc, char **argv)
 {
-	int32_t i = 0, count = 0;
+	int32_t number = 0, count = 0;
 	
 	do
 	{
-		scanf("%d", &i);
+		scanf("%d", &number);
 		count++;
-	}while (i != 0);
+	}while (number != 0);
 	
 	printf("%d\n", count - 1); 
 

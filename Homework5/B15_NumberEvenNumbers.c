@@ -25,17 +25,20 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+//Проверка числа на четность
+#define IS_EVEN(number)								(!((number) % 2))
+
 int main(int argc, char **argv)
 {
-	int32_t i = 0, countEven = 0;
+	int32_t number = 0, countEven = 0;
 	
 	do
 	{
-		if (i % 2 == 0)
+		if (IS_EVEN(number))
 			countEven++;
 			
-		scanf("%d", &i);
-	}while (i != 0);
+		scanf("%d", &number);
+	}while (number != 0);
 	
 	printf("%d\n", countEven - 1); 
 

@@ -27,16 +27,13 @@
 
 int main(int argc, char **argv)
 {
-	char charArray[50] = {0};
+	char char1 = 0;
 	
-	int32_t i = 0;
+	scanf("%c", &char1);
 	
-	for (;charArray[i - 1] != '.'; i++)
-		scanf("%c", &charArray[i]);
-		
-	for (int a = 0, b = i - 2; b >= 0; b--, a++)
+	while (char1 != '.')
 	{
-		switch (charArray[a])
+		switch (char1)
 		{
 			case 'A':
 			case 'B':
@@ -64,13 +61,13 @@ int main(int argc, char **argv)
 			case 'X':
 			case 'Y':
 			case 'Z':
-				charArray[a] += 0x20;
+				char1 += 'a' - 'A';
 		}
+		
+		printf("%c", char1);
+		
+		scanf("%c", &char1);
 	}
-	
-	for (int a = 0; charArray[a] != '.'; a++)
-		printf("%c", charArray[a]);
-
 
 	return 0;
 }

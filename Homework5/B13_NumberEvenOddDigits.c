@@ -25,29 +25,55 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+//Максималное возможное входное значение
+#define MAX_NUMBER									100000
+//Минимальное возможное входное значение
+#define MIN_NUMBER									0
+//Входит ли введенное число в верхний предел
+#define UPPER_LIMIT(number)							((number) <= MAX_NUMBER)
+//Входит ли введенное число в нижний предел
+#define LOWER_LIMIT(number)							((number) >= MIN_NUMBER)
+//Входит ли введенное число в необходимые пределы
+#define ENTER_LIMIT(number)							(UPPER_LIMIT(number) && LOWER_LIMIT(number))
+
+//Возвращяет цифру находящуюся в разряде digit числа number
+#define RETURN_DIGIT_NUMBER(number, digit)			(((number) / (digit)) % 10)
+//Возвращяет десятичное число number сдвинутое вправо на digit разрядов
+#define SHIFT_DIGIT_NUMBER_RIGHT(number, digit)		((number) / ((digit) * 10))
+
+//Разряды введенного числа
+enum Place
+{
+	UNITS    = 1,
+	TENS     = 10,
+	HUNDREDS = 100
+};
+
+//Проверка числа на четность
+#define IS_EVEN(number)								(!((number) % 2))
+
 int main(int argc, char **argv)
 {
-	char charArray[20] = {0};
+	int32_t number = 0, countEven = 0, countNoEven = 0;
 	
-	int32_t i = 0, countEven = 0, countNoEven = 0;
+	scanf("%d", &number);
 	
-	for (;charArray[i - 1] != '\n'; i++)
-		scanf("%c", &charArray[i]);
-		
-	for (int a = 0, b = i - 2; b >= 0; b--, a++)
+	if (!(ENTER_LIMIT(number)))
+		return 1;
+	
+	while (number > 0)
 	{
-		switch (charArray[a])
+		switch (IS_EVEN(RETURN_DIGIT_NUMBER(number, UNITS)))
 		{
-			case '0':
-			case '2':
-			case '4':
-			case '6':
-			case '8':
+			case 0:
+				countNoEven++;
+				break;
+			case 1:
 				countEven++;
 				break;
-			default:
-				countNoEven++;
 		}
+		
+		number = SHIFT_DIGIT_NUMBER_RIGHT(number, UNITS);
 	}
 	
 	printf("%d %d\n", countEven, countNoEven);
