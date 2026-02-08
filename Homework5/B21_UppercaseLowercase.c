@@ -25,6 +25,9 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+//Переводит буквы английского алфавита из заглавных в строчные
+#define UPPERCASE_LOWERCASE(character)		((character) + ('a' - 'A'))
+
 int main(int argc, char **argv)
 {
 	char char1 = 0;
@@ -61,7 +64,7 @@ int main(int argc, char **argv)
 			case 'X':
 			case 'Y':
 			case 'Z':
-				char1 += 'a' - 'A';
+				char1 = UPPERCASE_LOWERCASE(char1);
 		}
 		
 		printf("%c", char1);
