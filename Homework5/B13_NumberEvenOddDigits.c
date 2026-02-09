@@ -63,15 +63,10 @@ int main(int argc, char **argv)
 	
 	while (number > 0)
 	{
-		switch (IS_EVEN(RETURN_DIGIT_NUMBER(number, UNITS)))
-		{
-			case 0:
-				countNoEven++;
-				break;
-			case 1:
-				countEven++;
-				break;
-		}
+		if (IS_EVEN(RETURN_DIGIT_NUMBER(number, UNITS)))
+			countNoEven++;
+		else
+			countEven++;
 		
 		number = SHIFT_DIGIT_NUMBER_RIGHT(number, UNITS);
 	}

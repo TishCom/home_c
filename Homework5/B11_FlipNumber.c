@@ -20,8 +20,7 @@
  * 
  * 
  */
-
-
+ 
 #include <stdio.h>
 #include <inttypes.h>
 
@@ -36,12 +35,35 @@
 //Входит ли введенное число в необходимые пределы
 #define ENTER_LIMIT(number)							(UPPER_LIMIT(number) && LOWER_LIMIT(number))
 
+//Основание системы счисления введенного числа
+#define BASE_NUMBER									10
 //Возвращяет цифру находящуюся в разряде digit числа number
-#define RETURN_DIGIT_NUMBER(number, digit)			(((number) / (digit)) % 10)
+#define RETURN_DIGIT_NUMBER(number, digit)			(((number) / (digit)) % BASE_NUMBER)
 //Возвращяет десятичное число number сдвинутое вправо на digit разрядов
-#define SHIFT_DIGIT_NUMBER_RIGHT(number, digit)		((number) / ((digit) * 10))
+#define SHIFT_DIGIT_NUMBER_RIGHT(number, digit)		((number) / ((digit) * BASE_NUMBER))
 //Возвращяет десятичное число number сдвинутое влево на digit разрядов
-#define SHIFT_DIGIT_NUMBER_LEFT(number, digit)		((number) * ((digit) * 10))
+#define SHIFT_DIGIT_NUMBER_LEFT(number, digit)		((number) * ((digit) * BASE_NUMBER))
+
+//Проверка числа на четность
+#define IS_EVEN(number)								(!((number) % 2))
+
+//Возвращяет максимальное из двух введенных чисел
+#define MAX(operand1, operand2)						((operand1) >= (operand2) ? (operand1) : (operand2))
+//Возвращяет минимальное из двух введенных чисел
+#define MIN(operand1, operand2)						((operand1) <= (operand2) ? (operand1) : (operand2))
+
+//Проверка символа на то является это буквой старшего регистра или нет
+#define IS_UPPERCASE_LETTER(letter)					((letter) >= 'A' && (letter) <= 'Z')
+//Проверка символа на то является это буквой младшего регистра или нет
+#define IS_LOWERCASE_LETTER(letter)					((letter) >= 'a' && (letter) <= 'z')
+//Проверка символа на то является это буквой или нет
+#define IS_LETTER(letter)							(IS_UPPERCASE_LETTER(letter) || IS_LOWERCASE_LETTER(letter))
+//Переводит буквы английского алфавита из строчных в прописные
+#define LOWERCASE_UPPERCASE(letter)					((letter) - ('a' - 'A'))
+//Переводит буквы английского алфавита из прописных в строчные
+#define UPPERCASE_LOWERCASE(letter)					((letter) + ('a' - 'A'))
+//Переводит буквы английского алфавита из прописных в строчные и наоборот, остальные символы остаются неизменными
+#define CHANGE_CASE(character)						(IS_LETTER(character) ? (IS_UPPERCASE_LETTER(character) ? UPPERCASE_LOWERCASE(character) : LOWERCASE_UPPERCASE(character)) : (character))
 
 //Разряды введенного числа
 enum Place

@@ -25,8 +25,18 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-//Переводит буквы английского алфавита из заглавных в строчные
-#define UPPERCASE_LOWERCASE(character)		((character) + ('a' - 'A'))
+//Проверка символа на то является это буквой старшего регистра или нет
+#define IS_UPPERCASE_LETTER(letter)			((letter) >= 'A' && (letter) <= 'Z')
+//Проверка символа на то является это буквой младшего регистра или нет
+#define IS_LOWERCASE_LETTER(letter)			((letter) >= 'a' && (letter) <= 'z')
+//Проверка символа на то является это буквой или нет
+#define IS_LETTER(letter)					(IS_UPPERCASE_LETTER(letter) || IS_LOWERCASE_LETTER(letter))
+//Переводит буквы английского алфавита из строчных в прописные
+#define LOWERCASE_UPPERCASE(letter)			((letter) - ('a' - 'A'))
+//Переводит буквы английского алфавита из прописных в строчные
+#define UPPERCASE_LOWERCASE(letter)			((letter) + ('a' - 'A'))
+//Переводит буквы английского алфавита из прописных в строчные и наоборот, остальные символы остаются неизменными
+#define CHANGE_CASE(character)				(IS_LETTER(character) ? (IS_UPPERCASE_LETTER(character) ? UPPERCASE_LOWERCASE(character) : LOWERCASE_UPPERCASE(character)) : (character))
 
 int main(int argc, char **argv)
 {
@@ -36,37 +46,9 @@ int main(int argc, char **argv)
 	
 	while (char1 != '.')
 	{
-		switch (char1)
-		{
-			case 'A':
-			case 'B':
-			case 'C':
-			case 'D':
-			case 'E':
-			case 'F':
-			case 'G':
-			case 'H':
-			case 'I':
-			case 'J':
-			case 'K':
-			case 'L':
-			case 'M':
-			case 'N':
-			case 'O':
-			case 'P':
-			case 'Q':
-			case 'R':
-			case 'S':
-			case 'T':
-			case 'U':
-			case 'V':
-			case 'W':
-			case 'X':
-			case 'Y':
-			case 'Z':
-				char1 = UPPERCASE_LOWERCASE(char1);
-		}
-		
+		if (IS_UPPERCASE_LETTER(char1))
+			char1 = UPPERCASE_LOWERCASE(char1);
+
 		printf("%c", char1);
 		
 		scanf("%c", &char1);
