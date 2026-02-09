@@ -64,9 +64,9 @@ int main(int argc, char **argv)
 	while (number > 0)
 	{
 		if (IS_EVEN(RETURN_DIGIT_NUMBER(number, UNITS)))
-			countNoEven++;
-		else
 			countEven++;
+		else
+			countNoEven++;
 		
 		number = SHIFT_DIGIT_NUMBER_RIGHT(number, UNITS);
 	}
