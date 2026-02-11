@@ -25,26 +25,28 @@
 #include <stdio.h>
 #include <stdint.h>
 
+//Функция возвращяет сумму чисел от 1 до введенного числа
 uint32_t sumN(int32_t n);
 
 int main(int argc, char **argv)
 {
-	int32_t number = 0;
+	int32_t number = 0, sumNumber;
 	
 	scanf("%d", &number);
 	
-	number = sumN(number);
+	sumNumber = sumN(number);
 	
-	printf("%d\n", number);
+	printf("%d\n", sumNumber);
 	
 	return 0;
 }
 
-uint32_t sumN(int32_t n)
+//Функция возвращяет сумму чисел от 1 до введенного числа
+uint32_t sumN(int32_t number)
 {
 	int32_t result = 0;
 	
-	for (int i = 1; i <= n; i++)
+	for (int i = 1; i <= number; i++)
 		result += i;
 		
 	return result;

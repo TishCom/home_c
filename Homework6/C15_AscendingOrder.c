@@ -25,11 +25,38 @@
 #include <stdio.h>
 #include <stdint.h>
 
+//Стандартные системы счисления
+enum NumberSystem
+{
+	BINARY     	= 2,
+	OCTAL      	= 8,
+	DECIMAL  	= 10,
+	HEXADECIMAL = 16
+};
+
+//Функция проверяет больше ли сcheckNumber чем verificater
 uint32_t isMore(uint32_t checkNumber, uint32_t verificater);
+/* 
+ * Функция возвращает число находящееся в разряде digit числа number.
+ * При этом number имеет основание baseNumber.
+ */
 uint32_t returnDigit(uint32_t number, uint32_t digit, uint32_t baseNumber);
+/* 
+ * Функция возвращает число number сдвинутое на digit разрядов вправо.
+ * При этом number имеет основание baseNumber.
+ */
 uint32_t shiftDigitNumberRight(uint32_t number, uint32_t digit, uint32_t baseNumber);
+/* 
+ * Функция возвращает число number сдвинутое на digit разрядов влево.
+ * При этом number имеет основание baseNumber.
+ */
 uint32_t shiftDigitNumberLeft(uint32_t number, uint32_t digit, uint32_t baseNumber);
+/* 
+ * Функция проверяет действительно ли что цифры в каждом
+ * разряде числа number расположенны по возрастанию.
+ */
 uint32_t isAscendingOrder(uint32_t number);
+//Функция возвращает число numberIN в степени power
 uint32_t powerNumber(int32_t numberIN, int32_t power);
 
 int main(int argc, char **argv)
@@ -46,6 +73,7 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+//Функция проверяет больше ли сcheckNumber чем verificater
 uint32_t isMore(uint32_t checkNumber, uint32_t verificater)
 {
 	if (checkNumber > verificater)
@@ -54,31 +82,47 @@ uint32_t isMore(uint32_t checkNumber, uint32_t verificater)
 		return 0;
 }
 
+/* 
+ * Функция возвращает число находящееся в разряде digit числа number.
+ * При этом number имеет основание baseNumber.
+ */
 uint32_t returnDigit(uint32_t number, uint32_t digit, uint32_t baseNumber)
 {
 	return (number / powerNumber(baseNumber, digit)) % baseNumber;
 }
 
+/* 
+ * Функция возвращает число number сдвинутое на digit разрядов вправо.
+ * При этом number имеет основание baseNumber.
+ */
 uint32_t shiftDigitNumberRight(uint32_t number, uint32_t digit, uint32_t baseNumber)
 {
 	return number / powerNumber(baseNumber, digit);
 }
 
+/* 
+ * Функция возвращает число number сдвинутое на digit разрядов влево.
+ * При этом number имеет основание baseNumber.
+ */
 uint32_t shiftDigitNumberLeft(uint32_t number, uint32_t digit, uint32_t baseNumber)
 {
 	return number * powerNumber(baseNumber, digit);
 }
 
+/* 
+ * Функция проверяет действительно ли что цифры в каждом
+ * разряде числа number расположенны по возрастанию.
+ */
 uint32_t isAscendingOrder(uint32_t number)
 {
-	uint32_t oldDigit = returnDigit(number, 0, 10), curentDigit = 0;
+	uint32_t oldDigit = returnDigit(number, 0, DECIMAL), curentDigit = 0;
 	uint32_t flagAscending = 1;
 	
 	while (number > 0)
 	{
-		number = shiftDigitNumberRight(number, 1, 10);
+		number = shiftDigitNumberRight(number, 1, DECIMAL);
 		
-		curentDigit = returnDigit(number, 0, 10);
+		curentDigit = returnDigit(number, 0, DECIMAL);
 		
 		if (isMore(oldDigit, curentDigit))
 		{
@@ -96,6 +140,7 @@ uint32_t isAscendingOrder(uint32_t number)
 	return flagAscending;
 }
 
+//Функция возвращает число numberIN в степени power
 uint32_t powerNumber(int32_t numberIN, int32_t power)
 {
 	int32_t numberOUT = 1;

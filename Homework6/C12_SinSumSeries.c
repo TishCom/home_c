@@ -25,10 +25,16 @@
 #include <stdint.h>
 #include <math.h>
 
+//Функция возвращает число numberIN в степени power
 float powerNumber(float numberIN, int32_t power);
+//Функция возвращает факторила числа number
 uint64_t factorial(uint32_t number);
+//Функция переводит градусы в радианы
 float convertingDegreesRadians(float degrees);
-float mySin(float radians);
+//Функция переводит радианы в градусы
+float convertingRadiansDegrees(float radians);
+//Функция возвращает синус числа введенного в радианах
+float sinus(float radians);
 
 int main(int argc, char **argv)
 {
@@ -36,14 +42,15 @@ int main(int argc, char **argv)
 	
 	scanf("%f", &x);
 	
-	printf("%.3f\n", mySin(convertingDegreesRadians(x)));
+	printf("%.3f\n", sinus(convertingDegreesRadians(x)));
 	
 	return 0;
 }
 
+//Функция возвращает число numberIN в степени power
 float powerNumber(float numberIN, int32_t power)
 {
-	double numberOUT = 1.0;
+	float numberOUT = 1.0;
 	
 	for (int i = 0; i < power; i++)
 		numberOUT *= numberIN;
@@ -51,15 +58,10 @@ float powerNumber(float numberIN, int32_t power)
 	return numberOUT;
 }
 
+//Функция возвращает факторила числа number
 uint64_t factorial(uint32_t number)
 {
-	uint64_t result = 1.0;
-	
-	if (number < 1 || number > 20)
-	{
-		printf("1 - 20\n");
-		return 1;
-	}
+	uint64_t result = 1;
 	
 	for (int i = 1; i <= number; i++)
 		result *= i;
@@ -67,19 +69,27 @@ uint64_t factorial(uint32_t number)
 	return result;
 }
 
+//Функция переводит градусы в радианы
 float convertingDegreesRadians(float degrees)
 {
 	return (M_PI * degrees) / 180;
 }
 
-float mySin(float radians)
+//Функция переводит радианы в градусы
+float convertingRadiansDegrees(float radians)
+{
+	return (radians * 180) / M_PI;
+}
+
+//Функция возвращает синус числа введенного в радианах
+float sinus(float radians)
 {
 	float result = radians;
 	int32_t sign = -1;
 	
-	for (uint32_t i = 1; i < 10; i++)
+	for (uint32_t i = 3; i < 10; i += 2)
 	{
-		result += sign * (powerNumber(radians, i * 2 + 1) / (float)factorial(i * 2 + 1));
+		result += sign * (powerNumber(radians, i) / factorial(i));
 		sign = -sign;
 	}
 	

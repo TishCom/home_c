@@ -25,7 +25,9 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+//Функция проверяет является ли число number простым
 uint32_t isPrimeNumber(uint32_t number);
+//Функция выводит в терминал все простые множители числа number
 void printSimple(uint32_t number);
 
 int main(int argc, char **argv)
@@ -39,6 +41,7 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+//Функция проверяет является ли число number простым
 uint32_t isPrimeNumber(uint32_t number)
 {
 	int32_t flagPrime = 1;
@@ -55,6 +58,7 @@ uint32_t isPrimeNumber(uint32_t number)
 	return flagPrime;
 }
 
+//Функция выводит в терминал все простые множители числа number
 void printSimple(uint32_t number)
 {
 	for (uint32_t i = 2; i <= number; i++)

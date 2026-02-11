@@ -25,13 +25,45 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-uint32_t sumDigitNumber(uint32_t number);
-uint32_t multDigitNumber(uint32_t number);
+//Стандартные системы счисления
+enum NumberSystem
+{
+	BINARY     	= 2,
+	OCTAL      	= 8,
+	DECIMAL  	= 10,
+	HEXADECIMAL = 16
+};
+
+/* 
+ * Функция возвращает сумму цифр в каждом разряде числа number
+ * При этом number имеет основание baseNumber.
+ */
+uint32_t sumDigits(uint32_t number, uint32_t baseNumber);
+/* 
+ * Функция возвращает произведение цифр в каждом разряде числа number
+ * При этом number имеет основание baseNumber.
+ */
+uint32_t multDigit(uint32_t number, uint32_t baseNumber);
+//Функция проверяет на равенство number1 и number2
 uint32_t isEqual(uint32_t number1, uint32_t number2);
+//Функция проверяет является ли число number счастливым
 uint32_t isHappyNumber(uint32_t number);
+/* 
+ * Функция возвращает число находящееся в разряде digit числа number.
+ * При этом number имеет основание baseNumber.
+ */
 uint32_t returnDigit(uint32_t number, uint32_t digit, uint32_t baseNumber);
+/* 
+ * Функция возвращает число number сдвинутое на digit разрядов вправо.
+ * При этом number имеет основание baseNumber.
+ */
 uint32_t shiftDigitNumberRight(uint32_t number, uint32_t digit, uint32_t baseNumber);
+/* 
+ * Функция возвращает число number сдвинутое на digit разрядов влево.
+ * При этом number имеет основание baseNumber.
+ */
 uint32_t shiftDigitNumberLeft(uint32_t number, uint32_t digit, uint32_t baseNumber);
+//Функция возвращает число numberIN в степени power
 uint32_t powerNumber(int32_t numberIN, int32_t power);
 
 int main(int argc, char **argv)
@@ -48,32 +80,41 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-uint32_t sumDigitNumber(uint32_t number)
+/* 
+ * Функция возвращает сумму цифр в каждом разряде числа number
+ * При этом number имеет основание baseNumber.
+ */
+uint32_t sumDigits(uint32_t number, uint32_t baseNumber)
 {
 	uint32_t sum = 0;
 	
 	while (number > 0)
 	{
-		sum += returnDigit(number, 0, 10);
-		number = shiftDigitNumberRight(number, 1, 10);
+		sum += returnDigit(number, 0, baseNumber);
+		number = shiftDigitNumberRight(number, 1, baseNumber);
 	}
 	
 	return sum;
 }
 
-uint32_t multDigitNumber(uint32_t number)
+/* 
+ * Функция возвращает произведение цифр в каждом разряде числа number
+ * При этом number имеет основание baseNumber.
+ */
+uint32_t multDigit(uint32_t number, uint32_t baseNumber)
 {
 	uint32_t mult = 1;
 	
 	while (number > 0)
 	{
-		mult *= returnDigit(number, 0, 10);
-		number = shiftDigitNumberRight(number, 1, 10);
+		mult *= returnDigit(number, 0, baseNumber);
+		number = shiftDigitNumberRight(number, 1, baseNumber);
 	}
 	
 	return mult;
 }
 
+//Функция проверяет на равенство number1 и number2
 uint32_t isEqual(uint32_t number1, uint32_t number2)
 {
 	if (number1 == number2)
@@ -82,26 +123,40 @@ uint32_t isEqual(uint32_t number1, uint32_t number2)
 		return 0;
 }
 
+//Функция проверяет является ли число number счастливым
 uint32_t isHappyNumber(uint32_t number)
 {
-	return isEqual(multDigitNumber(number), sumDigitNumber(number));
+	return isEqual(multDigit(number, DECIMAL), sumDigits(number, DECIMAL));
 }
 
+/* 
+ * Функция возвращает число находящееся в разряде digit числа number.
+ * При этом number имеет основание baseNumber.
+ */
 uint32_t returnDigit(uint32_t number, uint32_t digit, uint32_t baseNumber)
 {
 	return (number / powerNumber(baseNumber, digit)) % baseNumber;
 }
 
+/* 
+ * Функция возвращает число number сдвинутое на digit разрядов вправо.
+ * При этом number имеет основание baseNumber.
+ */
 uint32_t shiftDigitNumberRight(uint32_t number, uint32_t digit, uint32_t baseNumber)
 {
 	return number / powerNumber(baseNumber, digit);
 }
 
+/* 
+ * Функция возвращает число number сдвинутое на digit разрядов влево.
+ * При этом number имеет основание baseNumber.
+ */
 uint32_t shiftDigitNumberLeft(uint32_t number, uint32_t digit, uint32_t baseNumber)
 {
 	return number * powerNumber(baseNumber, digit);
 }
 
+//Функция возвращает число numberIN в степени power
 uint32_t powerNumber(int32_t numberIN, int32_t power)
 {
 	int32_t numberOUT = 1;

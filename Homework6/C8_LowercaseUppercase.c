@@ -25,14 +25,23 @@
 #include <stdio.h>
 #include <stdint.h>
 
+//Функция переводит букву letter из нижнего регистра в верхний
 char lowercaseUppercase(char letter);
+//Функция переводит букву letter из верхнего регистра в нижний
 char uppercaseLowercase(char letter);
+//Функция меняет регистр буквы letter
 char changeCaseLetter(char character);
+//Функция переводит character(0 - 9) в число
 uint32_t characterNumber(char character);
+//Функция проверяет находится ли буква letter в верхнем регистре
 uint32_t isUppercaseLetter(char letter);
+//Функция проверяет находится ли буква letter в нижнем регистре
 uint32_t isLowercaseLetter(char letter);
+//Функция проверяет является ли letter буквой
 uint32_t isLetter(char letter);
+//Функция проверяет является ли character символом числа(0 - 9)
 uint32_t isNumberCharacter(char character);
+//Функция проверяет является ли character печатным символом
 uint32_t isPrintableCharacter(char character);
 
 int main(int argc, char **argv)
@@ -53,6 +62,7 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+//Функция переводит букву letter из нижнего регистра в верхний
 char lowercaseUppercase(char letter)
 {
 	if (isLowercaseLetter(letter))
@@ -61,6 +71,7 @@ char lowercaseUppercase(char letter)
 		return  letter;
 }
 
+//Функция переводит букву letter из верхнего регистра в нижний
 char uppercaseLowercase(char letter)
 {
 	if (isUppercaseLetter(letter))
@@ -69,6 +80,7 @@ char uppercaseLowercase(char letter)
 		return  letter;
 }
 
+//Функция меняет регистр буквы letter
 char changeCaseLetter(char character)
 {
 	if (isLetter(character))
@@ -82,6 +94,7 @@ char changeCaseLetter(char character)
 	return  character;
 }
 
+//Функция переводит character(0 - 9) в число
 uint32_t characterNumber(char character)
 {
 	if (isNumberCharacter(character))
@@ -90,6 +103,7 @@ uint32_t characterNumber(char character)
 		return  character;
 }
 
+//Функция проверяет находится ли буква letter в верхнем регистре
 uint32_t isUppercaseLetter(char letter)
 {
 	if (letter >= 'A' && letter <= 'Z')
@@ -98,6 +112,7 @@ uint32_t isUppercaseLetter(char letter)
 		return  0;
 }
 
+//Функция проверяет находится ли буква letter в нижнем регистре
 uint32_t isLowercaseLetter(char letter)
 {
 	if (letter >= 'a' && letter <= 'z')
@@ -106,6 +121,7 @@ uint32_t isLowercaseLetter(char letter)
 		return  0;
 }
 
+//Функция проверяет является ли letter буквой
 uint32_t isLetter(char letter)
 {
 	if (isUppercaseLetter(letter) || isLowercaseLetter(letter))
@@ -114,6 +130,7 @@ uint32_t isLetter(char letter)
 		return  0;
 }
 
+//Функция проверяет является ли character символом числа(0 - 9)
 uint32_t isNumberCharacter(char character)
 {
 	if (character >= '0' && character <= '9')
@@ -122,6 +139,7 @@ uint32_t isNumberCharacter(char character)
 		return  0;
 }
 
+//Функция проверяет является ли character печатным символом
 uint32_t isPrintableCharacter(char character)
 {
 	if ((character >= '!' && character <= '/') || 

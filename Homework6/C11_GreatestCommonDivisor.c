@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+//Функция возвращает НОД чисел number1 и number2
 uint32_t greatestCommonDivisor(uint32_t number1, uint32_t number2);
 
 int main(int argc, char **argv)
@@ -38,6 +39,7 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+//Функция возвращает НОД чисел number1 и number2
 uint32_t greatestCommonDivisor(uint32_t number1, uint32_t number2)
 {
 	while (number1 != number2)

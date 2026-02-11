@@ -26,6 +26,7 @@
 #include <stdint.h>
 #include <inttypes.h>
 
+// Функция возвращает колличество зерен в клетке шахматной доски номер square
 uint64_t howManyGrains(uint64_t square);
 
 int main(int argc, char **argv)
@@ -33,6 +34,12 @@ int main(int argc, char **argv)
 	uint64_t number = 0;
 	
 	scanf("%"SCNu64, &number);
+	
+	if (number < 1 || number > 64)
+	{
+		printf("printing 1 - 64");
+		return 1;
+	}
 	
 	number = howManyGrains(number);
 	
@@ -42,15 +49,10 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+// Функция возвращает колличество зерен в клетке шахматной доски номер square
 uint64_t howManyGrains(uint64_t square)
 {
 	uint64_t result = 1;
-	
-	if (square < 1 || square > 64)
-	{
-		printf("printing 1 - 64");
-		return 0;
-	}
 	
 	for (int i = 1; i < square; i++)
 		result *= (uint64_t)2;

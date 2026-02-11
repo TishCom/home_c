@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <stdint.h>
 
+//Функция возвращяет модуль(абсолютную величину) введенного числа
 uint32_t module(int32_t number);
 
 int main(int argc, char **argv)
@@ -40,6 +41,7 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+//Функция возвращяет модуль(абсолютную величину) введенного числа
 uint32_t module(int32_t number)
 {
 	return number < 0 ? -number : number;

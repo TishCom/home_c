@@ -25,7 +25,9 @@
 #include <stdio.h>
 #include <stdint.h>
 
+//Функция проверяет является ли символ character круглой скобуой
 uint32_t isParentheses(char character);
+//Функция проверяет является ли введенная строка с круглыми скобками корректной
 uint32_t isCorrectUseParentheses(void);
 
 int main(int argc, char **argv)
@@ -38,6 +40,7 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+//Функция проверяет является ли символ character круглой скобуой
 uint32_t isParentheses(char character)
 {
 	if (character == ')' || character == '(')
@@ -46,6 +49,7 @@ uint32_t isParentheses(char character)
 		return  0;
 }
 
+//Функция проверяет является ли введенная строка с круглыми скобками корректной
 uint32_t isCorrectUseParentheses(void)
 {
 	char character = 0;
@@ -54,13 +58,13 @@ uint32_t isCorrectUseParentheses(void)
 	scanf("%c", &character);
 	
 	if (character == ')')
-		return 0;
+		sum--;
 	
-	while (character != '.')
+	while (character != '.' && sum >= 0)
 	{
 		if (character == '(')
 			sum++;
-		else
+		else if (character == ')')
 			sum--;
 			
 		scanf("%c", &character);

@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <stdint.h>
 
+//Функция проверяет является ли символ character числом
 uint32_t isNumberCharacter(char character);
 
 int main(int argc, char **argv)
@@ -47,6 +48,7 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+//Функция проверяет является ли символ character числом
 uint32_t isNumberCharacter(char character)
 {
 	if (character >= '0' && character <= '9')

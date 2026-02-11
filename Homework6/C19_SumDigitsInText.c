@@ -25,8 +25,10 @@
 #include <stdio.h>
 #include <stdint.h>
 
+//Функция проверяет является ли символ character числом
 uint32_t isNumberCharacter(char character);
-uint32_t characterNumber(char character);
+//Функция переводит символ character в число
+uint32_t convertCharacterNumber(char character);
 
 int main(int argc, char **argv)
 {
@@ -38,7 +40,7 @@ int main(int argc, char **argv)
 	while (character != '.')
 	{
 		if (isNumberCharacter(character))
-			sum += characterNumber(character);
+			sum += convertCharacterNumber(character);
 			
 		scanf("%c", &character);
 	}
@@ -48,6 +50,7 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+//Функция проверяет является ли символ character числом
 uint32_t isNumberCharacter(char character)
 {
 	if (character >= '0' && character <= '9')
@@ -56,7 +59,8 @@ uint32_t isNumberCharacter(char character)
 		return  0;
 }
 
-uint32_t characterNumber(char character)
+//Функция переводит символ character в число
+uint32_t convertCharacterNumber(char character)
 {
 	if (isNumberCharacter(character))
 		return  character - '0';

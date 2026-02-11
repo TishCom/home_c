@@ -24,7 +24,9 @@
 #include <stdio.h>
 #include <stdint.h>
 
+//Функция возвращяет f(x)
 uint32_t functionAccordingFormula(int32_t x);
+//Функция возвращяет наибольшее из введенных чисел
 uint32_t maximum(int32_t numberA, int32_t numberB);
 
 int main(int argc, char **argv)
@@ -45,6 +47,7 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+//Функция возвращяет f(x)
 uint32_t functionAccordingFormula(int32_t x)
 {
 	if (-2 <= x && x < 2)
@@ -57,6 +60,7 @@ uint32_t functionAccordingFormula(int32_t x)
 	return x;
 }
 
+//Функция возвращяет наибольшее из введенных чисел
 uint32_t maximum(int32_t number1, int32_t number2)
 {
 	return number1 > number2 ? number1 : number2;

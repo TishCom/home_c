@@ -25,15 +25,21 @@
 #include <stdio.h>
 #include <stdint.h>
 
-//Разряды введенного числа
-enum Place
+//Стандартные системы счисления
+enum NumberSystem
 {
-	UNITS    = 1,
-	TENS     = 10,
-	HUNDREDS = 100
+	BINARY     	= 2,
+	OCTAL      	= 8,
+	DECIMAL  	= 10,
+	HEXADECIMAL = 16
 };
 
+/*
+ * Функция переводит число numberIN из десятичной системы счисления
+ * в число с системой счисления по основанию base
+*/
 uint32_t transformSystem(uint32_t numberIN, uint32_t base);
+//Функция возвращает число numberIN в степени power
 uint32_t powerNumber(int32_t numberIN, int32_t power);
 
 int main(int argc, char **argv)
@@ -49,20 +55,25 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+/*
+ * Функция переводит число numberIN из десятичной системы счисления
+ * в число с системой счисления по основанию base
+*/
 uint32_t transformSystem(uint32_t numberIN, uint32_t base)
 {
-	uint32_t numberOUT = 0, count = 0;
+	uint32_t numberOUT = 0, digit  = 0;
 	
 	while (numberIN > 0)
 	{
-		numberOUT += (numberIN % base) * powerNumber(TENS, count);
+		numberOUT += (numberIN % base) * powerNumber(DECIMAL, digit);
 		numberIN /= base;
-		count++;
+		digit ++;
 	}
 	
 	return numberOUT;
 }
 
+//Функция возвращает число numberIN в степени power
 uint32_t powerNumber(int32_t numberIN, int32_t power)
 {
 	int32_t numberOUT = 1;

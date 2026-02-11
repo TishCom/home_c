@@ -25,21 +25,23 @@
 #include <stdio.h>
 #include <stdint.h>
 
+//Функция возвращяет среднее арифметическое между numberA и numberB
 uint32_t middle(int32_t numberA, int32_t numberB);
 
 int main(int argc, char **argv)
 {
-	int32_t number1 = 0, number2 = 0;
+	int32_t number1 = 0, number2 = 0, middleNumber = 0;
 	
 	scanf("%d%d", &number1, &number2);
 	
-	number1 = middle(number1, number2);
+	middleNumber = middle(number1, number2);
 	
-	printf("%d\n", number1);
+	printf("%d\n", middleNumber);
 	
 	return 0;
 }
 
+//Функция возвращяет среднее арифметическое между numberA и numberB
 uint32_t middle(int32_t numberA, int32_t numberB)
 {
 	return (numberA + numberB) / 2;

@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <stdint.h>
 
+//Функция возвращает факторила числа number
 uint32_t factorial(uint32_t number);
 
 int main(int argc, char **argv)
@@ -33,20 +34,21 @@ int main(int argc, char **argv)
 	
 	scanf("%u", &number);
 	
-	printf("%u\n", factorial(number));
-	
-	return 0;
-}
-
-uint32_t factorial(uint32_t number)
-{
-	uint32_t result = 1;
-	
 	if (number < 1 || number > 20)
 	{
 		printf("1 - 20\n");
 		return 1;
 	}
+	
+	printf("%u\n", factorial(number));
+	
+	return 0;
+}
+
+//Функция возвращает факторила числа number
+uint32_t factorial(uint32_t number)
+{
+	uint32_t result = 1;
 	
 	for (int i = 1; i <= number; i++)
 		result *= i;

@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <stdint.h>
 
+//Функция возвращяет число равное степени power числа numberIN
 uint32_t powerNumber(int32_t numberIN, int32_t power);
 
 int main(int argc, char **argv)
@@ -40,6 +41,7 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+//Функция возвращяет число равное степени power числа numberIN
 uint32_t powerNumber(int32_t numberIN, int32_t power)
 {
 	int32_t numberOUT = 1;
