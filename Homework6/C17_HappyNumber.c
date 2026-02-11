@@ -1,7 +1,7 @@
 /*
- * C14_SumDigitsEven.c
+ * C17_HappyNumber.c
  * 
- * Copyright 2026 tisha <tisha@DESKTOP-H2QK95F>
+ * Copyright 2026 Tisha <Tisha@DESKTOP-TSPB5RM>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,22 +23,24 @@
 
 
 #include <stdio.h>
-#include <stdint.h>
+#include <inttypes.h>
 
-uint32_t isEven(uint32_t number);
+uint32_t sumDigitNumber(uint32_t number);
+uint32_t multDigitNumber(uint32_t number);
+uint32_t isEqual(uint32_t number1, uint32_t number2);
+uint32_t isHappyNumber(uint32_t number);
 uint32_t returnDigit(uint32_t number, uint32_t digit, uint32_t baseNumber);
 uint32_t shiftDigitNumberRight(uint32_t number, uint32_t digit, uint32_t baseNumber);
 uint32_t shiftDigitNumberLeft(uint32_t number, uint32_t digit, uint32_t baseNumber);
-uint32_t sumDigitsIsEven(uint32_t number);
 uint32_t powerNumber(int32_t numberIN, int32_t power);
 
 int main(int argc, char **argv)
 {
-	uint32_t number = 0;
+	int32_t number = 0;
 	
-	scanf("%d", &number);
+	scanf("%u", &number);
 	
-	if (sumDigitsIsEven(number))
+	if (isHappyNumber(number))
 		printf("YES\n");
 	else
 		printf("NO\n");
@@ -46,9 +48,43 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-uint32_t isEven(uint32_t number)
+uint32_t sumDigitNumber(uint32_t number)
 {
-	return !(number % 2);
+	uint32_t sum = 0;
+	
+	while (number > 0)
+	{
+		sum += returnDigit(number, 0, 10);
+		number = shiftDigitNumberRight(number, 1, 10);
+	}
+	
+	return sum;
+}
+
+uint32_t multDigitNumber(uint32_t number)
+{
+	uint32_t mult = 1;
+	
+	while (number > 0)
+	{
+		mult *= returnDigit(number, 0, 10);
+		number = shiftDigitNumberRight(number, 1, 10);
+	}
+	
+	return mult;
+}
+
+uint32_t isEqual(uint32_t number1, uint32_t number2)
+{
+	if (number1 == number2)
+		return 1;
+	else
+		return 0;
+}
+
+uint32_t isHappyNumber(uint32_t number)
+{
+	return isEqual(multDigitNumber(number), sumDigitNumber(number));
 }
 
 uint32_t returnDigit(uint32_t number, uint32_t digit, uint32_t baseNumber)
@@ -64,19 +100,6 @@ uint32_t shiftDigitNumberRight(uint32_t number, uint32_t digit, uint32_t baseNum
 uint32_t shiftDigitNumberLeft(uint32_t number, uint32_t digit, uint32_t baseNumber)
 {
 	return number * powerNumber(baseNumber, digit);
-}
-
-uint32_t sumDigitsIsEven(uint32_t number)
-{
-	uint32_t sum = 0;
-	
-	while (number > 0)
-	{
-		sum += returnDigit(number, 0, 10);
-		number = shiftDigitNumberRight(number, 1, 10);
-	}
-	
-	return isEven(sum);
 }
 
 uint32_t powerNumber(int32_t numberIN, int32_t power)

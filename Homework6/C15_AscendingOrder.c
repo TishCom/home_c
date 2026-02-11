@@ -1,7 +1,7 @@
 /*
- * C14_SumDigitsEven.c
+ * C15_AscendingOrder.c
  * 
- * Copyright 2026 tisha <tisha@DESKTOP-H2QK95F>
+ * Copyright 2026 Tisha <Tisha@DESKTOP-TSPB5RM>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,11 +25,11 @@
 #include <stdio.h>
 #include <stdint.h>
 
-uint32_t isEven(uint32_t number);
+uint32_t isMore(uint32_t checkNumber, uint32_t verificater);
 uint32_t returnDigit(uint32_t number, uint32_t digit, uint32_t baseNumber);
 uint32_t shiftDigitNumberRight(uint32_t number, uint32_t digit, uint32_t baseNumber);
 uint32_t shiftDigitNumberLeft(uint32_t number, uint32_t digit, uint32_t baseNumber);
-uint32_t sumDigitsIsEven(uint32_t number);
+uint32_t isAscendingOrder(uint32_t number);
 uint32_t powerNumber(int32_t numberIN, int32_t power);
 
 int main(int argc, char **argv)
@@ -38,7 +38,7 @@ int main(int argc, char **argv)
 	
 	scanf("%d", &number);
 	
-	if (sumDigitsIsEven(number))
+	if (isAscendingOrder(number))
 		printf("YES\n");
 	else
 		printf("NO\n");
@@ -46,9 +46,12 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-uint32_t isEven(uint32_t number)
+uint32_t isMore(uint32_t checkNumber, uint32_t verificater)
 {
-	return !(number % 2);
+	if (checkNumber > verificater)
+		return 1;
+	else
+		return 0;
 }
 
 uint32_t returnDigit(uint32_t number, uint32_t digit, uint32_t baseNumber)
@@ -66,17 +69,31 @@ uint32_t shiftDigitNumberLeft(uint32_t number, uint32_t digit, uint32_t baseNumb
 	return number * powerNumber(baseNumber, digit);
 }
 
-uint32_t sumDigitsIsEven(uint32_t number)
+uint32_t isAscendingOrder(uint32_t number)
 {
-	uint32_t sum = 0;
+	uint32_t oldDigit = returnDigit(number, 0, 10), curentDigit = 0;
+	uint32_t flagAscending = 1;
 	
 	while (number > 0)
 	{
-		sum += returnDigit(number, 0, 10);
 		number = shiftDigitNumberRight(number, 1, 10);
+		
+		curentDigit = returnDigit(number, 0, 10);
+		
+		if (isMore(oldDigit, curentDigit))
+		{
+			flagAscending = 1;
+		}
+		else
+		{
+			flagAscending = 0;
+			break;
+		}
+		
+		oldDigit = curentDigit;
 	}
 	
-	return isEven(sum);
+	return flagAscending;
 }
 
 uint32_t powerNumber(int32_t numberIN, int32_t power)
