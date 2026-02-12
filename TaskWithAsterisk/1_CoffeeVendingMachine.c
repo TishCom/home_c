@@ -42,7 +42,7 @@ typedef enum
 	EVENT_MAX
 } EVENT_t;
 
-typedef STATE_t (*STATE_FUNC_COFFEE)(void);
+typedef STATE_t (*stateCoffee)(void);
 
 STATE_t ready(void);
 STATE_t prepfre(void);
@@ -53,7 +53,7 @@ STATE_t error(void);
 EVENT_t getEvent(void);
 
 
-const STATE_FUNC_COFFEE transition_table[STATE_MAX][EVENT_MAX] =
+const stateCoffee transition_table[STATE_MAX][EVENT_MAX] =
 {
 	[READY] 	[RUBL_1] 	= wait,
 	[READY] 	[RUBL_2] 	= prepfre,
