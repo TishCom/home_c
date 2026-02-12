@@ -22,7 +22,7 @@
  */
 
 #include <stdio.h>
-#include <stdint.h>
+#include <conio.h>
 
 typedef enum 
 {
@@ -42,45 +42,42 @@ typedef enum
 	EVENT_MAX
 } EVENT_t;
 
-typedef STATE_t (*STATE_FUNC_PTR_t)(void);
+typedef STATE_t (*STATE_FUNC_COFFEE)(void);
 
 STATE_t ready(void);
 STATE_t prepfre(void);
 STATE_t wait(void);
 STATE_t change(void);
 STATE_t myReturn(void);
+STATE_t error(void);
 EVENT_t getEvent(void);
 
 
-STATE_t (*transition_table[STATE_MAX][EVENT_MAX]) (void) = 
+STATE_FUNC_COFFEE transition_table[STATE_MAX][EVENT_MAX] =
 {
-	[READY] 	[RUBL_1] 	= ready,
+	[READY] 	[RUBL_1] 	= wait,
 	[READY] 	[RUBL_2] 	= prepfre,
-	[READY] 	[CANCEL] 	= wait,
+	[READY] 	[CANCEL] 	= error,
 	[PREPFRE]	[RUBL_1] 	= wait,
-	[PREPFRE]	[RUBL_2] 	= change,
-	[PREPFRE]	[CANCEL] 	= ready,
-	[WAIT] 		[RUBL_1] 	= myReturn,
+	[PREPFRE]	[RUBL_2] 	= prepfre,
+	[PREPFRE]	[CANCEL] 	= error,
+	[WAIT] 		[RUBL_1] 	= prepfre,
 	[WAIT] 		[RUBL_2] 	= change,
-	[WAIT] 		[CANCEL] 	= wait,
-	[CHANGE] 	[RUBL_1] 	= myReturn,
+	[WAIT] 		[CANCEL] 	= myReturn,
+	[CHANGE] 	[RUBL_1] 	= wait,
 	[CHANGE]	[RUBL_2] 	= prepfre,
-	[CHANGE]	[CANCEL] 	= myReturn,
-	[RETURN] 	[RUBL_1] 	= change,
-	[RETURN] 	[RUBL_2] 	= myReturn,
-	[RETURN] 	[CANCEL] 	= prepfre
+	[CHANGE]	[CANCEL] 	= error,
+	[RETURN] 	[RUBL_1] 	= wait,
+	[RETURN] 	[RUBL_2] 	= prepfre,
+	[RETURN] 	[CANCEL] 	= error
 };
 
 int main(int argc, char **argv)
 {
-	STATE_t state = PREPFRE;
-	EVENT_t event = CANCEL;
+	STATE_t state = READY;
 	
 	while(1) 
-	{
-		event = getEvent();
-		state = transition_table[state][event]();
-	}
+		state = transition_table[state][getEvent()]();
 
 	return 0;
 }
@@ -88,11 +85,13 @@ int main(int argc, char **argv)
 EVENT_t getEvent(void)
 {
     char choice;
+    
     while(1)
     {
         printf("1.Put 1 rubl\n2.Put 2 rubl\n0.Cancel\n");
-        scanf("%c", &choice);
-        getchar();
+        
+		choice = _getch();
+		
         switch(choice)
         {
         case '1':
@@ -107,35 +106,42 @@ EVENT_t getEvent(void)
 
 STATE_t ready(void)
 {
-	printf("ready\n");
+	printf("Ready\n");
 	
 	return READY;
 }
 
 STATE_t prepfre(void)
 {
-	printf("prepfe\n");
+	printf("Preapare cofee\n");
 	
-	return READY;
+	return ready();
 }
 
 STATE_t wait(void)
 {
-	printf("wait\n");
+	printf("Wait\n");
 	
-	return READY;
+	return WAIT;
 }
 
 STATE_t change(void)
 {
-	printf("change\n");
+	printf("Change 1 Rubl\n");
 	
-	return READY;
+	return prepfre();
 }
 
 STATE_t myReturn(void)
 {
-	printf("myReturn\n");
+	printf("Change 1 Rubl\n");
 	
-	return READY;
+	return ready();
+}
+
+STATE_t error(void)
+{
+	printf("Error signal CANCEL\n");
+	
+	return ready();
 }
