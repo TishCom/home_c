@@ -53,14 +53,11 @@ uint32_t isParentheses(char character)
 uint32_t isCorrectUseParentheses(void)
 {
 	char character = 0;
-	uint32_t sum = 0;
+	int32_t sum = 0;
 	
 	scanf("%c", &character);
 	
-	if (character == ')')
-		sum--;
-	
-	while (character != '.' && sum >= 0)
+	while (sum >= 0 && character != '.')
 	{
 		if (character == '(')
 			sum++;
@@ -70,9 +67,6 @@ uint32_t isCorrectUseParentheses(void)
 		scanf("%c", &character);
 	}
 	
-	if (sum == 0)
-		return 1;
-	else
-		return 0;
+	return !sum;
 }
 

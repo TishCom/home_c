@@ -53,7 +53,10 @@ uint32_t isPrimeNumber(uint32_t number)
 	for (int i = 2; i < number; i++)
 	{
 		if (number % i == 0)
+		{
 			flagPrime = 0;
+			break;
+		}
 	}
 	
 	return flagPrime;
