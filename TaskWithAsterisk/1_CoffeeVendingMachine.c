@@ -58,18 +58,18 @@ STATE_FUNC_COFFEE transition_table[STATE_MAX][EVENT_MAX] =
 	[READY] 	[RUBL_1] 	= wait,
 	[READY] 	[RUBL_2] 	= prepfre,
 	[READY] 	[CANCEL] 	= error,
-	[PREPFRE]	[RUBL_1] 	= wait,
-	[PREPFRE]	[RUBL_2] 	= prepfre,
-	[PREPFRE]	[CANCEL] 	= error,
+	[PREPFRE]	[RUBL_1] 	= NULL,
+	[PREPFRE]	[RUBL_2] 	= NULL,
+	[PREPFRE]	[CANCEL] 	= NULL,
 	[WAIT] 		[RUBL_1] 	= prepfre,
 	[WAIT] 		[RUBL_2] 	= change,
 	[WAIT] 		[CANCEL] 	= myReturn,
-	[CHANGE] 	[RUBL_1] 	= wait,
-	[CHANGE]	[RUBL_2] 	= prepfre,
-	[CHANGE]	[CANCEL] 	= error,
-	[RETURN] 	[RUBL_1] 	= wait,
-	[RETURN] 	[RUBL_2] 	= prepfre,
-	[RETURN] 	[CANCEL] 	= error
+	[CHANGE] 	[RUBL_1] 	= NULL,
+	[CHANGE]	[RUBL_2] 	= NULL,
+	[CHANGE]	[CANCEL] 	= NULL,
+	[RETURN] 	[RUBL_1] 	= NULL,
+	[RETURN] 	[RUBL_2] 	= NULL,
+	[RETURN] 	[CANCEL] 	= NULL
 };
 
 int main(int argc, char **argv)
