@@ -74,7 +74,7 @@ const stateCoffee transition_table[STATE_MAX][EVENT_MAX] =
 
 int main(int argc, char **argv)
 {
-	STATE_t state = READY;
+	STATE_t state = ready();
 	
 	while(1) 
 		state = transition_table[state][getEvent()]();
