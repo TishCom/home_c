@@ -79,15 +79,11 @@ int main(int argc, char **argv)
 
 EVENT_t getEvent(void)
 {
-    char choice;
-    
-    while(1)
+	while(1)
     { 
 		printf("1.Put 1 rubl\n2.Put 2 rubl\n0.Cancel\n");
 		
-		choice = _getch();
-		
-        switch(choice)
+		switch(_getch())
         {
 			case USER_ENTER_RUBL_1:
 				return RUBL_1;
