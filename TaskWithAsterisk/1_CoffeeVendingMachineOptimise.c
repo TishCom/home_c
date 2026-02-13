@@ -40,6 +40,13 @@ typedef enum
 	EVENT_FAILED
 } EVENT_t;
 
+enum User_Event
+{
+	USER_ENTER_RUBL_1 = '1',
+	USER_ENTER_RUBL_2 = '2',
+	USER_ENTER_CANCEL = '0'
+};
+
 typedef STATE_t (*stateCoffee)(void);
 
 STATE_t ready(void);
@@ -101,11 +108,11 @@ EVENT_t getEvent(void)
 		
         switch(choice)
         {
-			case '1':
+			case USER_ENTER_RUBL_1:
 				return RUBL_1;
-			case '2':
+			case USER_ENTER_RUBL_2:
 				return RUBL_2;
-			case '0':
+			case USER_ENTER_CANCEL:
 				return CANCEL;
 			default:
 				return EVENT_FAILED;
