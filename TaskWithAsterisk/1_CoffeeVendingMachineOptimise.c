@@ -37,7 +37,6 @@ typedef enum
 	RUBL_2,
 	CANCEL,
 	EVENT_MAX,
-	EVENT_FAILED
 } EVENT_t;
 
 enum User_Event
@@ -56,7 +55,6 @@ STATE_t change(void);
 STATE_t myReturn(void);
 STATE_t error(void);
 EVENT_t getEvent(void);
-EVENT_t getEventCorrect(void);
 
 
 const stateCoffee transition_table[STATE_MAX][EVENT_MAX] =
@@ -74,29 +72,10 @@ int main(int argc, char **argv)
 	STATE_t state = ready();
 	
 	while(1) 
-		state = transition_table[state][getEventCorrect()]();
+		state = transition_table[state][getEvent()]();
 
 	return 0;
 }
-
-EVENT_t getEventCorrect(void)
-{
-    EVENT_t event;
-    
-    printf("1.Put 1 rubl\n2.Put 2 rubl\n0.Cancel\n");
-    
-    event = getEvent();
-    
-    while (event == EVENT_FAILED)
-	{
-		printf("Enter the correct value.\n");
-		
-		event = getEvent();
-	}
-    
-    return event;
-}
-
 
 EVENT_t getEvent(void)
 {
@@ -104,6 +83,8 @@ EVENT_t getEvent(void)
     
     while(1)
     { 
+		printf("1.Put 1 rubl\n2.Put 2 rubl\n0.Cancel\n");
+		
 		choice = _getch();
 		
         switch(choice)
@@ -115,7 +96,8 @@ EVENT_t getEvent(void)
 			case USER_ENTER_CANCEL:
 				return CANCEL;
 			default:
-				return EVENT_FAILED;
+				printf("Enter the correct value.\n");
+				break;
         }
     }
 }
@@ -129,7 +111,7 @@ STATE_t ready(void)
 
 STATE_t prepfre(void)
 {
-	printf("Preapare cofee\n");
+	printf("Prepare coffee\n");
 	
 	return ready();
 }
