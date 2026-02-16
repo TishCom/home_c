@@ -52,19 +52,20 @@ STATE_t ready(void);
 STATE_t prepfre(void);
 STATE_t wait(void);
 STATE_t change(void);
-STATE_t myReturn(void);
+STATE_t returnRubl(void);
 STATE_t error(void);
 EVENT_t getEvent(void);
+void printChange(void);
 
 
 const stateCoffee transition_table[STATE_MAX][EVENT_MAX] =
 {
-	[READY] 	[RUBL_1] 	= wait,
-	[READY] 	[RUBL_2] 	= prepfre,
-	[READY] 	[CANCEL] 	= error,
-	[WAIT] 		[RUBL_1] 	= prepfre,
-	[WAIT] 		[RUBL_2] 	= change,
-	[WAIT] 		[CANCEL] 	= myReturn,
+	[READY]	[RUBL_1] 	= wait,
+	[READY]	[RUBL_2] 	= prepfre,
+	[READY]	[CANCEL] 	= error,
+	[WAIT]	[RUBL_1] 	= prepfre,
+	[WAIT]	[RUBL_2] 	= change,
+	[WAIT]	[CANCEL] 	= returnRubl,
 };
 
 int main(int argc, char **argv)
@@ -121,14 +122,14 @@ STATE_t wait(void)
 
 STATE_t change(void)
 {
-	printf("Change 1 Rubl\n");
+	printChange();
 	
 	return prepfre();
 }
 
-STATE_t myReturn(void)
+STATE_t returnRubl(void)
 {
-	printf("Change 1 Rubl\n");
+	printChange();
 	
 	return ready();
 }
@@ -138,4 +139,9 @@ STATE_t error(void)
 	printf("Error signal CANCEL\n");
 	
 	return ready();
+}
+
+void printChange(void)
+{
+	printf("Change 1 Rubl\n");
 }
