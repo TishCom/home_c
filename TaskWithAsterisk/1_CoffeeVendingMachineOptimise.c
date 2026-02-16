@@ -36,7 +36,7 @@ typedef enum
 	RUBL_1,
 	RUBL_2,
 	CANCEL,
-	EVENT_MAX,
+	EVENT_MAX
 } EVENT_t;
 
 enum User_Event
@@ -60,12 +60,12 @@ void printChange(void);
 
 const stateCoffee transition_table[STATE_MAX][EVENT_MAX] =
 {
-	[READY]	[RUBL_1] 	= wait,
+	[READY]	[RUBL_1]	= wait,
 	[READY]	[RUBL_2] 	= prepfre,
 	[READY]	[CANCEL] 	= error,
 	[WAIT]	[RUBL_1] 	= prepfre,
 	[WAIT]	[RUBL_2] 	= change,
-	[WAIT]	[CANCEL] 	= returnRubl,
+	[WAIT]	[CANCEL] 	= returnRubl
 };
 
 int main(int argc, char **argv)
