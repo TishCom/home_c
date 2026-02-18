@@ -1,7 +1,7 @@
 /*
- * D16_ExactPower2.c
+ * D13_PrintingPrimeFactors.c
  * 
- * Copyright 2026 tisha <tisha@DESKTOP-H2QK95F>
+ * Copyright 2026 Tisha <Tisha@DESKTOP-TSPB5RM>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,35 +25,48 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-#define isPower2(number)	convertNumberBinary(number) == 1 
+#define isPrime(number)	isPrimeNumber(2, number) 
+#define printPrime(number)	printSimple(1, number) 
 
-uint32_t convertNumberBinary(uint32_t number);
+uint32_t isPrimeNumber(uint32_t i, uint32_t n);
+void printSimple(uint32_t i, uint32_t n);
 
 int main(int argc, char **argv)
 {
-	uint32_t number = 0;
+	int32_t number = 0;
 	
 	scanf("%d", &number);
 	
-	if (isPower2(number))
-		printf("YES");
-	else
-		printf("NO");;
+	printPrime(number); 
 	
 	return 0;
 }
 
-uint32_t convertNumberBinary(uint32_t number)
+uint32_t isPrimeNumber(uint32_t i, uint32_t n) 
 {
-	uint32_t iterator = 0;
+	if(i == n)
+		return 1;
+	else if (n % i == 0 || n <= 1)
+		return 0;
 	
-	if (number > 0)
+	return isPrimeNumber(i + 1, n);
+}
+
+void printSimple(uint32_t i, uint32_t n) 
+{
+	if(n == 1)
+		return;
+		
+	if (n % i == 0 && isPrime(i))
 	{
-		iterator += convertNumberBinary(number / 2);
+		printf("%u ", i);
 		
-		if (number % 2)
-			iterator++;
+		if(i == n)
+			return;
+			
+		n /= i;
+		i--;
 	}
-		
-	return iterator;
+	
+	printSimple(i + 1, n);
 }
