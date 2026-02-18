@@ -25,7 +25,8 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-uint32_t isPrime(uint32_t number);
+#define isPrime(number)	isPrimeNumber(2, number) 
+
 uint32_t isPrimeNumber(uint32_t i, uint32_t n) ;
 
 int main(int argc, char **argv)
@@ -42,19 +43,11 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-uint32_t isPrime(uint32_t number)
-{
-	if (number <= 1)
-		return 0;
-	
-	return isPrimeNumber(2, number);
-}
-
 uint32_t isPrimeNumber(uint32_t i, uint32_t n) 
 {
 	if(i == n)
 		return 1;
-	else if (n % i == 0)
+	else if (n % i == 0 || n <= 1)
 		return 0;
 	
 	return isPrimeNumber(i + 1, n);
