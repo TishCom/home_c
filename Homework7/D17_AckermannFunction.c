@@ -1,7 +1,7 @@
 /*
- * D12_PrintKTimes.c
+ * D17_AckermannFunction.c
  * 
- * Copyright 2026 tisha <tisha@DESKTOP-H2QK95F>
+ * Copyright 2026 Tisha <Tisha@DESKTOP-TSPB5RM>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,40 +25,25 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-#define isPrime(number)	isPrimeNumber(1, number) 
-
-void isPrimeNumber(uint32_t i, uint32_t n);
-void recursionFor(uint32_t i, uint32_t n, uint32_t *y);
+uint32_t akkerman(uint32_t n, uint32_t m);
 
 int main(int argc, char **argv)
 {
-	int32_t number = 0;
+	uint32_t numberA = 0, numberB = 0;
 	
-	scanf("%d", &number);
+	scanf("%d%d", &numberA, &numberB);
 	
-	isPrime(number); 
+	printf("%d ", akkerman(numberA, numberB));
 	
 	return 0;
 }
 
-void isPrimeNumber(uint32_t i, uint32_t n) 
+uint32_t akkerman(uint32_t n, uint32_t m)
 {
-	if (n <= 0)
-		return;
-	
-	recursionFor(0, i, &n);
-	
-	isPrimeNumber(i + 1, n);
-}
-
-void recursionFor(uint32_t i, uint32_t n, uint32_t *y)
-{
-	if (*y <= 0 || i >= n)
-		return;
-		
-	printf("%d ", n);
-	
-	*y = *y - 1;
-	
-	recursionFor(i+1, n, y);
+	if(n == 0)
+		return m + 1;
+	else if (m == 0)
+		return akkerman(n - 1, 1);
+	else
+		return akkerman(n - 1, akkerman(n, m - 1));
 }

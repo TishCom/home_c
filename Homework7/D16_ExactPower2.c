@@ -25,7 +25,7 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-#define isPower2(number)	convertNumberBinary(number) == 1 
+#define isPower2(number)	(convertNumberBinary(number) == 1) 
 
 uint32_t convertNumberBinary(uint32_t number);
 

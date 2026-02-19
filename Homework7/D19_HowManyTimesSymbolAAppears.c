@@ -1,7 +1,7 @@
 /*
- * D12_PrintKTimes.c
+ * D19_HowManyTimesSymbolAAppears.c
  * 
- * Copyright 2026 tisha <tisha@DESKTOP-H2QK95F>
+ * Copyright 2026 Tisha <Tisha@DESKTOP-TSPB5RM>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,40 +25,33 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-#define isPrime(number)	isPrimeNumber(1, number) 
-
-void isPrimeNumber(uint32_t i, uint32_t n);
-void recursionFor(uint32_t i, uint32_t n, uint32_t *y);
+uint32_t convertNumberBinary(void);
 
 int main(int argc, char **argv)
 {
-	int32_t number = 0;
+	uint32_t number = 0;
 	
 	scanf("%d", &number);
 	
-	isPrime(number); 
+	printf("%d ",convertNumberBinary());
 	
 	return 0;
 }
 
-void isPrimeNumber(uint32_t i, uint32_t n) 
+uint32_t convertNumberBinary(void)
 {
-	if (n <= 0)
-		return;
+	uint32_t iterator = 0;
+	char symbol = 0;
 	
-	recursionFor(0, i, &n);
+	scanf("%c", &symbol);
 	
-	isPrimeNumber(i + 1, n);
-}
-
-void recursionFor(uint32_t i, uint32_t n, uint32_t *y)
-{
-	if (*y <= 0 || i >= n)
-		return;
+	if (symbol != '.')
+	{
+		iterator += convertNumberBinary();
 		
-	printf("%d ", n);
-	
-	*y = *y - 1;
-	
-	recursionFor(i+1, n, y);
+		if (symbol == 'a')
+			iterator++;
+	}
+		
+	return iterator;
 }
