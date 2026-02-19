@@ -25,9 +25,9 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-#define isPrime(number)	isPrimeNumber(1, number) 
+#define printK(number)	printKTimes(1, number) 
 
-void isPrimeNumber(uint32_t i, uint32_t n);
+void printKTimes(uint32_t i, uint32_t n);
 void recursionFor(uint32_t i, uint32_t n, uint32_t *y);
 
 int main(int argc, char **argv)
@@ -36,19 +36,19 @@ int main(int argc, char **argv)
 	
 	scanf("%d", &number);
 	
-	isPrime(number); 
+	printK(number); 
 	
 	return 0;
 }
 
-void isPrimeNumber(uint32_t i, uint32_t n) 
+void printKTimes(uint32_t i, uint32_t n) 
 {
 	if (n <= 0)
 		return;
 	
 	recursionFor(0, i, &n);
 	
-	isPrimeNumber(i + 1, n);
+	printKTimes(i + 1, n);
 }
 
 void recursionFor(uint32_t i, uint32_t n, uint32_t *y)
@@ -60,5 +60,5 @@ void recursionFor(uint32_t i, uint32_t n, uint32_t *y)
 	
 	*y = *y - 1;
 	
-	recursionFor(i+1, n, y);
+	recursionFor(i + 1, n, y);
 }

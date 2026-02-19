@@ -25,7 +25,7 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-int32_t printNumber(int32_t number);
+int32_t sumDigits(int32_t number);
 
 int main(int argc, char **argv)
 {
@@ -33,15 +33,15 @@ int main(int argc, char **argv)
 	
 	scanf("%d", &number);
 	
-	printf("%d", printNumber(number));
+	printf("%d", sumDigits(number));
 	
 	return 0;
 }
 
-int32_t printNumber(int32_t number)
+int32_t sumDigits(int32_t number)
 {
 	if (number > 0)
-		return number % 10 + printNumber(number / 10);
+		return number % 10 + sumDigits(number / 10);
 		
 	return 0;
 }

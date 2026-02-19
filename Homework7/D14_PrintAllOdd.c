@@ -25,16 +25,16 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-void convertNumberBinary(void);
+void printOdd(void);
 
 int main(int argc, char **argv)
 {
-	convertNumberBinary();
+	printOdd();
 	
 	return 0;
 }
 
-void convertNumberBinary(void)
+void printOdd(void)
 {
 	uint32_t number = 0;
 	
@@ -45,6 +45,6 @@ void convertNumberBinary(void)
 		if (number % 2)
 			printf("%d ", number);
 			
-		convertNumberBinary();
+		printOdd();
 	}
 }

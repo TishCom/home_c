@@ -25,9 +25,9 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-#define isPower2(number)	(convertNumberBinary(number) == 1) 
+#define isPower2(number)	(exactPower2(number) == 1) 
 
-uint32_t convertNumberBinary(uint32_t number);
+uint32_t exactPower2(uint32_t number);
 
 int main(int argc, char **argv)
 {
@@ -43,13 +43,13 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-uint32_t convertNumberBinary(uint32_t number)
+uint32_t exactPower2(uint32_t number)
 {
 	uint32_t iterator = 0;
 	
 	if (number > 0)
 	{
-		iterator += convertNumberBinary(number / 2);
+		iterator += exactPower2(number / 2);
 		
 		if (number % 2)
 			iterator++;

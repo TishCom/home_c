@@ -25,16 +25,16 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-uint32_t convertNumberBinary(void);
+uint32_t findLargest(void);
 
 int main(int argc, char **argv)
 {
-	printf("%d ", convertNumberBinary());
+	printf("%d ", findLargest());
 	
 	return 0;
 }
 
-uint32_t convertNumberBinary(void)
+uint32_t findLargest(void)
 {
 	uint32_t number = 0, number1 = 0;
 	
@@ -42,7 +42,7 @@ uint32_t convertNumberBinary(void)
 	
 	if (number != 0)
 	{
-		number1 = convertNumberBinary();
+		number1 = findLargest();
 		return number > number1 ? number : number1;
 	}
 	

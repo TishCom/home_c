@@ -25,7 +25,7 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-uint32_t convertNumberBinary(uint32_t number);
+uint32_t numberBinaryDigit1(uint32_t number);
 
 int main(int argc, char **argv)
 {
@@ -33,18 +33,18 @@ int main(int argc, char **argv)
 	
 	scanf("%d", &number);
 	
-	printf("%d ",convertNumberBinary(number));
+	printf("%d ",numberBinaryDigit1(number));
 	
 	return 0;
 }
 
-uint32_t convertNumberBinary(uint32_t number)
+uint32_t numberBinaryDigit1(uint32_t number)
 {
 	uint32_t iterator = 0;
 	
 	if (number > 0)
 	{
-		iterator += convertNumberBinary(number / 2);
+		iterator += numberBinaryDigit1(number / 2);
 		
 		if (number % 2)
 			iterator++;

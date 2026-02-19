@@ -25,7 +25,7 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-int32_t isPrimeNumber(int32_t i, uint32_t n);
+int32_t power(int32_t i, uint32_t n);
 
 int main(int argc, char **argv)
 {
@@ -34,15 +34,15 @@ int main(int argc, char **argv)
 	
 	scanf("%d%d", &numberA, &numberB);
 	
-	printf("%d", isPrimeNumber(numberA, numberB));
+	printf("%d", power(numberA, numberB));
 	
 	return 0;
 }
 
-int32_t isPrimeNumber(int32_t i, uint32_t n) 
+int32_t power(int32_t i, uint32_t n) 
 {
 	if(n == 0)
 		return 1;
 	else 
-		return i *= isPrimeNumber(i, n - 1);
+		return i *= power(i, n - 1);
 }

@@ -54,19 +54,15 @@ uint32_t isPrimeNumber(uint32_t i, uint32_t n)
 
 void printSimple(uint32_t i, uint32_t n) 
 {
-	if(n == 1)
-		return;
-		
 	if (n % i == 0 && isPrime(i))
 	{
 		printf("%u ", i);
-		
-		if(i == n)
-			return;
-			
 		n /= i;
 		i--;
 	}
+	
+	if(n == 1)
+		return;
 	
 	printSimple(i + 1, n);
 }

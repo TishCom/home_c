@@ -25,7 +25,7 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-uint32_t convertNumberBinary(void);
+uint32_t symbolAAppears(void);
 
 int main(int argc, char **argv)
 {
@@ -33,12 +33,12 @@ int main(int argc, char **argv)
 	
 	scanf("%d", &number);
 	
-	printf("%d ",convertNumberBinary());
+	printf("%d ",symbolAAppears());
 	
 	return 0;
 }
 
-uint32_t convertNumberBinary(void)
+uint32_t symbolAAppears(void)
 {
 	uint32_t iterator = 0;
 	char symbol = 0;
@@ -47,7 +47,7 @@ uint32_t convertNumberBinary(void)
 	
 	if (symbol != '.')
 	{
-		iterator += convertNumberBinary();
+		iterator += symbolAAppears();
 		
 		if (symbol == 'a')
 			iterator++;
