@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+//Функция распечатывает введенную строку(до точки) в обратном порядке
 void reversString(void);
 
 int main(int argc, char **argv)

@@ -25,6 +25,24 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+//Больше ли это число нуля
+#define IS_GREATER_ZERO(number)						((number) > 0)
+//Основание системы счисления введенного числа
+#define BASE_NUMBER									2
+//Возвращяет цифру находящуюся в разряде digit числа number
+#define RETURN_DIGIT_NUMBER(number, digit)			(((number) / (digit)) % BASE_NUMBER)
+//Возвращяет десятичное число number сдвинутое вправо на digit разрядов
+#define SHIFT_DIGIT_NUMBER_RIGHT(number, digit)		((number) / ((digit) * BASE_NUMBER))
+
+//Разряды введенного числа
+enum Place
+{
+	UNITS    = 1,
+	TENS     = 10,
+	HUNDREDS = 100
+};
+
+//Функция возвращает количество 1 в двоичном представлении number
 uint32_t numberBinaryDigit1(uint32_t number);
 
 int main(int argc, char **argv)
@@ -42,11 +60,11 @@ uint32_t numberBinaryDigit1(uint32_t number)
 {
 	uint32_t iterator = 0;
 	
-	if (number > 0)
+	if (IS_GREATER_ZERO(number))
 	{
-		iterator += numberBinaryDigit1(number / 2);
+		iterator += numberBinaryDigit1(SHIFT_DIGIT_NUMBER_RIGHT(number, UNITS));
 		
-		if (number % 2)
+		if (RETURN_DIGIT_NUMBER(number, UNITS))
 			iterator++;
 	}
 		

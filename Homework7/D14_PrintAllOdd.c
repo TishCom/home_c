@@ -25,6 +25,12 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+//Это число обозночает выход
+#define IS_EXIT(number)		((number) == 0)
+//Это четное число
+#define IS_EVEN(number)		(((number) % 2) == 0)
+
+//Функция печатает все не четные числа до числа 0
 void printOdd(void);
 
 int main(int argc, char **argv)
@@ -40,9 +46,9 @@ void printOdd(void)
 	
 	scanf("%d", &number);
 	
-	if (number != 0)
+	if (!IS_EXIT(number))
 	{
-		if (number % 2)
+		if (!IS_EVEN(number))
 			printf("%d ", number);
 			
 		printOdd();

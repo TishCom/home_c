@@ -25,7 +25,8 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-int32_t power(int32_t i, uint32_t n);
+//Функция возвращает numberUser в степени numberPower
+int32_t power(int32_t numberUser, uint32_t numberPower);
 
 int main(int argc, char **argv)
 {
@@ -39,10 +40,10 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-int32_t power(int32_t i, uint32_t n) 
+int32_t power(int32_t numberUser, uint32_t numberPower) 
 {
-	if(n == 0)
+	if(numberPower == 0)
 		return 1;
 	else 
-		return i *= power(i, n - 1);
+		return numberUser *= power(numberUser, numberPower - 1);
 }

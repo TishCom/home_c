@@ -25,6 +25,12 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+//Не является ли это число последним
+#define IS_NOT_LAST_NUMBER(number)	((number) > 1)
+//Возвращяет предидущее число
+#define PREVIOUS_NUMBER(number)		((number) - 1)
+
+//Функция распечатывает числа от number до 1
 void printNumber(uint32_t number);
 
 int main(int argc, char **argv)
@@ -42,6 +48,6 @@ void printNumber(uint32_t number)
 {
 	printf("%d ", number);
 	
-	if (number > 1)
-		printNumber(number - 1);
+	if (IS_NOT_LAST_NUMBER(number))
+		printNumber(PREVIOUS_NUMBER(number));
 }

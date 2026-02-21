@@ -25,6 +25,12 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+//Это число обозночает выход
+#define IS_EXIT(number)				((number) == 0)
+//Возвращяет максимальное из двух введенных чисел
+#define MAX(operand1, operand2)		((operand1) >= (operand2) ? (operand1) : (operand2))
+
+//Функция возвращает наибольшее число из введенных до числа 0
 uint32_t findLargest(void);
 
 int main(int argc, char **argv)
@@ -40,10 +46,10 @@ uint32_t findLargest(void)
 	
 	scanf("%d", &number);
 	
-	if (number != 0)
+	if (!IS_EXIT(number))
 	{
 		number1 = findLargest();
-		return number > number1 ? number : number1;
+		return MAX(number, number1);
 	}
 	
 	return 0;

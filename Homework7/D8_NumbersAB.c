@@ -25,6 +25,11 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+/*
+ * Функция распечатывает числа от numberA до numberB
+ * если numberA > numberB и числа от numberB до numberA
+ * если numberA < numberB
+ */
 void printNumber(int32_t numberA, int32_t numberB);
 
 int main(int argc, char **argv)

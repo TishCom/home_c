@@ -25,9 +25,17 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-#define isPrime(number)	isPrimeNumber(2, number) 
+//Обертака функции isPrimeNumber
+#define isPrime(number)								isPrimeNumber(2, number)
+//Возвращяет следующее число
+#define NEXT_NUMBER(number)							((number) + 1)
+//Делятся ли без остатка
+#define IS_COMPLETELY_DIVIDED(number1, number2)		((number1) % (number2) == 0)
+//Большн ли введенное число 1
+#define IS_GERATER_ONE(number)						((number) > 1)
 
-uint32_t isPrimeNumber(uint32_t i, uint32_t n) ;
+//Функция возвращает 1 если numberUser простое в противном случе возращает 0
+uint32_t isPrimeNumber(uint32_t auxiliaryNumber, uint32_t numberUser);
 
 int main(int argc, char **argv)
 {
@@ -43,12 +51,12 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-uint32_t isPrimeNumber(uint32_t i, uint32_t n) 
+uint32_t isPrimeNumber(uint32_t auxiliaryNumber, uint32_t numberUser) 
 {
-	if(i == n)
-		return 1;
-	else if (n % i == 0 || n <= 1)
-		return 0;
+	if(auxiliaryNumber == numberUser)
+		return true;
+	else if (IS_COMPLETELY_DIVIDED(numberUser, auxiliaryNumber) || !IS_GERATER_ONE(numberUser))
+		return false;
 	
-	return isPrimeNumber(i + 1, n);
+	return isPrimeNumber(NEXT_NUMBER(auxiliaryNumber), numberUser);
 }

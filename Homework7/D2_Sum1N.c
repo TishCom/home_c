@@ -25,6 +25,12 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+//Не является ли это число последним
+#define IS_NOT_LAST_NUMBER(number)	((number) > 1)
+//Возвращяет предидущее число
+#define PREVIOUS_NUMBER(number)		((number) - 1)
+
+//Функция выозвращает число равное сумме чисел от 1 до number
 uint32_t sumNumber(uint32_t number);
 
 int main(int argc, char **argv)
@@ -40,8 +46,8 @@ int main(int argc, char **argv)
 
 uint32_t sumNumber(uint32_t number)
 {
-	if (number > 1)
-		return number + sumNumber(number - 1);
+	if (IS_NOT_LAST_NUMBER(number))
+		return number + sumNumber(PREVIOUS_NUMBER(number));
 		
 	return 1;
 }

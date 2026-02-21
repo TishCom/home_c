@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+//Функция Аккермана
 uint32_t akkerman(uint32_t n, uint32_t m);
 
 int main(int argc, char **argv)

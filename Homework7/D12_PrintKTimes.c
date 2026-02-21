@@ -25,9 +25,17 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-#define printK(number)	printKTimes(1, number) 
+//Обертка функции printKTimes
+#define printK(number)		printKTimes(1, number) 
+//Возвращяет следующее число
+#define NEXT_NUMBER(number)	((number) + 1)
 
+/*
+ * Функция распечатывает последовательность из n чисел,
+ * в которой каждое натуральное число k встречается ровно k раз
+ */
 void printKTimes(uint32_t i, uint32_t n);
+//Вспомогательная функция для функции printKTimes
 void recursionFor(uint32_t i, uint32_t n, uint32_t *y);
 
 int main(int argc, char **argv)
@@ -41,24 +49,24 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-void printKTimes(uint32_t i, uint32_t n) 
+void printKTimes(uint32_t auxiliaryNumber, uint32_t numberUser) 
 {
-	if (n <= 0)
+	if (numberUser <= 0)
 		return;
 	
-	recursionFor(0, i, &n);
+	recursionFor(0, auxiliaryNumber, &numberUser);
 	
-	printKTimes(i + 1, n);
+	printKTimes(NEXT_NUMBER(auxiliaryNumber), numberUser);
 }
 
-void recursionFor(uint32_t i, uint32_t n, uint32_t *y)
+void recursionFor(uint32_t auxiliaryNumber2, uint32_t auxiliaryNumber1, uint32_t *numberUser)
 {
-	if (*y <= 0 || i >= n)
+	if (*numberUser <= 0 || auxiliaryNumber2 >= auxiliaryNumber1)
 		return;
 		
-	printf("%d ", n);
+	printf("%d ", auxiliaryNumber1);
 	
-	*y = *y - 1;
+	(*numberUser)--;
 	
-	recursionFor(i + 1, n, y);
+	recursionFor(NEXT_NUMBER(auxiliaryNumber2), auxiliaryNumber1, numberUser);
 }

@@ -25,6 +25,22 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+//Основание системы счисления введенного числа
+#define BASE_NUMBER									10
+//Возвращяет цифру находящуюся в разряде digit числа number
+#define RETURN_DIGIT_NUMBER(number, digit)			(((number) / (digit)) % BASE_NUMBER)
+//Возвращяет десятичное число number сдвинутое вправо на digit разрядов
+#define SHIFT_DIGIT_NUMBER_RIGHT(number, digit)		((number) / ((digit) * BASE_NUMBER))
+
+//Разряды введенного числа
+enum Place
+{
+	UNITS    = 1,
+	TENS     = 10,
+	HUNDREDS = 100
+};
+
+//Функция распечатывает все разряды числа number в обратном порядке
 void printDigitNumber(uint32_t number);
 
 int main(int argc, char **argv)
@@ -40,8 +56,8 @@ int main(int argc, char **argv)
 
 void printDigitNumber(uint32_t number)
 {
-	printf("%d ", number % 10);
+	printf("%d ", RETURN_DIGIT_NUMBER(number, UNITS));
 	
-	if (number >= 10)
-		printDigitNumber(number / 10);
+	if (number >= TENS)
+		printDigitNumber(SHIFT_DIGIT_NUMBER_RIGHT(number, UNITS));
 }

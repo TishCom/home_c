@@ -25,10 +25,20 @@
 #include <stdio.h>
 #include <inttypes.h>
 
-#define isPrime(number)	isPrimeNumber(2, number) 
-#define printPrime(number)	printSimple(1, number) 
+//Обертака функции isPrimeNumber
+#define isPrime(number)								isPrimeNumber(2, number)
+//Обертака функции printSimple
+#define printPrime(number)							printSimple(1, number) 
+//Возвращяет следующее число
+#define NEXT_NUMBER(number)							((number) + 1)
+//Делятся ли без остатка
+#define IS_COMPLETELY_DIVIDED(number1, number2)		((number1) % (number2) == 0)
+//Большн ли введенное число 1
+#define IS_GERATER_ONE(number)						((number) > 1)
 
+//Функция возвращает 1 если numberUser простое в противном случе возращает 0
 uint32_t isPrimeNumber(uint32_t i, uint32_t n);
+//Функция печатает все простые множителеи n
 void printSimple(uint32_t i, uint32_t n);
 
 int main(int argc, char **argv)
@@ -42,27 +52,28 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-uint32_t isPrimeNumber(uint32_t i, uint32_t n) 
+void printSimple(uint32_t auxiliaryNumber, uint32_t numberUser) 
 {
-	if(i == n)
-		return 1;
-	else if (n % i == 0 || n <= 1)
-		return 0;
-	
-	return isPrimeNumber(i + 1, n);
-}
-
-void printSimple(uint32_t i, uint32_t n) 
-{
-	if (n % i == 0 && isPrime(i))
+	if (IS_COMPLETELY_DIVIDED(numberUser, auxiliaryNumber) && isPrime(auxiliaryNumber))
 	{
-		printf("%u ", i);
-		n /= i;
-		i--;
+		printf("%u ", auxiliaryNumber);
+		numberUser /= auxiliaryNumber;
+		auxiliaryNumber--;
 	}
 	
-	if(n == 1)
+	if(!IS_GERATER_ONE(numberUser))
 		return;
 	
-	printSimple(i + 1, n);
+	printSimple(NEXT_NUMBER(auxiliaryNumber), numberUser);
+}
+
+
+uint32_t isPrimeNumber(uint32_t auxiliaryNumber, uint32_t numberUser) 
+{
+	if(auxiliaryNumber == numberUser)
+		return true;
+	else if (IS_COMPLETELY_DIVIDED(numberUser, auxiliaryNumber) || !IS_GERATER_ONE(numberUser))
+		return false;
+	
+	return isPrimeNumber(NEXT_NUMBER(auxiliaryNumber), numberUser);
 }

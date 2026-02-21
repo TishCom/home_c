@@ -25,6 +25,33 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+//Больше ли это число нуля
+#define IS_GREATER_ZERO(number)						((number) > 0)
+//Основание системы счисления введенного числа
+#define BASE_NUMBER									2
+//Возвращяет цифру находящуюся в разряде digit числа number
+#define RETURN_DIGIT_NUMBER(number, digit)			(((number) / (digit)) % BASE_NUMBER)
+//Возвращяет десятичное число number сдвинутое вправо на digit разрядов
+#define SHIFT_DIGIT_NUMBER_RIGHT(number, digit)		((number) / ((digit) * BASE_NUMBER))
+
+//Разряды введенного числа
+enum Place
+{
+	UNITS    = 1,
+	TENS     = 10,
+	HUNDREDS = 100
+};
+
+//Стандартные системы счисления
+enum NumberSystem
+{
+	BINARY     	= 2,
+	OCTAL      	= 8,
+	DECIMAL  	= 10,
+	HEXADECIMAL = 16
+};
+
+//Функция возвращает число number в двоичном формате
 uint32_t convertNumberBinary(uint32_t number);
 
 int main(int argc, char **argv)
@@ -40,8 +67,8 @@ int main(int argc, char **argv)
 
 uint32_t convertNumberBinary(uint32_t number)
 {
-	if (number > 0)
-		return number % 2 + (convertNumberBinary(number / 2) * 10);
+	if (IS_GREATER_ZERO(number))
+		return RETURN_DIGIT_NUMBER(number, UNITS) + (convertNumberBinary(SHIFT_DIGIT_NUMBER_RIGHT(number, UNITS)) * DECIMAL);
 		
 	return 0;
 }

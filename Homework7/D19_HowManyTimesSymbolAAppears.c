@@ -25,6 +25,12 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+//Это символ обозночает выход
+#define IS_EXIT(symbol)				((symbol) == '.')
+//Является ли этот сивол искомым
+#define IS_DESIRED_SYMBOL(symbol)	((symbol) == 'a')
+
+//Функция возвращает колличество символа 'a' во введенной строке до точки
 uint32_t symbolAAppears(void);
 
 int main(int argc, char **argv)
@@ -45,11 +51,11 @@ uint32_t symbolAAppears(void)
 	
 	scanf("%c", &symbol);
 	
-	if (symbol != '.')
+	if (!IS_EXIT(symbol))
 	{
 		iterator += symbolAAppears();
 		
-		if (symbol == 'a')
+		if (IS_DESIRED_SYMBOL(symbol))
 			iterator++;
 	}
 		
