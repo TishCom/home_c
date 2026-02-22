@@ -26,13 +26,13 @@
 
 int main(int argc, char **argv)
 {
-	int volume = 0;
+	int cups = 0;
 	printf("%s", "Enter the volume in cups: ");
-	scanf("%d", &volume);
-	printf("%s %f\n", "Entered volume in pints:", volume / 2.);
-	printf("%s %f\n", "Entered volume in ounces:", volume * 8.);
-	printf("%s %f\n", "Entered volume in tablespoons:", volume * 16.);
-	printf("%s %f\n", "Entered volume in teaspoons:", volume * 48.);
+	scanf("%d", &cups);
+	printf("%s %f\n", "Entered volume in pints:", cups / 2.);
+	printf("%s %f\n", "Entered volume in ounces:", cups * 8.);
+	printf("%s %f\n", "Entered volume in tablespoons:", cups * 16.);
+	printf("%s %f\n", "Entered volume in teaspoons:", cups * 48.);
 	
 	return 0;
 }
