@@ -9,6 +9,7 @@
 #define IND_ENGINE  8     //Пин основного датчика индуктивности
 #define IND_LEFT    9     //Пин левого датчика индуктивности 
 #define IND_RIGHT   10    //Пин правого датчика индуктивности 
+#define TIME        A0    //Пин enable
 
 #define DELBT       100    //Задержка для проверки истинности нажатия кнопки, по умолчанию 250 мсек.
 
@@ -63,7 +64,7 @@ void loop() {
     pwmWrite(STEP, 128);
   }
 
-  if(millis() - timing3 > 1000)
+  if(millis() - timing3 > analogRead(TIME))
     pwmWrite(STEP, 0);
 
   if(digitalRead(IND_LEFT))
