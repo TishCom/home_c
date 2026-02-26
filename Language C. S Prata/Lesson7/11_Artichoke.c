@@ -47,7 +47,7 @@ int main(int argc, char **argv)
 	
 	printf("Enter name:");
 	
-	while (scanf("%c", &ch) == 1 && ch != 'q')
+	while ((ch = getchar()) != 'q')
 	{
 		printf("Enter weight:");
 		scanf("%d", &pound);
