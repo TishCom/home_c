@@ -95,9 +95,11 @@ int main(int argc, char **argv)
 		
 	sum += delivery; 
 	
-	printf("sumPound = %d, countArtichoke = %d, countBeet = %d, countCarrot = %d\n"
-			"totalAmount = %.2f, discount = %.2f, delivery = %.2f, sum = %.2f,",
-			sumPound, countArtichoke, countBeet, countCarrot,
+	printf("ARTICHOKE = %.2f, Pound = % d, Price = %.2f\n", ARTICHOKE, countArtichoke, countArtichoke * ARTICHOKE);
+	printf("BEET = %.2f,      Pound = % d, Price = %.2f\n", BEET, countBeet, countBeet * BEET);
+	printf("CARROT = %.2f,    Pound = % d, Price = %.2f\n", CARROT, countCarrot, countCarrot * CARROT);
+	
+	printf("totalAmount = %.2f, discount = %.2f, delivery = %.2f, sum = %.2f,",
 			 totalAmount, discount, delivery, sum);
 	
 	return 0;
