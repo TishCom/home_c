@@ -25,7 +25,7 @@
 #include <stdio.h>
 
 #define LIMIT_HOUR 		40
-#define OVERTIME_HOUR 	15.0
+#define OVERTIME_HOUR 	1.5
 #define LIM1 			300.0 
 #define LIM2 			450.0
 #define TAX1 			0.15
@@ -66,16 +66,18 @@ int main(int argc, char **argv)
 			salaryHour = SALARY_HOUR4;
 			break;
 		case 5:
+			printf("EXIT.\n");
 			return 0;
 		default:
-			printf("Enter correct number\n");
+			printf("Enter correct number.\n");
+			return 0;
 	}
 	
-	
+	printf("Enter the number of hours: ");
 	scanf("%d", &hour);
 	
 	if (hour > LIMIT_HOUR)
-		sum = LIMIT_HOUR * salaryHour + (hour - LIMIT_HOUR) * OVERTIME_HOUR;
+		sum = LIMIT_HOUR * salaryHour + (hour - LIMIT_HOUR) * salaryHour * OVERTIME_HOUR;
 	else
 		sum = hour * salaryHour;
 		
