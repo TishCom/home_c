@@ -33,12 +33,10 @@ int main(int argc, char **argv)
 	{
 		switch (ch)
 		{
-			case '.':
-				ch = '!';
-				convertCount++;
-				break;
 			case '!':
 				putchar(ch);
+			case '.':
+				ch = '!';
 				convertCount++;
 		}
 		
