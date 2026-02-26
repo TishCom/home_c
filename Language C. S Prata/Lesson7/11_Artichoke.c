@@ -64,7 +64,7 @@ int main(int argc, char **argv)
 				countCarrot += pound;
 				break;
 			default:
-				printf("Enter correct number.\n");
+				printf("Enter correct name.\n");
 				continue;
 		}
 		
