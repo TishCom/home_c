@@ -11,13 +11,18 @@
 #define IND_RIGHT   10    //Пин правого датчика индуктивности 
 #define TIME        A0    //Пин enable
 
-#define DELBT       100    //Задержка для проверки истинности нажатия кнопки, по умолчанию 250 мсек.
+#define DELBT       100   //Задержка для проверки истинности нажатия кнопки, по умолчанию 250 мсек.
+
+#define FREQ        1500  //Частота шагового двигателя
 
 #define LEFT        0
 #define RIGHT       1
 
 //Флаг запуска (1) или остановки (0) двигателя
 bool flgRun = false;  
+
+//Флаг запуска нахождения основного датчика
+bool flgEng = false; 
 
 //Переменные для антистатической кнопки
 bool flgbtn1 = false;
@@ -31,7 +36,7 @@ uint32_t timing3 = 0;
 void setup() 
 {
   InitTimersSafe(); 
-  SetPinFrequencySafe(STEP, 885);
+  SetPinFrequencySafe(STEP, FREQ);
   
   pinMode(PUSK, INPUT);
   pinMode(STOP, INPUT);
@@ -62,10 +67,14 @@ void loop() {
   {
     timing3 = millis();
     pwmWrite(STEP, 128);
+    flgEng = true; 
   }
 
-  if(millis() - timing3 > analogRead(TIME))
+  if(flgEng && (millis() - timing3 > analogRead(TIME)))
+  {
     pwmWrite(STEP, 0);
+    flgEng = false; 
+  }
 
   if(digitalRead(IND_LEFT))
     digitalWrite(DIR, RIGHT);

@@ -1,11 +1,20 @@
 #include <PWM.h>
 
-#define PUSK    2     //Пин кнопки пуск/стоп
-#define STEP    3     //Пин тактирования
-#define ENB     5     //Пин отключения двигателя
-#define INDUP   6     //Пин датчика индуктивности верхнего
+#define PUSK      2               //Пин кнопки пуск/стоп
+#define STEP      3               //Пин тактирования
+#define DIR       4               //Пин направления
+#define ENB       5               //Пин отключения двигателя
+#define INDUP     6               //Пин датчика индуктивности верхнего
 
-#define DELBT   50   //Задержка для проверки истинности нажатия кнопки, по умолчанию 250 мсек.
+#define DIR_UP    0               //Направление вверх
+#define DIR_DWN   1               //Направление вниз
+
+#define FREQ_UP   735             //Частота при направлении вверх
+#define FREQ_DWN  FREQ_UP * 4     //Частота при направлении вниз
+
+#define TIMING    5000            //Время отработки движения вниз(мс)
+
+#define DELBT     100             //Задержка для проверки истинности нажатия кнопки, по умолчанию 250 мсек.
 
 bool flgRun = false;  //Флаг запуска (1) или остановки (0) двигателя
 
@@ -14,16 +23,17 @@ bool flgbtn1 = false;
 uint32_t timing1 = 0;
 uint32_t timing2 = 0;
 
+bool flgUp = false;
+
 void setup() 
 {
   InitTimersSafe(); 
-
-  SetPinFrequencySafe(STEP, 885);
   
   pinMode(PUSK, INPUT);
   pinMode(INDUP, INPUT);
 
   pinMode(ENB, OUTPUT);
+  pinMode(DIR, OUTPUT);
   pinMode(STEP, OUTPUT);
 }
 
@@ -32,26 +42,28 @@ void loop() {
 
   if(flgRun)
   {
- //   timing2 = millis();
+    SetPinFrequencySafe(STEP, FREQ_UP);
     digitalWrite(ENB, 0);
+    digitalWrite(DIR, DIR_UP);
     pwmWrite(STEP, 128);
     flgRun = false;
   }
- /*
-  if((millis() - timing2 > 200))
-  {
-    pwmWrite(STEP, 0);
-    
-    digitalWrite(ENB, 1);
-    delay(1000);
-  }
-*/
 
   if(!digitalRead(INDUP))
   {
+    digitalWrite(DIR, DIR_DWN);
+    SetPinFrequencySafe(STEP, FREQ_DWN);
+    pwmWrite(STEP, 128);
+    timing2 = millis();
+    flgUp = true;
+  }
+
+  if(flgUp && (millis() - timing2 > TIMING))
+  {
     pwmWrite(STEP, 0);
     digitalWrite(ENB, 1);
-    delay(3000);
+    delay(1000);
+    flgUp = false;
   }
 }
 
