@@ -89,7 +89,7 @@ void sortAscendingArr(int arr[], int size)
 			}
 		}
 		
-		if (sortingFinished == 1)
+		if (sortingFinished)
 			break;
 	}
 }
@@ -110,7 +110,7 @@ void sortDescendingArr(int arr[], int size)
 			}
 		}
 		
-		if (sortingFinished == 1)
+		if (sortingFinished)
 			break;
 	}
 }

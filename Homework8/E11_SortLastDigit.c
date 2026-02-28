@@ -100,7 +100,7 @@ void sortLastDigitArr(int arr[], int size)
 			}
 		}
 		
-		if (sortingFinished == 1)
+		if (sortingFinished)
 			break;
 	}
 }
