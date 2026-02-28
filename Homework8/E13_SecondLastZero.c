@@ -23,10 +23,82 @@
 
 
 #include <stdio.h>
+#include <inttypes.h>
+
+#define SIZE 	10
+
+enum NumberSystem
+{
+	BINARY     	= 2,
+	OCTAL      	= 8,
+	DECIMAL  	= 10,
+	HEXADECIMAL = 16
+};
+
+int inputArr(int arr[], int size);
+int outputArr(int arr[], int size);
+int selection0Arr(int arr[], int arr1[], int size);
+uint32_t returnDigit(uint32_t number, uint32_t digit, uint32_t baseNumber);
+uint32_t powerNumber(int32_t numberIN, int32_t power);
 
 int main(int argc, char **argv)
 {
+	int arr[SIZE] = {0};
+	int arr1[SIZE] = {0};
+	int size = 0;
+	
+	inputArr(arr, SIZE);
+	size = selection0Arr(arr, arr1, SIZE);
+	outputArr(arr1, size);
 	
 	return 0;
 }
 
+int inputArr(int arr[], int size)
+{
+	int i;
+	for (i = 0; i < size; i++)
+		scanf("%d", &arr[i]);
+	
+	return i;
+}
+
+int outputArr(int arr[], int size)
+{
+	int i;
+	for (i = 0; i < size; i++)
+		printf("%d ", arr[i]);
+	
+	return i;
+}
+
+int selection0Arr(int arr[], int arr1[], int size)
+{
+	int y = 0;
+	
+	for (int i = 0; i < size; i++)
+	{
+		if (returnDigit(arr[i], 1, DECIMAL) == 0)
+		{
+			arr1[y] = arr[i];
+			y++;
+		}
+	}
+	
+	return y;
+}
+
+uint32_t returnDigit(uint32_t number, uint32_t digit, uint32_t baseNumber)
+{
+	return (number / powerNumber(baseNumber, digit)) % baseNumber;
+}
+
+uint32_t powerNumber(int32_t numberIN, int32_t power)
+{
+	int32_t numberOUT = 1;
+	
+	for (int i = 0; i < power; i++)
+		numberOUT *= numberIN;
+	
+	return numberOUT;
+}

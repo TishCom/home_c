@@ -24,9 +24,75 @@
 
 #include <stdio.h>
 
+#define SIZE 	10
+
+int inputArr(int arr[], int size);
+int outputArr(int arr[], int size);
+int sortPositiveArr(int arr[], int arr1[], int size);
+int sortNegativeArr(int arr[], int arr1[], int size);
+
 int main(int argc, char **argv)
 {
+	int arr[SIZE] = {0};
+	int arrPositive[SIZE] = {0};
+	int arrNegative[SIZE] = {0};
+	int size = 0;
+	
+	inputArr(arr, SIZE);
+	size = sortPositiveArr(arr, arrPositive, SIZE);
+	outputArr(arrPositive, size);
+	size = sortNegativeArr(arr, arrNegative, SIZE);
+	outputArr(arrNegative, size);
 	
 	return 0;
 }
 
+int inputArr(int arr[], int size)
+{
+	int i;
+	for (i = 0; i < size; i++)
+		scanf("%d", &arr[i]);
+	
+	return i;
+}
+
+int outputArr(int arr[], int size)
+{
+	int i;
+	for (i = 0; i < size; i++)
+		printf("%d ", arr[i]);
+	
+	return i;
+}
+
+int sortPositiveArr(int arr[], int arr1[], int size)
+{
+	int y = 0;
+	
+	for (int i = 0; i < size; i++)
+	{
+		if (arr[i] > 0)
+		{
+			arr1[y] = arr[i];
+			y++;
+		}
+	}
+	
+	return y;
+}
+
+int sortNegativeArr(int arr[], int arr1[], int size)
+{
+	int y = 0;
+	
+	for (int i = 0; i < size; i++)
+	{
+		if (arr[i] < 0)
+		{
+			arr1[y] = arr[i];
+			y++;
+		}
+	}
+	
+	return y;
+}

@@ -28,15 +28,17 @@
 
 int inputArr(int arr[], int size);
 int outputArr(int arr[], int size);
-float meanArr(int arr[], int size);
-void inversionHalvesArr(int arr[], int size);
+void inversionArr(int arr[], int size);
+void copyArr(int arr[], int arr1[], int size);
+void inversionHalvesArr(int arr[],int number, int size);
+void inversionCrushingArr(int arr[], int number, int size);
 
 int main(int argc, char **argv)
 {
 	int arr[SIZE] = {0};
 	
 	inputArr(arr, SIZE);
-	inversionHalvesArr(arr, SIZE);
+	inversionHalvesArr(arr, 2, SIZE);
 	outputArr(arr, SIZE);
 	
 	return 0;
@@ -60,28 +62,38 @@ int outputArr(int arr[], int size)
 	return i;
 }
 
-float meanArr(int arr[], int size)
+void inversionHalvesArr(int arr[], int number, int size)
 {
-	float sum = 0;
-	for (int i = 0; i < size; i++)
-		sum += arr[i];
-	
-	return sum / size;
+	for (int q = 0; q < number; q++)
+		inversionCrushingArr(arr, q, size / number);
 }
 
-void inversionHalvesArr(int arr[], int size)
+void inversionCrushingArr(int arr[], int number, int size)
 {
-	int arr1[size / 2];
+	int arr1[size];
 	
-	for (int i = 0, y = size / 2 - 1; i < size / 2; i++, y--)
+	for (int i = 0, y = size * number; i < size; i++, y++)
 		arr1[i] = arr[y];
 		
-	for (int i = 0; i < size / 2; i++)
-		arr[i] = arr1[i];
+	inversionArr(arr1, size);
 		
-	for (int i = 0, y = size - 1; i < size / 2; i++, y--)
-		arr1[i] = arr[y];
-		
+	for (int i = 0; i < size; i++)
+		arr[i + size * number] = arr1[i];
+}
+
+void copyArr(int arr[], int arr1[], int size)
+{
+	for (int i = 0; i < size; i++)
+		arr1[i] = arr[i];
+}
+
+void inversionArr(int arr[], int size)
+{
+	int temp;
 	for (int i = 0; i < size / 2; i++)
-		arr[i + size / 2] = arr1[i];
+	{
+		temp = arr[i];
+		arr[i] = arr[size - i - 1];
+		arr[size - i - 1] = temp;
+	}
 }

@@ -29,7 +29,6 @@
 
 int inputArr(int arr[], int size);
 int outputArr(int arr[], int size);
-float meanArr(int arr[], int size);
 void ciclicShiftRightArr(int arr[], int size);
 void ciclicShiftLeftArr(int arr[], int size);
 void ciclicShiftRightNumberArr(int arr[], int number, int size);
@@ -64,15 +63,6 @@ int outputArr(int arr[], int size)
 	return i;
 }
 
-float meanArr(int arr[], int size)
-{
-	float sum = 0;
-	for (int i = 0; i < size; i++)
-		sum += arr[i];
-	
-	return sum / size;
-}
-
 void ciclicShiftRightArr(int arr[], int size)
 {
 	int element = arr[size - 1];
@@ -95,36 +85,12 @@ void ciclicShiftLeftArr(int arr[], int size)
 
 void ciclicShiftRightNumberArr(int arr[], int number, int size)
 {
-	int arr1[number];
-	
-	for (int i = size - 1, y = number - 1; i > size - number - 1; i--, y--)
-		arr1[y] = arr[i];
-	
 	for (int i = 0; i < number; i++)
-	{
-		for (int y = size - 1; y > 0; y--)
-			arr[y] = arr[y - 1];
-	}
-	
-	for (int i = 0; i < number; i++)
-		arr[i] = arr1[i];
-	
+		ciclicShiftRightArr(arr, size);
 }
 
 void ciclicShiftLeftNumberArr(int arr[], int number, int size)
 {
-	int arr1[number];
-	
 	for (int i = 0; i < number; i++)
-		arr1[i] = arr[i];
-	
-	for (int i = 0; i < number; i++)
-	{
-		for (int i = 0; i < size - 1; i++)
-			arr[i] = arr[i + 1];
-	}
-	
-	for (int i = size - number, y = 0; i < size; i++, y++)
-		arr[i] = arr1[y];
-	
+		ciclicShiftLeftArr(arr, size);
 }

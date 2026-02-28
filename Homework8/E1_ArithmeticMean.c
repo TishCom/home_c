@@ -27,7 +27,6 @@
 #define SIZE 5
 
 int inputArr(int arr[], int size);
-int outputArr(int arr[], int size);
 float meanArr(int arr[], int size);
 
 int main(int argc, char **argv)
@@ -46,15 +45,6 @@ int inputArr(int arr[], int size)
 	int i;
 	for (i = 0; i < size; i++)
 		scanf("%d", &arr[i]);
-	
-	return i;
-}
-
-int outputArr(int arr[], int size)
-{
-	int i;
-	for (i = 0; i < size; i++)
-		printf("%d |", arr[i]);
 	
 	return i;
 }

@@ -24,9 +24,35 @@
 
 #include <stdio.h>
 
+int coincidenceElementArr(int number, int devider);
+void selectionCoincidenceArr(int number);
+
 int main(int argc, char **argv)
 {
+	int number = 0;
+	
+	scanf("%d", &number);
+	
+	selectionCoincidenceArr(number);
 	
 	return 0;
 }
 
+void selectionCoincidenceArr(int number)
+{
+	for (int i = 2; i <= 9; i++)
+		printf("%d %d\n", i, coincidenceElementArr(number, i));
+}
+
+int coincidenceElementArr(int number, int devider)
+{
+	int coincidence = 0;
+	
+	for (int i = 2; i <= number; i++)
+	{
+		if (i % devider == 0)
+			coincidence++;
+	}
+	
+	return coincidence;
+}

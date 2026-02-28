@@ -23,18 +23,30 @@
 
 
 #include <stdio.h>
+#include <inttypes.h>
 
 #define SIZE 	10
+
+enum NumberSystem
+{
+	BINARY     	= 2,
+	OCTAL      	= 8,
+	DECIMAL  	= 10,
+	HEXADECIMAL = 16
+};
 
 int inputArr(int arr[], int size);
 int outputArr(int arr[], int size);
 void sortLastDigitArr(int arr[], int size);
+uint32_t returnDigit(uint32_t number, uint32_t digit, uint32_t baseNumber);
+uint32_t powerNumber(int32_t numberIN, int32_t power);
 
 int main(int argc, char **argv)
 {
 	int arr[SIZE] = {0};
 	
 	inputArr(arr, SIZE);
+	sortLastDigitArr(arr, SIZE);
 	outputArr(arr, SIZE);
 	
 	return 0;
@@ -61,13 +73,33 @@ int outputArr(int arr[], int size)
 
 void sortLastDigitArr(int arr[], int size)
 {
-	int temp = arr[0];
+	int temp = 0;
 	
 	for (int i = 0; i < size - 1; i++)
 	{
-		if (arr[i] % 10 > arr[i + 1] % 10)
+		for (int y = i; y < size - 1; y++)
 		{
-			printf("%d ", temp);
+			if (returnDigit(arr[i], 0, DECIMAL) > returnDigit(arr[y + 1], 0, DECIMAL))
+			{
+				temp = arr[i];
+				arr[i] = arr[y + 1];
+				arr[y + 1] = temp;
+			}
 		}
 	}
+}
+
+uint32_t returnDigit(uint32_t number, uint32_t digit, uint32_t baseNumber)
+{
+	return (number / powerNumber(baseNumber, digit)) % baseNumber;
+}
+
+uint32_t powerNumber(int32_t numberIN, int32_t power)
+{
+	int32_t numberOUT = 1;
+	
+	for (int i = 0; i < power; i++)
+		numberOUT *= numberIN;
+	
+	return numberOUT;
 }

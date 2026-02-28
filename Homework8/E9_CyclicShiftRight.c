@@ -28,7 +28,6 @@
 
 int inputArr(int arr[], int size);
 int outputArr(int arr[], int size);
-float meanArr(int arr[], int size);
 void ciclicShiftRightArr(int arr[], int size);
 void ciclicShiftLeftArr(int arr[], int size);
 
@@ -59,15 +58,6 @@ int outputArr(int arr[], int size)
 		printf("%d ", arr[i]);
 	
 	return i;
-}
-
-float meanArr(int arr[], int size)
-{
-	float sum = 0;
-	for (int i = 0; i < size; i++)
-		sum += arr[i];
-	
-	return sum / size;
 }
 
 void ciclicShiftRightArr(int arr[], int size)

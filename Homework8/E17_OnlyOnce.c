@@ -24,9 +24,50 @@
 
 #include <stdio.h>
 
+#define SIZE 	10
+
+int inputArr(int arr[], int size);
+int coincidenceElementArr(int arr[], int element, int size);
+void selectionCoincidenceArr(int arr[], int size);
+
 int main(int argc, char **argv)
 {
+	int arr[SIZE] = {0};
+	
+	inputArr(arr, SIZE);
+	
+	selectionCoincidenceArr(arr, SIZE);
 	
 	return 0;
 }
 
+int inputArr(int arr[], int size)
+{
+	int i;
+	for (i = 0; i < size; i++)
+		scanf("%d", &arr[i]);
+	
+	return i;
+}
+
+void selectionCoincidenceArr(int arr[], int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		if (coincidenceElementArr(arr, arr[i], size) == 1)
+			printf("%d ", arr[i]);
+	}
+}
+
+int coincidenceElementArr(int arr[], int element, int size)
+{
+	int coincidence = 0;
+	
+	for (int i = 0; i < size; i++)
+	{
+		if (arr[i] == element)
+			coincidence++;
+	}
+	
+	return coincidence;
+}
