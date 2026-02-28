@@ -24,12 +24,17 @@
 
 #include <stdio.h>
 
+//Размер массива
 #define SIZE 	10
 
+//Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size);
+//Функция выводит значения элементов массива в терминал
 int outputArr(int arr[], int size);
-int coincidenceElementArr(int arr[], int element, int size);
-int selectionCoincidenceArr(int arr[], int size);
+//Функция возвращает колличетво совпадений в массиве arr элементов element
+int numberCoincidenceElementArr(int arr[], int element, int size);
+//Функция возвращает элемент массива с которым в массиве больше всего совпадений
+int maxCoincidenceElementArr(int arr[], int size);
 
 int main(int argc, char **argv)
 {
@@ -37,11 +42,12 @@ int main(int argc, char **argv)
 	
 	inputArr(arr, SIZE);
 	
-	printf("%d ", selectionCoincidenceArr(arr, SIZE));
+	printf("%d ", maxCoincidenceElementArr(arr, SIZE));
 	
 	return 0;
 }
 
+//Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size)
 {
 	int i;
@@ -51,6 +57,7 @@ int inputArr(int arr[], int size)
 	return i;
 }
 
+//Функция выводит значения элементов массива в терминал
 int outputArr(int arr[], int size)
 {
 	int i;
@@ -60,25 +67,27 @@ int outputArr(int arr[], int size)
 	return i;
 }
 
-int selectionCoincidenceArr(int arr[], int size)
+//Функция возвращает элемент массива с которым в массиве больше всего совпадений
+int maxCoincidenceElementArr(int arr[], int size)
 {
-	int temp = 0, currentCoincidence = 0, maxCoincidence = 0;
+	int out = 0, currentCoincidence = 0, maxCoincidence = 0;
 	
 	for (int i = 0; i < size; i++)
 	{
-		currentCoincidence = coincidenceElementArr(arr, arr[i], size);
+		currentCoincidence = numberCoincidenceElementArr(arr, arr[i], size);
 		
 		if (currentCoincidence > maxCoincidence)
 		{
 			maxCoincidence = currentCoincidence;
-			temp = arr[i];
+			out = arr[i];
 		}
 	}
 	
-	return temp;
+	return out;
 }
 
-int coincidenceElementArr(int arr[], int element, int size)
+//Функция возвращает колличетво совпадений в массиве arr элементов element
+int numberCoincidenceElementArr(int arr[], int element, int size)
 {
 	int coincidence = 0;
 	

@@ -24,13 +24,26 @@
 
 #include <stdio.h>
 
+//Размер массива
 #define SIZE 10
 
+//Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size);
+//Функция возвращающая элемент массива с минимальным значением
 int minArr(int arr[], int size);
+//Функция возвращающая элемент массива с максимальным значением
 int maxArr(int arr[], int size);
+//Функция возвращающая сумму двух наибольших элементов массива
 int sumMax2Arr(int arr[], int size);
+/*
+ * Функция возвращающая номмер элемента массива равного element
+ * (если такого нет вернет -1)
+ */
 int posArr(int arr[], int element, int size);
+/*
+ * Функция возвращающая индекс элемента массива равного element
+ * (если такого нет вернет -1)
+ */
 int indexArr(int arr[], int element, int size);
 
 int main(int argc, char **argv)
@@ -44,6 +57,7 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+//Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size)
 {
 	int i;
@@ -53,6 +67,7 @@ int inputArr(int arr[], int size)
 	return i;
 }
 
+//Функция возвращающая элемент массива с минимальным значением
 int minArr(int arr[], int size)
 {
 	int min =  arr[0];
@@ -66,6 +81,7 @@ int minArr(int arr[], int size)
 	return min;
 }
 
+//Функция возвращающая элемент массива с максимальным значением
 int maxArr(int arr[], int size)
 {
 	int max =  arr[0];
@@ -79,6 +95,7 @@ int maxArr(int arr[], int size)
 	return max;
 }
 
+//Функция возвращающая сумму двух наибольших элементов массива
 int sumMax2Arr(int arr[], int size)
 {
 	int max1 = maxArr(arr, size), max2 = minArr(arr, size);
@@ -93,6 +110,10 @@ int sumMax2Arr(int arr[], int size)
 	return max1 + max2;
 }
 
+/*
+ * Функция возвращающая номмер элемента массива равного element
+ * (если такого нет вернет -1)
+ */
 int posArr(int arr[], int element, int size)
 {
 	int pos;
@@ -112,6 +133,10 @@ int posArr(int arr[], int element, int size)
 	return pos;
 }
 
+/*
+ * Функция возвращающая индекс элемента массива равного element
+ * (если такого нет вернет -1)
+ */
 int indexArr(int arr[], int element, int size)
 {
 	int index = posArr(arr, element, size);

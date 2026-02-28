@@ -24,9 +24,12 @@
 
 #include <stdio.h>
 
+//Размер массива
 #define SIZE 5
 
+//Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size);
+//Функция возвращающая элемент массива с минимальным значением
 int minArr(int arr[], int size);
 
 int main(int argc, char **argv)
@@ -40,6 +43,7 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+//Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size)
 {
 	int i;
@@ -49,6 +53,7 @@ int inputArr(int arr[], int size)
 	return i;
 }
 
+//Функция возвращающая элемент массива с минимальным значением
 int minArr(int arr[], int size)
 {
 	int min =  arr[0];

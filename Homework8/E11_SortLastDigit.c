@@ -25,8 +25,10 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+//Размер массива
 #define SIZE 	10
 
+//Псевдонимы стандартных систем счисления
 enum NumberSystem
 {
 	BINARY     	= 2,
@@ -35,11 +37,21 @@ enum NumberSystem
 	HEXADECIMAL = 16
 };
 
+//Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size);
+//Функция выводит значения элементов массива в терминал
 int outputArr(int arr[], int size);
+//Функция выполняет сортировку массива по последней цифре элемента
 void sortLastDigitArr(int arr[], int size);
+/* 
+ * Функция возвращает число находящееся в разряде digit числа number.
+ * При этом number имеет основание baseNumber.
+ */
 uint32_t returnDigit(uint32_t number, uint32_t digit, uint32_t baseNumber);
+//Функция возвращает число numberIN в степени power
 uint32_t powerNumber(int32_t numberIN, int32_t power);
+//Функция выполняет меняет элементы в массиве местами
+void SwapArr(int arr[], int i, int j);
 
 int main(int argc, char **argv)
 {
@@ -52,6 +64,7 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+//Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size)
 {
 	int i;
@@ -61,6 +74,7 @@ int inputArr(int arr[], int size)
 	return i;
 }
 
+//Функция выводит значения элементов массива в терминал
 int outputArr(int arr[], int size)
 {
 	int i;
@@ -70,30 +84,29 @@ int outputArr(int arr[], int size)
 	return i;
 }
 
-
+//Функция выполняет сортировку массива по последней цифре элемента
 void sortLastDigitArr(int arr[], int size)
 {
-	int temp = 0;
-	
 	for (int i = 0; i < size - 1; i++)
 	{
 		for (int y = i; y < size - 1; y++)
 		{
 			if (returnDigit(arr[i], 0, DECIMAL) > returnDigit(arr[y + 1], 0, DECIMAL))
-			{
-				temp = arr[i];
-				arr[i] = arr[y + 1];
-				arr[y + 1] = temp;
-			}
+				SwapArr(arr, i, y + 1);
 		}
 	}
 }
 
+/* 
+ * Функция возвращает число находящееся в разряде digit числа number.
+ * При этом number имеет основание baseNumber.
+ */
 uint32_t returnDigit(uint32_t number, uint32_t digit, uint32_t baseNumber)
 {
 	return (number / powerNumber(baseNumber, digit)) % baseNumber;
 }
 
+//Функция возвращает число numberIN в степени power
 uint32_t powerNumber(int32_t numberIN, int32_t power)
 {
 	int32_t numberOUT = 1;
@@ -102,4 +115,12 @@ uint32_t powerNumber(int32_t numberIN, int32_t power)
 		numberOUT *= numberIN;
 	
 	return numberOUT;
+}
+
+//Функция выполняет меняет элементы в массиве местами
+void SwapArr(int arr[], int i, int j)
+{
+	int temp = arr[i];
+	arr[i] = arr[j];
+	arr[j] = temp;
 }

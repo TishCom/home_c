@@ -24,11 +24,15 @@
 
 #include <stdio.h>
 
+//Размер массива
 #define SIZE 	10
 
+//Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size);
-int coincidenceElementArr(int arr[], int element, int size);
-void selectionCoincidenceArr(int arr[], int size);
+//Функция возвращает колличетво совпадений в массиве arr элементов element
+int numberCoincidenceElementArr(int arr[], int element, int size);
+//Функция выводит в терминал значение элементов которые включены в массив 1 раз
+void printOnceCoincidenceArr(int arr[], int size);
 
 int main(int argc, char **argv)
 {
@@ -36,11 +40,12 @@ int main(int argc, char **argv)
 	
 	inputArr(arr, SIZE);
 	
-	selectionCoincidenceArr(arr, SIZE);
+	printOnceCoincidenceArr(arr, SIZE);
 	
 	return 0;
 }
 
+//Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size)
 {
 	int i;
@@ -50,16 +55,18 @@ int inputArr(int arr[], int size)
 	return i;
 }
 
-void selectionCoincidenceArr(int arr[], int size)
+//Функция выводит в терминал значение элементов которые включены в массив 1 раз
+void printOnceCoincidenceArr(int arr[], int size)
 {
 	for (int i = 0; i < size; i++)
 	{
-		if (coincidenceElementArr(arr, arr[i], size) == 1)
+		if (numberCoincidenceElementArr(arr, arr[i], size) == 1)
 			printf("%d ", arr[i]);
 	}
 }
 
-int coincidenceElementArr(int arr[], int element, int size)
+//Функция возвращает колличетво совпадений в массиве arr элементов element
+int numberCoincidenceElementArr(int arr[], int element, int size)
 {
 	int coincidence = 0;
 	

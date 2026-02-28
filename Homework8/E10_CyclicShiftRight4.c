@@ -24,14 +24,22 @@
 
 #include <stdio.h>
 
+//Размер массива
 #define SIZE 	12
+//На сколько элементов надо сдвигать массив
 #define SHIFT 	4
 
+//Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size);
+//Функция выводит значения элементов массива в терминал
 int outputArr(int arr[], int size);
+//Функция совершает циклический сдвиг массива arr вправо на 1 элемент
 void ciclicShiftRightArr(int arr[], int size);
+//Функция совершает циклический сдвиг массива arr влево на 1 элемент
 void ciclicShiftLeftArr(int arr[], int size);
+//Функция совершает циклический сдвиг массива arr вправо на number элементов
 void ciclicShiftRightNumberArr(int arr[], int number, int size);
+//Функция совершает циклический сдвиг массива arr влево на number элементов
 void ciclicShiftLeftNumberArr(int arr[], int number, int size);
 
 int main(int argc, char **argv)
@@ -45,6 +53,7 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+//Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size)
 {
 	int i;
@@ -54,6 +63,7 @@ int inputArr(int arr[], int size)
 	return i;
 }
 
+//Функция выводит значения элементов массива в терминал
 int outputArr(int arr[], int size)
 {
 	int i;
@@ -63,6 +73,7 @@ int outputArr(int arr[], int size)
 	return i;
 }
 
+//Функция совершает циклический сдвиг массива arr вправо на 1 элемент
 void ciclicShiftRightArr(int arr[], int size)
 {
 	int element = arr[size - 1];
@@ -73,6 +84,7 @@ void ciclicShiftRightArr(int arr[], int size)
 	arr[0] = element;
 }
 
+//Функция совершает циклический сдвиг массива arr влево на 1 элемент
 void ciclicShiftLeftArr(int arr[], int size)
 {
 	int element = arr[0];
@@ -83,12 +95,14 @@ void ciclicShiftLeftArr(int arr[], int size)
 	arr[size - 1] = element;
 }
 
+//Функция совершает циклический сдвиг массива arr вправо на number элементов
 void ciclicShiftRightNumberArr(int arr[], int number, int size)
 {
 	for (int i = 0; i < number; i++)
 		ciclicShiftRightArr(arr, size);
 }
 
+//Функция совершает циклический сдвиг массива arr влево на number элементов
 void ciclicShiftLeftNumberArr(int arr[], int number, int size)
 {
 	for (int i = 0; i < number; i++)

@@ -25,9 +25,12 @@
 
 #include <stdio.h>
 
+//Размер массива
 #define SIZE 12
 
+//Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size);
+//Функция возвращающая среднее арифметическое всех элементов массива
 float meanArr(int arr[], int size);
 
 int main(int argc, char **argv)
@@ -41,6 +44,7 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+//Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size)
 {
 	int i;
@@ -50,6 +54,7 @@ int inputArr(int arr[], int size)
 	return i;
 }
 
+//Функция возвращающая среднее арифметическое всех элементов массива
 float meanArr(int arr[], int size)
 {
 	float sum = 0;

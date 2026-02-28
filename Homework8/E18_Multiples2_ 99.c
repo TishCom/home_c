@@ -24,7 +24,9 @@
 
 #include <stdio.h>
 
-int coincidenceElementArr(int number, int devider);
+//Функция возвращает колличетво чисел из number которые кратны devider
+int multiplesNumber(int number, int devider);
+//Функция выводит в трминал колличетво чисел из number которые кратны (1-9)
 void selectionCoincidenceArr(int number);
 
 int main(int argc, char **argv)
@@ -38,13 +40,15 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+//Функция выводит в трминал колличетво чисел из number которые кратны (1-9)
 void selectionCoincidenceArr(int number)
 {
 	for (int i = 2; i <= 9; i++)
-		printf("%d %d\n", i, coincidenceElementArr(number, i));
+		printf("%d %d\n", i, multiplesNumber(number, i));
 }
 
-int coincidenceElementArr(int number, int devider)
+//Функция возвращает колличетво чисел из number которые кратны devider
+int multiplesNumber(int number, int devider)
 {
 	int coincidence = 0;
 	

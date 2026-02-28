@@ -24,11 +24,16 @@
 
 #include <stdio.h>
 
+//Размер массива
 #define SIZE 10
 
+//Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size);
+//Функция выводит значения элементов массива в терминал
 int outputArr(int arr[], int size);
+//Функция совершает циклический сдвиг массива arr вправо на 1 элемент
 void ciclicShiftRightArr(int arr[], int size);
+//Функция совершает циклический сдвиг массива arr влево на 1 элемент
 void ciclicShiftLeftArr(int arr[], int size);
 
 int main(int argc, char **argv)
@@ -42,6 +47,7 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+//Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size)
 {
 	int i;
@@ -51,6 +57,7 @@ int inputArr(int arr[], int size)
 	return i;
 }
 
+//Функция выводит значения элементов массива в терминал
 int outputArr(int arr[], int size)
 {
 	int i;
@@ -60,6 +67,7 @@ int outputArr(int arr[], int size)
 	return i;
 }
 
+//Функция совершает циклический сдвиг массива arr вправо на 1 элемент
 void ciclicShiftRightArr(int arr[], int size)
 {
 	int element = arr[size - 1];
@@ -70,6 +78,7 @@ void ciclicShiftRightArr(int arr[], int size)
 	arr[0] = element;
 }
 
+//Функция совершает циклический сдвиг массива arr влево на 1 элемент
 void ciclicShiftLeftArr(int arr[], int size)
 {
 	int element = arr[0];

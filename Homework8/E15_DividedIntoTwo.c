@@ -24,11 +24,16 @@
 
 #include <stdio.h>
 
+//Размер массива
 #define SIZE 	10
 
+//Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size);
+//Функция выводит значения элементов массива в терминал
 int outputArr(int arr[], int size);
+//Функция выполняет отбор положительных элементов массива
 int sortPositiveArr(int arr[], int arr1[], int size);
+//Функция выполняет отбор отрицательных элементов массива
 int sortNegativeArr(int arr[], int arr1[], int size);
 
 int main(int argc, char **argv)
@@ -47,6 +52,7 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+//Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size)
 {
 	int i;
@@ -56,6 +62,7 @@ int inputArr(int arr[], int size)
 	return i;
 }
 
+//Функция выводит значения элементов массива в терминал
 int outputArr(int arr[], int size)
 {
 	int i;
@@ -65,6 +72,7 @@ int outputArr(int arr[], int size)
 	return i;
 }
 
+//Функция выполняет отбор положительных элементов массива
 int sortPositiveArr(int arr[], int arr1[], int size)
 {
 	int y = 0;
@@ -81,6 +89,7 @@ int sortPositiveArr(int arr[], int arr1[], int size)
 	return y;
 }
 
+//Функция выполняет отбор отрицательных элементов массива
 int sortNegativeArr(int arr[], int arr1[], int size)
 {
 	int y = 0;

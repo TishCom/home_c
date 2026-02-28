@@ -24,26 +24,36 @@
 
 #include <stdio.h>
 
+//Размер массива
 #define SIZE 12
 
+//Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size);
+//Функция выводит значения элементов массива в терминал
 int outputArr(int arr[], int size);
+//Функция меняет элементы массива местами задом наперед
 void inversionArr(int arr[], int size);
+//Функция копирует элементы массива arr в arr1 в колличестве size
 void copyArr(int arr[], int arr1[], int size);
-void inversionHalvesArr(int arr[], int number, int size);
+//Функция выполняет инверсию массива arr по частям равным number
+void inversionPartsArr(int arr[], int number, int size);
+//Функция выполняет инверсию части number массива arr
 void inversionCrushingArr(int arr[], int number, int size);
+//Функция выполняет меняет элементы в массиве местами
+void SwapArr(int arr[], int i, int j);
 
 int main(int argc, char **argv)
 {
 	int arr[SIZE] = {0};
 	
 	inputArr(arr, SIZE);
-	inversionHalvesArr(arr, 3, SIZE);
+	inversionPartsArr(arr, 3, SIZE);
 	outputArr(arr, SIZE);
 	
 	return 0;
 }
 
+//Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size)
 {
 	int i;
@@ -53,6 +63,7 @@ int inputArr(int arr[], int size)
 	return i;
 }
 
+//Функция выводит значения элементов массива в терминал
 int outputArr(int arr[], int size)
 {
 	int i;
@@ -62,12 +73,14 @@ int outputArr(int arr[], int size)
 	return i;
 }
 
-void inversionHalvesArr(int arr[], int number, int size)
+//Функция выполняет инверсию массива arr по частям равным number
+void inversionPartsArr(int arr[], int number, int size)
 {
 	for (int q = 0; q < number; q++)
 		inversionCrushingArr(arr, q, size / number);
 }
 
+//Функция выполняет инверсию части number массива arr
 void inversionCrushingArr(int arr[], int number, int size)
 {
 	int arr1[size];
@@ -81,19 +94,24 @@ void inversionCrushingArr(int arr[], int number, int size)
 		arr[i + size * number] = arr1[i];
 }
 
+//Функция копирует элементы массива arr в arr1 в колличестве size
 void copyArr(int arr[], int arr1[], int size)
 {
 	for (int i = 0; i < size; i++)
 		arr1[i] = arr[i];
 }
 
+//Функция меняет элементы массива местами задом наперед
 void inversionArr(int arr[], int size)
 {
-	int temp;
 	for (int i = 0; i < size / 2; i++)
-	{
-		temp = arr[i];
-		arr[i] = arr[size - i - 1];
-		arr[size - i - 1] = temp;
-	}
+		SwapArr(arr, i, size - i - 1);
+}
+
+//Функция выполняет меняет элементы в массиве местами
+void SwapArr(int arr[], int i, int j)
+{
+	int temp = arr[i];
+	arr[i] = arr[j];
+	arr[j] = temp;
 }

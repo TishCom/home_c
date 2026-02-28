@@ -24,11 +24,16 @@
 
 #include <stdio.h>
 
+//Размер массива
 #define SIZE 	10
 
+//Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size);
+//Функция выводит значения элементов массива в терминал
 int outputArr(int arr[], int size);
+//Функция сообщает есть ли element в массиве arr
 int coincidenceElementArr(int arr[], int element, int size);
+//Функция выполняет отбор повторяющихся элементов массива
 int selectionCoincidenceArr(int arr[], int arr1[], int size);
 
 int main(int argc, char **argv)
@@ -44,6 +49,7 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+//Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size)
 {
 	int i;
@@ -53,6 +59,7 @@ int inputArr(int arr[], int size)
 	return i;
 }
 
+//Функция выводит значения элементов массива в терминал
 int outputArr(int arr[], int size)
 {
 	int i;
@@ -62,6 +69,7 @@ int outputArr(int arr[], int size)
 	return i;
 }
 
+//Функция выполняет отбор повторяющихся элементов массива
 int selectionCoincidenceArr(int arr[], int arr1[], int size)
 {
 	int y = 0, temp = 0;
@@ -84,6 +92,7 @@ int selectionCoincidenceArr(int arr[], int arr1[], int size)
 	return y;
 }
 
+//Функция сообщает есть ли element в массиве arr
 int coincidenceElementArr(int arr[], int element, int size)
 {
 	int coincidence = 0;
