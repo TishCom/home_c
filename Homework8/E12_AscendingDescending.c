@@ -76,15 +76,17 @@ int outputArr(int arr[], int size)
 //Функция выполняет сортировку массива по возраствнию
 void sortAscendingArr(int arr[], int size)
 {
-	int sortingFinished = 1;
+	int sortingFinished;
 	
 	for (int i = 0; i < size - 1; i++)
 	{
-		for (int y = i; y < size - 1; y++)
+		sortingFinished = 1;
+		
+		for (int y = size - 1; y > i; y--)
 		{
-			if (arr[i] > arr[y + 1])
+			if (arr[y] < arr[y - 1])
 			{
-				SwapArr(arr, i, y + 1);
+				SwapArr(arr, y, y - 1);
 				sortingFinished = 0;
 			}
 		}
@@ -97,15 +99,17 @@ void sortAscendingArr(int arr[], int size)
 //Функция выполняет сортировку массива по убыванию
 void sortDescendingArr(int arr[], int size)
 {
-	int sortingFinished = 1;
+	int sortingFinished;
 	
 	for (int i = 0; i < size - 1; i++)
 	{
-		for (int y = i; y < size - 1; y++)
+		sortingFinished = 1;
+		
+		for (int y = size - 1; y > i; y--)
 		{
-			if (arr[i] < arr[y + 1])
+			if (arr[y] > arr[y - 1])
 			{
-				SwapArr(arr, i, y + 1);
+				SwapArr(arr, y, y - 1);
 				sortingFinished = 0;
 			}
 		}

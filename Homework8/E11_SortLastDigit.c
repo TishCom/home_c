@@ -87,15 +87,17 @@ int outputArr(int arr[], int size)
 //Функция выполняет сортировку массива по последней цифре элемента
 void sortLastDigitArr(int arr[], int size)
 {
-	int sortingFinished = 1;
+	int sortingFinished;
 	
-	for (int i = 0; i < size - 1; i++)
+	for (int i = 0; i < size; i++)
 	{
-		for (int y = i; y < size - 1; y++)
+		sortingFinished = 1;
+		
+		for (int y = size - 1; y > i; y--)
 		{
-			if (returnDigit(arr[i], 0, DECIMAL) > returnDigit(arr[y + 1], 0, DECIMAL))
+			if (returnDigit(arr[y], 0, DECIMAL) < returnDigit(arr[y - 1], 0, DECIMAL))
 			{
-				SwapArr(arr, i, y + 1);
+				SwapArr(arr, y, y - 1);
 				sortingFinished = 0;
 			}
 		}
