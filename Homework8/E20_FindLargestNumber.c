@@ -26,6 +26,13 @@
 #include <inttypes.h>
 
 //Псевдонимы стандартных систем счисления
+enum PosibleNumber
+{
+	MIN  = 1,
+	MAX  = 2,
+};
+
+//Псевдонимы стандартных систем счисления
 enum NumberSystem
 {
 	BINARY     	= 2,
@@ -54,10 +61,12 @@ void fillArrNumber(int arr[], int number, int size);
 int convertArrNumber(int arr[], int size);
 //Функция выполняет сортировку массива по возраствнию
 void sortAscendingArr(int arr[], int size);
-//Функция возвращает максимальное число которое может получится из разрядов number
-int maxPosibleNumber(int number);
 //Функция выполняет меняет элементы в массиве местами
 void SwapArr(int arr[], int i, int j);
+//Функция выполняет сортировку массива по убыванию
+void sortDescendingArr(int arr[], int size);
+//Функция возвращает максимальное или минимальное число которое может получится из разрядов number
+int posibleNumber(int number, int which);
 
 int main(int argc, char **argv)
 {
@@ -65,19 +74,28 @@ int main(int argc, char **argv)
 	
 	scanf("%d", &number);
 	
-	printf("%d\n", maxPosibleNumber(number));
+	printf("%d\n", posibleNumber(number, MAX));
 	
 	return 0;
 }
 
-//Функция возвращает максимальное число которое может получится из разрядов number
-int maxPosibleNumber(int number)
+//Функция возвращает максимальное или минимальное число которое может получится из разрядов number
+int posibleNumber(int number, int which)
 {
 	int depth = depthNumber(number);
 	int arr[depth];
 	
 	fillArrNumber(arr, number, depth);
-	sortAscendingArr(arr, depth);
+	
+	switch (which)
+	{
+		case MIN:
+			sortDescendingArr(arr, depth);
+			break;
+		case MAX:
+			sortAscendingArr(arr, depth);
+			break;
+	}
 	
 	return convertArrNumber(arr, depth);
 }
@@ -112,6 +130,29 @@ void sortAscendingArr(int arr[], int size)
 		for (int y = size - 1; y > i; y--)
 		{
 			if (arr[y] < arr[y - 1])
+			{
+				SwapArr(arr, y, y - 1);
+				sortingFinished = 0;
+			}
+		}
+		
+		if (sortingFinished)
+			break;
+	}
+}
+
+//Функция выполняет сортировку массива по убыванию
+void sortDescendingArr(int arr[], int size)
+{
+	int sortingFinished;
+	
+	for (int i = 0; i < size - 1; i++)
+	{
+		sortingFinished = 1;
+		
+		for (int y = size - 1; y > i; y--)
+		{
+			if (arr[y] > arr[y - 1])
 			{
 				SwapArr(arr, y, y - 1);
 				sortingFinished = 0;
