@@ -99,11 +99,11 @@ int maxArr(int arr[], int size)
 int sumMax2Arr(int arr[], int size)
 {
 	int max1 = maxArr(arr, size), max2 = minArr(arr, size);
-	int pos = indexArr(arr, max1, size);
+	int index = indexArr(arr, max1, size);
 	
 	for (int i = 0; i < size; i++)
 	{
-		if (max2 < arr[i] && i != pos)
+		if (max2 < arr[i] && i != index)
 			max2 = arr[i];
 	}
 	
