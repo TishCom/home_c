@@ -50,13 +50,13 @@ void selectionCoincidenceArr(int number)
 //Функция возвращает колличетво чисел из number которые кратны devider
 int multiplesNumber(int number, int devider)
 {
-	int coincidence = 0;
+	int match = 0;
 	
 	for (int i = 2; i <= number; i++)
 	{
 		if (i % devider == 0)
-			coincidence++;
+			match++;
 	}
 	
-	return coincidence;
+	return match;
 }
