@@ -23,14 +23,28 @@
 
 
 #include <stdio.h>
+#include <inttypes.h>
 
 //Размер массива
 #define SIZE 	10
 
-//Размер массива
-#define ASCENDING 	1
-//Размер массива
-#define DISCENDING 	0
+//Возможные действия с частью массива
+enum ActionArray
+{
+	DISCENDING       = 1,
+	ASCENDING        = 2,
+	INVERSION        = 3,
+	SORT_LAST_DIGIT  = 4
+};
+
+//Псевдонимы стандартных систем счисления
+enum NumberSystem
+{
+	BINARY     	= 2,
+	OCTAL      	= 8,
+	DECIMAL  	= 10,
+	HEXADECIMAL = 16
+};
 
 //Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size);
@@ -46,6 +60,17 @@ void sortAscendingArr(int arr[], int size);
 void sortDescendingArr(int arr[], int size);
 //Функция выполняет меняет элементы в массиве местами
 void SwapArr(int arr[], int i, int j);
+//Функция меняет элементы массива местами задом наперед
+void inversionArr(int arr[], int size);
+//Функция выполняет сортировку массива по последней цифре элемента
+void sortLastDigitArr(int arr[], int size);
+//Функция возвращает число numberIN в степени power
+uint32_t powerNumber(int32_t numberIN, int32_t power);
+/* 
+ * Функция возвращает число находящееся в разряде digit числа number.
+ * При этом number имеет основание baseNumber.
+ */
+uint32_t returnDigit(uint32_t number, uint32_t digit, uint32_t baseNumber);
 
 int main(int argc, char **argv)
 {
@@ -124,15 +149,45 @@ void sortDescendingArr(int arr[], int size)
 	}
 }
 
+//Функция выполняет сортировку массива по последней цифре элемента
+void sortLastDigitArr(int arr[], int size)
+{
+	int sortingFinished;
+	
+	for (int i = 0; i < size; i++)
+	{
+		sortingFinished = 1;
+		
+		for (int y = size - 1; y > i; y--)
+		{
+			if (returnDigit(arr[y], 0, DECIMAL) < returnDigit(arr[y - 1], 0, DECIMAL))
+			{
+				SwapArr(arr, y, y - 1);
+				sortingFinished = 0;
+			}
+		}
+		
+		if (sortingFinished)
+			break;
+	}
+}
+
+//Функция меняет элементы массива местами задом наперед
+void inversionArr(int arr[], int size)
+{
+	for (int i = 0; i < size / 2; i++)
+		SwapArr(arr, i, size - i - 1);
+}
+
 //Функция выполняет сортировку массива (половина возрастающая, половина убывающая)
 void sortPartsArr(int arr[], int crushing, int size)
 {
 	int part = 0;
 	sortCrushingArr(arr, part++, ASCENDING, size / crushing);
-	sortCrushingArr(arr, part++, DISCENDING, size / crushing);
+	sortCrushingArr(arr, part, DISCENDING, size / crushing);
 }
 
-//Функция выполняет сортировку половины массива 
+//Функция выполняет необходимые действия с чстью массива 
 void sortCrushingArr(int arr[], int number, int action, int size)
 {
 	int arr1[size];
@@ -148,8 +203,12 @@ void sortCrushingArr(int arr[], int number, int action, int size)
 		case DISCENDING:
 			sortDescendingArr(arr1, size);
 			break;
-		default:
-			;
+		case INVERSION:
+			inversionArr(arr1, size);;
+			break;
+		case SORT_LAST_DIGIT:
+			sortLastDigitArr(arr1, size);
+			break;
 	}
 	
 	for (int i = 0; i < size; i++)
@@ -162,4 +221,24 @@ void SwapArr(int arr[], int i, int j)
 	int temp = arr[i];
 	arr[i] = arr[j];
 	arr[j] = temp;
+}
+
+/* 
+ * Функция возвращает число находящееся в разряде digit числа number.
+ * При этом number имеет основание baseNumber.
+ */
+uint32_t returnDigit(uint32_t number, uint32_t digit, uint32_t baseNumber)
+{
+	return (number / powerNumber(baseNumber, digit)) % baseNumber;
+}
+
+//Функция возвращает число numberIN в степени power
+uint32_t powerNumber(int32_t numberIN, int32_t power)
+{
+	int32_t numberOUT = 1;
+	
+	for (int i = 0; i < power; i++)
+		numberOUT *= numberIN;
+	
+	return numberOUT;
 }
