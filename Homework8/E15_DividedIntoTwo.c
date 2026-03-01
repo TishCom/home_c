@@ -41,13 +41,10 @@ int main(int argc, char **argv)
 	int arr[SIZE] = {0};
 	int arrPositive[SIZE] = {0};
 	int arrNegative[SIZE] = {0};
-	int size = 0;
 	
 	inputArr(arr, SIZE);
-	size = sortPositiveArr(arr, arrPositive, SIZE);
-	outputArr(arrPositive, size);
-	size = sortNegativeArr(arr, arrNegative, SIZE);
-	outputArr(arrNegative, size);
+	outputArr(arrPositive, sortPositiveArr(arr, arrPositive, SIZE));
+	outputArr(arrNegative, sortNegativeArr(arr, arrNegative, SIZE));
 	
 	return 0;
 }
