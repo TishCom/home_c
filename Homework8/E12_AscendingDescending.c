@@ -27,12 +27,17 @@
 //Размер массива
 #define SIZE 	10
 
+//Размер массива
+#define ASCENDING 	1
+//Размер массива
+#define DISCENDING 	0
+
 //Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size);
 //Функция выводит значения элементов массива в терминал
 int outputArr(int arr[], int size);
 //Функция выполняет сортировку массива (половина возрастающая, половина убывающая)
-void sortHalvesArr(int arr[], int crushing, int size);
+void sortPartsArr(int arr[], int crushing, int size);
 //Функция выполняет сортировку половины массива 
 void sortCrushingArr(int arr[], int number, int isAscending, int size);
 //Функция выполняет сортировку массива по возраствнию
@@ -47,7 +52,7 @@ int main(int argc, char **argv)
 	int arr[SIZE] = {0};
 	
 	inputArr(arr, SIZE);
-	sortHalvesArr(arr, 2, SIZE);
+	sortPartsArr(arr, 2, SIZE);
 	outputArr(arr, SIZE);
 	
 	return 0;
@@ -120,24 +125,32 @@ void sortDescendingArr(int arr[], int size)
 }
 
 //Функция выполняет сортировку массива (половина возрастающая, половина убывающая)
-void sortHalvesArr(int arr[], int crushing, int size)
+void sortPartsArr(int arr[], int crushing, int size)
 {
-	sortCrushingArr(arr, 0, 1, size / crushing);
-	sortCrushingArr(arr, 1, 0, size / crushing);
+	int part = 0;
+	sortCrushingArr(arr, part++, ASCENDING, size / crushing);
+	sortCrushingArr(arr, part++, DISCENDING, size / crushing);
 }
 
 //Функция выполняет сортировку половины массива 
-void sortCrushingArr(int arr[], int number, int isAscending, int size)
+void sortCrushingArr(int arr[], int number, int action, int size)
 {
 	int arr1[size];
 	
 	for (int i = 0, y = size * number; i < size; i++, y++)
 		arr1[i] = arr[y];
 		
-	if (isAscending)
-		sortAscendingArr(arr1, size);
-	else
-		sortDescendingArr(arr1, size);
+	switch (action)
+	{
+		case ASCENDING:
+			sortAscendingArr(arr1, size);
+			break;
+		case DISCENDING:
+			sortDescendingArr(arr1, size);
+			break;
+		default:
+			;
+	}
 	
 	for (int i = 0; i < size; i++)
 		arr[i + size * number] = arr1[i];
