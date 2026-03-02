@@ -181,9 +181,9 @@ void inversionArr(int arr[], int size)
 void sortPartsArr(int arr[], int number, int size)
 {
 	int part = 0;
-	sortAscendingArr(arr + part * SIZE / number, SIZE / number);
+	sortAscendingArr(arr + part * size / number, size / number);
 	part++;
-	sortDescendingArr(arr + part * SIZE / number, SIZE / number);
+	sortDescendingArr(arr + part * size / number, size / number);
 }
 
 //Функция меняет элементы местами
