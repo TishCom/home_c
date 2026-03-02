@@ -75,7 +75,7 @@ int outputArr(int arr[], int size)
 void inversionPartsArr(int arr[], int number, int size)
 {
 	for (int parts = 0; parts < number; parts++)
-		inversionArr(arr + parts * SIZE / number, SIZE / number);
+		inversionArr(arr + parts * size / number, size / number);
 }
 
 //Функция копирует элементы массива arr в arr1 в колличестве size
