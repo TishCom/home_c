@@ -51,15 +51,13 @@ int inputArr(int arr[], int size);
 //Функция выводит значения элементов массива в терминал
 int outputArr(int arr[], int size);
 //Функция выполняет сортировку массива (половина возрастающая, половина убывающая)
-void sortPartsArr(int arr[], int crushing, int size);
-//Функция выполняет сортировку половины массива 
-void sortCrushingArr(int arr[], int number, int isAscending, int size);
+void sortPartsArr(int arr[], int number, int size);
 //Функция выполняет сортировку массива по возраствнию
 void sortAscendingArr(int arr[], int size);
 //Функция выполняет сортировку массива по убыванию
 void sortDescendingArr(int arr[], int size);
-//Функция выполняет меняет элементы в массиве местами
-void SwapArr(int arr[], int i, int j);
+//Функция меняет элементы местами
+void swap(int *i, int *y);
 //Функция меняет элементы массива местами задом наперед
 void inversionArr(int arr[], int size);
 //Функция выполняет сортировку массива по последней цифре элемента
@@ -116,7 +114,7 @@ void sortAscendingArr(int arr[], int size)
 		{
 			if (arr[y] < arr[y - 1])
 			{
-				SwapArr(arr, y, y - 1);
+				swap(&arr[y], &arr[y - 1]);
 				sortingFinished = 0;
 			}
 		}
@@ -139,7 +137,7 @@ void sortDescendingArr(int arr[], int size)
 		{
 			if (arr[y] > arr[y - 1])
 			{
-				SwapArr(arr, y, y - 1);
+				swap(&arr[y], &arr[y - 1]);
 				sortingFinished = 0;
 			}
 		}
@@ -162,7 +160,7 @@ void sortLastDigitArr(int arr[], int size)
 		{
 			if (returnDigit(arr[y], 0, DECIMAL) < returnDigit(arr[y - 1], 0, DECIMAL))
 			{
-				SwapArr(arr, y, y - 1);
+				swap(&arr[y], &arr[y - 1]);
 				sortingFinished = 0;
 			}
 		}
@@ -176,51 +174,24 @@ void sortLastDigitArr(int arr[], int size)
 void inversionArr(int arr[], int size)
 {
 	for (int i = 0; i < size / 2; i++)
-		SwapArr(arr, i, size - i - 1);
+		swap(&arr[i], &arr[size - i - 1]);
 }
 
 //Функция выполняет сортировку массива (половина возрастающая, половина убывающая)
-void sortPartsArr(int arr[], int crushing, int size)
+void sortPartsArr(int arr[], int number, int size)
 {
 	int part = 0;
-	sortCrushingArr(arr, part++, ASCENDING, size / crushing);
-	sortCrushingArr(arr, part, DISCENDING, size / crushing);
+	sortAscendingArr(arr + part * SIZE / number, SIZE / number);
+	part++;
+	sortDescendingArr(arr + part * SIZE / number, SIZE / number);
 }
 
-//Функция выполняет необходимые действия с чстью массива 
-void sortCrushingArr(int arr[], int number, int action, int size)
+//Функция меняет элементы местами
+void swap(int *i, int *y)
 {
-	int arr1[size];
-	
-	for (int i = 0, y = size * number; i < size; i++, y++)
-		arr1[i] = arr[y];
-		
-	switch (action)
-	{
-		case ASCENDING:
-			sortAscendingArr(arr1, size);
-			break;
-		case DISCENDING:
-			sortDescendingArr(arr1, size);
-			break;
-		case INVERSION:
-			inversionArr(arr1, size);;
-			break;
-		case SORT_LAST_DIGIT:
-			sortLastDigitArr(arr1, size);
-			break;
-	}
-	
-	for (int i = 0; i < size; i++)
-		arr[i + size * number] = arr1[i];
-}
-
-//Функция выполняет меняет элементы в массиве местами
-void SwapArr(int arr[], int i, int j)
-{
-	int temp = arr[i];
-	arr[i] = arr[j];
-	arr[j] = temp;
+	int temp = *i;
+	*i = *y;
+	*y = temp;
 }
 
 /* 

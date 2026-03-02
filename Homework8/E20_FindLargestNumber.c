@@ -61,8 +61,8 @@ void fillArrNumber(int arr[], int number, int size);
 int convertArrNumber(int arr[], int size);
 //Функция выполняет сортировку массива по возраствнию
 void sortAscendingArr(int arr[], int size);
-//Функция выполняет меняет элементы в массиве местами
-void SwapArr(int arr[], int i, int j);
+//Функция меняет элементы местами
+void swap(int *i, int *y);
 //Функция выполняет сортировку массива по убыванию
 void sortDescendingArr(int arr[], int size);
 //Функция возвращает максимальное или минимальное число которое может получится из разрядов number
@@ -131,7 +131,7 @@ void sortAscendingArr(int arr[], int size)
 		{
 			if (arr[y] < arr[y - 1])
 			{
-				SwapArr(arr, y, y - 1);
+				swap(&arr[y], &arr[y - 1]);
 				sortingFinished = 0;
 			}
 		}
@@ -154,7 +154,7 @@ void sortDescendingArr(int arr[], int size)
 		{
 			if (arr[y] > arr[y - 1])
 			{
-				SwapArr(arr, y, y - 1);
+				swap(&arr[y], &arr[y - 1]);
 				sortingFinished = 0;
 			}
 		}
@@ -207,10 +207,10 @@ uint32_t depthNumber(int32_t number)
 	return depth;
 }
 
-//Функция выполняет меняет элементы в массиве местами
-void SwapArr(int arr[], int i, int j)
+//Функция меняет элементы местами
+void swap(int *i, int *y)
 {
-	int temp = arr[i];
-	arr[i] = arr[j];
-	arr[j] = temp;
+	int temp = *i;
+	*i = *y;
+	*y = temp;
 }

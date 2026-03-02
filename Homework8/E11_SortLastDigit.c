@@ -50,8 +50,8 @@ void sortLastDigitArr(int arr[], int size);
 uint32_t returnDigit(uint32_t number, uint32_t digit, uint32_t baseNumber);
 //Функция возвращает число numberIN в степени power
 uint32_t powerNumber(int32_t numberIN, int32_t power);
-//Функция выполняет меняет элементы в массиве местами
-void SwapArr(int arr[], int i, int j);
+//Функция меняет элементы местами
+void swap(int *i, int *y);
 
 int main(int argc, char **argv)
 {
@@ -97,7 +97,7 @@ void sortLastDigitArr(int arr[], int size)
 		{
 			if (returnDigit(arr[y], 0, DECIMAL) < returnDigit(arr[y - 1], 0, DECIMAL))
 			{
-				SwapArr(arr, y, y - 1);
+				swap(&arr[y], &arr[y - 1]);
 				sortingFinished = 0;
 			}
 		}
@@ -127,10 +127,10 @@ uint32_t powerNumber(int32_t numberIN, int32_t power)
 	return numberOUT;
 }
 
-//Функция выполняет меняет элементы в массиве местами
-void SwapArr(int arr[], int i, int j)
+//Функция меняет элементы местами
+void swap(int *i, int *y)
 {
-	int temp = arr[i];
-	arr[i] = arr[j];
-	arr[j] = temp;
+	int temp = *i;
+	*i = *y;
+	*y = temp;
 }
