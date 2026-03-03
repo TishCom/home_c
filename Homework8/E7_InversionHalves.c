@@ -74,8 +74,11 @@ int outputArr(int arr[], int size)
 //Функция выполняет инверсию массива arr по частям равным number
 void inversionPartsArr(int arr[], int number, int size)
 {
-	for (int parts = 0; parts < number; parts++)
-		inversionArr(arr + parts * size / number, size / number);
+	for (int parts = 0, partFinal = 0; parts < number; parts++)
+	{
+		partFinal = parts == number - 1 ? size % number : 0;
+		inversionArr(arr + parts * size / number, size / number + partFinal);
+	}
 }
 
 //Функция копирует элементы массива arr в arr1 в колличестве size

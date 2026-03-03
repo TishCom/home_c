@@ -180,10 +180,8 @@ void inversionArr(int arr[], int size)
 //Функция выполняет сортировку массива (половина возрастающая, половина убывающая)
 void sortPartsArr(int arr[], int number, int size)
 {
-	int part = 0;
-	sortAscendingArr(arr + part * size / number, size / number);
-	part++;
-	sortDescendingArr(arr + part * size / number, size / number);
+	sortAscendingArr(arr, size / number);
+	sortDescendingArr(arr + size / number, size / number);
 }
 
 //Функция меняет элементы местами
