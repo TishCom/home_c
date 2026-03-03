@@ -25,10 +25,12 @@
 #include <stdio.h>
 #include <ctype.h>
 
-void waitingEndInput(void);
+void skipString(void);
 char getFirstChar(void);
 int getInt(void);
 int acceptable(char ch);
+char getFirstNoSpaceChar(void);
+char skipSpace(void);
 
 int main(int argc, char **argv)
 {
@@ -40,7 +42,7 @@ int main(int argc, char **argv)
 	printf("c) multiplication	d) division\n");
 	printf("q) exit\n");
 	
-	while ((opertion = getFirstChar()) != 'q')
+	while ((opertion = getFirstNoSpaceChar()) != 'q')
 	{
 		if (!acceptable(opertion))
 		{
@@ -90,10 +92,26 @@ char getFirstChar(void)
 {
 	int ch = getchar();
 	
+	skipString();
+	
+	return ch;
+}
+
+char getFirstNoSpaceChar(void)
+{
+	int ch = skipSpace();
+	
+	skipString();
+	
+	return ch;
+}
+
+char skipSpace(void)
+{
+	int ch = getchar();
+	
 	while (isspace(ch))
 		ch = getchar();
-	
-	waitingEndInput();
 	
 	return ch;
 }
@@ -103,12 +121,12 @@ int getInt(void)
 	int number;
 	
 	while (scanf("%d", &number) != 1)
-		waitingEndInput();
+		skipString();
 	
 	return number;
 }
 
-void waitingEndInput(void)
+void skipString(void)
 {
 	while (getchar() != '\n')
 		continue;
