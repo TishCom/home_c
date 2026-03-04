@@ -27,6 +27,7 @@
 double negtivePowerNumber(double numberIN, int power);
 double positivePowerNumber(double numberIN, int power);
 double powerNumber(double numberIN, int power);
+double powerNumber1(double numberIN, int power);
 
 int main(int argc, char **argv)
 {
@@ -34,6 +35,11 @@ int main(int argc, char **argv)
 	printf("%.3f\n", powerNumber(5.687, -3));
 	printf("%.3f\n", powerNumber(5.687, 0));
 	printf("%.3f\n", powerNumber(0, 0));
+	
+	printf("%.3f\n", powerNumber1(5.687, 3));
+	printf("%.3f\n", powerNumber1(5.687, -3));
+	printf("%.3f\n", powerNumber1(5.687, 0));
+	printf("%.3f\n", powerNumber1(0, 0));
 	
 	return 0;
 }
@@ -46,8 +52,32 @@ double powerNumber(double numberIN, int power)
 		numberOUT = positivePowerNumber(numberIN, power);
 	else if (power < 0)
 		numberOUT = negtivePowerNumber(numberIN, power);
-	else if (power == 0 && numberIN == 0)
-		printf("Text.\n");
+	
+	return numberOUT;
+}
+
+double powerNumber1(double numberIN, int power)
+{
+	double numberOUT = 1;
+	int sign = 0;
+	
+	if (power < 0)
+	{
+		sign = 1;
+		power = -power;
+	}
+	
+	if (power == 0 && numberIN == 0)
+		printf("TEXT.\n");
+		
+	for (int i = 0; i < power; i++)
+	{
+		if (sign)
+			numberOUT /= numberIN;
+		else
+			numberOUT *= numberIN;
+	}
+		
 	
 	return numberOUT;
 }

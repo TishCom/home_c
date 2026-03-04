@@ -1,7 +1,7 @@
 /*
- * 11_CycleFibonacci.c
+ * 10_UniversalTo.c
  * 
- * Copyright 2026 Tisha <Tisha@DESKTOP-TSPB5RM>
+ * Copyright 2026 tisha <tisha@DESKTOP-H2QK95F>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,32 +24,34 @@
 
 #include <stdio.h>
 
-int cycleFibonacci(int number);
+void toBinary(unsigned long number);
+void toBaseN(int number, int base);
 
 int main(int argc, char **argv)
 {
-	printf("%d\n", cycleFibonacci(1));
-	printf("%d\n", cycleFibonacci(3));
-	printf("%d\n", cycleFibonacci(6));
-	printf("%d\n", cycleFibonacci(8));
-	printf("%d\n", cycleFibonacci(10));
+	toBinary(255);
+	putchar('\n');
+	toBaseN(255, 10);
 	
 	return 0;
 }
 
-int cycleFibonacci(int number)
+void toBinary(unsigned long number)
 {
-	int numberA = 0, numberB = 1, numberOUT = 0;
+	int r = number % 2;
 	
-	if (number > 1)
-		numberOUT = 1;
+	if (number >= 2)
+		toBinary(number / 2);
+		
+	putchar(r == 0 ? '0' : '1');
+}
+
+void toBaseN(int number, int base)
+{
+	int r = number % base;
 	
-	while (--number > 1)
-	{
-		numberOUT = numberA + numberB;
-		numberA = numberB;
-		numberB = numberOUT;
-	}
-	
-	return numberOUT;
+	if (number >= base)
+		toBaseN(number / base, base);
+		
+	putchar(r + '0');
 }
