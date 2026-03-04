@@ -1,5 +1,5 @@
 /*
- * Swap.c
+ * 11_CycleFibonacci.c
  * 
  * Copyright 2026 Tisha <Tisha@DESKTOP-TSPB5RM>
  * 
@@ -24,35 +24,32 @@
 
 #include <stdio.h>
 
-void sorting(double *x, double *y, double *z);
-void swap(double *x, double *y);
+int cycleFibonacci(int number);
 
 int main(int argc, char **argv)
 {
-	double x = 3.45, y = 5.04, z = 0.23;
-	
-	printf("%.2f %.2f %.2f\n", x, y, z);
-	
-	sorting(&x, &y, &z);
-	
-	printf("%.2f %.2f %.2f\n", x, y, z);
+	printf("%d\n", cycleFibonacci(1));
+	printf("%d\n", cycleFibonacci(3));
+	printf("%d\n", cycleFibonacci(6));
+	printf("%d\n", cycleFibonacci(8));
+	printf("%d\n", cycleFibonacci(10));
 	
 	return 0;
 }
 
-void sorting(double *x, double *y, double *z)
+int cycleFibonacci(int number)
 {
-	if(*x > *y)
-		swap(x, y);
-	if(*x > *z)
-		swap(x, z);
-	if(*y > *z)
-		swap(y, z);
-}
-
-void swap(double *x, double *y)
-{
-	double temp = *x;
-	*x = *y;
-	*y = temp;
+	int numberA = 0, numberB = 1, result = 0;
+	
+	if (number > 1)
+		result = 1;
+	
+	while (--number > 1)
+	{
+		result = numberA + numberB;
+		numberA = numberB;
+		numberB = result;
+	}
+	
+	return result;
 }

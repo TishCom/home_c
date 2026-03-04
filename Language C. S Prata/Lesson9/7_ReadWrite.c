@@ -1,5 +1,5 @@
 /*
- * Swap.c
+ * 7_ReadWrite.c
  * 
  * Copyright 2026 Tisha <Tisha@DESKTOP-TSPB5RM>
  * 
@@ -23,36 +23,36 @@
 
 
 #include <stdio.h>
+#include <ctype.h>
 
-void sorting(double *x, double *y, double *z);
-void swap(double *x, double *y);
+#define NO_CHAR -1
+
+int numberLater(char ch);
 
 int main(int argc, char **argv)
 {
-	double x = 3.45, y = 5.04, z = 0.23;
+	char ch = 0;
+	int number = 0;
 	
-	printf("%.2f %.2f %.2f\n", x, y, z);
-	
-	sorting(&x, &y, &z);
-	
-	printf("%.2f %.2f %.2f\n", x, y, z);
+	while ((ch = getchar()) != EOF)
+	{
+		number = numberLater(ch);
+		if (number != NO_CHAR)
+			printf("%c - later number %d.\n", ch, number);
+	}
 	
 	return 0;
 }
 
-void sorting(double *x, double *y, double *z)
+int numberLater(char ch)
 {
-	if(*x > *y)
-		swap(x, y);
-	if(*x > *z)
-		swap(x, z);
-	if(*y > *z)
-		swap(y, z);
-}
-
-void swap(double *x, double *y)
-{
-	double temp = *x;
-	*x = *y;
-	*y = temp;
+	if (isalpha(ch))
+	{
+		if (islower(ch))
+			return ch - 'a' + 1;
+		else if (isupper(ch))
+			return ch - 'A' + 1;
+	}	
+	
+	return NO_CHAR;
 }
