@@ -1,7 +1,7 @@
 /*
- * 6_Sorting.c
+ * Swap.c
  * 
- * Copyright 2026 tisha <tisha@DESKTOP-H2QK95F>
+ * Copyright 2026 Tisha <Tisha@DESKTOP-TSPB5RM>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,41 +24,35 @@
 
 #include <stdio.h>
 
-double max(double number1, double number2);
-double min(double number1, double number2);
 void sorting(double *x, double *y, double *z);
+void swap(double *x, double *y);
 
 int main(int argc, char **argv)
 {
-	double x = 67.43, y = 105.87, z = 67.43;
+	double x = 3.45, y = 5.04, z = 0.23;
 	
-	printf("%.2f %.2f %.2f\n", x, y, z);
+	printf("%.2f %.2f %.2f", x, y, z);
+	
 	sorting(&x, &y, &z);
-	printf("%.2f %.2f %.2f\n", x, y, z);
+	
+	printf("%.2f %.2f %.2f", x, y, z);
 	
 	return 0;
 }
 
 void sorting(double *x, double *y, double *z)
 {
-	double minNumber = min(*x, min(*y, *z));
-	double maxNumber = max(*x, max(*y, *z));
-	
-	if (*x > minNumber && *x < maxNumber)
-		*y = *x;
-	else if (*z > minNumber && *z < maxNumber)
-		*y = *z;
-		
-	*x = minNumber;
-	*z = maxNumber;
-} 
-
-double max(double number1, double number2)
-{
-	return number1 > number2 ? number1 : number2;
+	if(*x > *y)
+		swap(x, y);
+	if(*x > *z)
+		swap(x, z);
+	if(*y > *z)
+		swap(y, z);
 }
 
-double min(double number1, double number2)
+void swap(double *x, double *y)
 {
-	return number1 < number2 ? number1 : number2;
+	double temp = *x;
+	*x = *y;
+	*y = temp;
 }
