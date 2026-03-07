@@ -24,16 +24,21 @@
 
 #include <stdio.h>
 
-#define SIZE 10
+#define SIZE 	10
+#define BAD  	'b'
 
 //Функция возвращающая элемент массива с минимальным значением
 int minArr(int arr[], int size);
-//Функция возвращающая элемент массива с максимальным значением
+//Функция возвращающая элемент массива с максимальным отрицательным значением
 int maxNegativeArr(int arr[], int size);
 //Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size);
 //Функция меняет элементы местами
 void swap(int *i, int *y);
+/*
+ * Функция меняет местами элемент массива с максимальным
+ * отрицательным значением с последним элементом массива.
+*/
 void swap_negmax_last(int size, int a[]);
 /*
  * Функция возвращающая номмер элемента массива равного element
@@ -80,7 +85,7 @@ int inputArr(int arr[], int size)
 	return i;
 }
 
-//Функция возвращающая элемент массива с максимальным значением
+//Функция возвращающая элемент массива с максимальным отрицательным значением
 int maxNegativeArr(int arr[], int size)
 {
 	int maxNegative = minArr(arr, size);
@@ -94,7 +99,7 @@ int maxNegativeArr(int arr[], int size)
 		}
 	}
 	
-	return maxNegative >= 0 ? 'b' : maxNegative;
+	return maxNegative >= 0 ? BAD : maxNegative;
 }
 
 //Функция возвращающая элемент массива с минимальным значением
@@ -119,11 +124,15 @@ void swap(int *i, int *y)
 	*y = temp;
 }
 
+/*
+ * Функция меняет местами элемент массива с максимальным
+ * отрицательным значением с последним элементом массива.
+*/ 
 void swap_negmax_last(int size, int arr[])
 {
 	int maxNeg = maxNegativeArr(arr, size);
 	int index = indexArr(arr, maxNeg, size);
-	if (maxNeg != 'b')
+	if (maxNeg != BAD)
 		swap(&arr[index], &arr[size - 1]);
 }
 

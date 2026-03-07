@@ -24,6 +24,7 @@
 
 #include <stdio.h>
 
+//Размер массива
 #define SIZE 1000
 
 //Функция возвращающая элемент массива с максимальным значением
@@ -32,9 +33,10 @@ int maxArr(int arr[], int size);
 int minArr(int arr[], int size);
 //Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size);
+//Функция возвращает пропущенное в массиве число
 int missingNumber(int arr[], int size);
-//Функция возвращает колличетво совпадений в массиве arr элементов element
-int numberCoincidenceElementArr(int arr[], int element, int size);
+//Функция сообщает есть ли в массиве элемент со значением element
+int coincidenceElementArr(int arr[], int element, int size);
 
 int main(int argc, char **argv)
 {
@@ -85,19 +87,20 @@ int maxArr(int arr[], int size)
 	return max;
 }
 
+//Функция возвращает пропущенное в массиве число
 int missingNumber(int arr[], int size)
 {
 	for (int j = minArr(arr, size); j <= maxArr(arr, size); j++)
 	{
-		if (!numberCoincidenceElementArr(arr, j, size))
+		if (!coincidenceElementArr(arr, j, size))
 			return j;
 	}
 	
 	return -1;
 }
 
-//Функция возвращает колличетво совпадений в массиве arr элементов element
-int numberCoincidenceElementArr(int arr[], int element, int size)
+//Функция сообщает есть ли в массиве элемент со значением element
+int coincidenceElementArr(int arr[], int element, int size)
 {
 	for (int i = 0; i < size; i++)
 	{

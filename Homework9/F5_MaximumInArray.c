@@ -53,7 +53,7 @@ int inputArr(int arr[], int size)
 	return i;
 }
 
-//Функция возвращающая элемент массива с минимальным значением
+//Функция возвращающая элемент массива с максимальным значением
 int find_max_array(int size, int arr[])
 {
 	int max =  arr[0];

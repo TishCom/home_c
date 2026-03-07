@@ -26,7 +26,12 @@
 #include <stdlib.h>
 #include <time.h>
 
-//Функция выполняет отбор повторяющихся элементов массива
+//Размер массива
+#define SIZE 	10
+//Максимальное значение элемента массива
+#define LIM		20
+
+//Функция сообщает существует ли в данном массиве два одинаковых элемента
 int is_two_same(int size, int arr[]);
 //Функция заполняющая массив случайными значениями
 int inputRandArr(int arr[], int size, int limit);
@@ -41,13 +46,13 @@ int inputArr(int arr[], int size);
 int main(int argc, char **argv)
 {
 	srand(time(NULL));
-	int arr[10] = {0};
+	int arr[SIZE] = {0};
 	
-	inputRandArr(arr, 10, 20);
-	outputArr(arr, 10);
+	inputRandArr(arr, SIZE, LIM);
+	outputArr(arr, SIZE);
 	printf("\n");
 	
-	if(is_two_same(10, arr))
+	if(is_two_same(SIZE, arr))
 		printf("YES\n");
 	else
 		printf("NO\n");
@@ -91,7 +96,7 @@ int inputArr(int arr[], int size)
 	return i;
 }
 
-//Функция выполняет отбор повторяющихся элементов массива
+//Функция сообщает существует ли в данном массиве два одинаковых элемента
 int is_two_same(int size, int arr[])
 {
 	int temp = 0;

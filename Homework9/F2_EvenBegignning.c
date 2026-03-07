@@ -51,10 +51,9 @@ int main(int argc, char **argv)
 {
 	srand(time(NULL));
 	
-	int arr[SIZE] = {20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+	int arr[SIZE] = {0};//{20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
 	
-//	inputRandArr(arr, SIZE, LIMIT);
-//	inputArr(arr, SIZE);
+	inputRandArr(arr, SIZE, LIMIT);
 	outputArr(arr, SIZE);
 	printf("\n");
 	sortAscendingArr(arr, SIZE);

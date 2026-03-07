@@ -28,8 +28,12 @@
 //Размер массива
 #define SIZE 	1000
 
-//Функция возвращает максимальное или минимальное число которое может получится из разрядов number
-void posibleNumber(char arr[], int size);
+/*
+ * Функция вывдит на экран цифры в порядке возрастания,
+ * входящие в десятичную запись натурального числа. 
+ * Цифра пробел сколько раз данная цифра встречается в числе.
+*/
+void printNumberDigit(char arr[], int size);
 
 int main(int argc, char **argv)
 {
@@ -38,13 +42,17 @@ int main(int argc, char **argv)
 	for (int i = 0; (ch = getchar()) != '\n'; i++)
 		 stringNumber[i] = ch;
 	
-	posibleNumber(stringNumber, strlen(stringNumber));
+	printNumberDigit(stringNumber, strlen(stringNumber));
 	
 	return 0;
 }
 
-//Функция возвращает максимальное или минимальное число которое может получится из разрядов number
-void posibleNumber(char arr[], int size)
+/*
+ * Функция вывдит на экран цифры в порядке возрастания,
+ * входящие в десятичную запись натурального числа. 
+ * Цифра пробел сколько раз данная цифра встречается в числе.
+*/
+void printNumberDigit(char arr[], int size)
 {
 	int digit[10] = {0};
 	

@@ -33,8 +33,8 @@ int inputArr(int arr[], int size);
 int minArr(int arr[], int size);
 //Функция возвращающая элемент массива с максимальным значением
 int maxArr(int arr[], int size);
-//Функция возвращающая сумму двух наибольших элементов массива
-void sumMin2Arr(int arr[], int size);
+//Функция печатает индексы двух наименьших элементов массива
+void printMin2Arr(int arr[], int size);
 /*
  * Функция возвращающая номмер элемента массива равного element
  * (если такого нет вернет -1)
@@ -45,7 +45,9 @@ int posArr(int arr[], int element, int size);
  * (если такого нет вернет -1)
  */
 int indexArr(int arr[], int element, int size);
+//Фуекция возвращает минимальное из двух значений
 int min(int a, int b);
+//Фуекция возвращает максимальное из двух значений
 int max(int a, int b);
 
 int main(int argc, char **argv)
@@ -54,7 +56,7 @@ int main(int argc, char **argv)
 	
 	inputArr(arr, SIZE);
 	
-	sumMin2Arr(arr, SIZE);
+	printMin2Arr(arr, SIZE);
 	
 	return 0;
 }
@@ -97,8 +99,8 @@ int maxArr(int arr[], int size)
 	return max;
 }
 
-//Функция возвращающая сумму двух наибольших элементов массива
-void sumMin2Arr(int arr[], int size)
+//Функция печатает индексы двух наименьших элементов массива
+void printMin2Arr(int arr[], int size)
 {
 	int min1 = maxArr(arr, size), min2 = minArr(arr, size);
 	int index = indexArr(arr, min2, size), index1 = 0;
@@ -115,11 +117,13 @@ void sumMin2Arr(int arr[], int size)
 	printf("%d %d\n", min(index1, index), max(index1, index));
 }
 
+//Фуекция возвращает максимальное из двух значений
 int max(int a, int b)
 {
 	return a > b ? a : b;
 }
 
+//Фуекция возвращает минимальное из двух значений
 int min(int a, int b)
 {
 	return a < b ? a : b;
