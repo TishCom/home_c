@@ -92,11 +92,8 @@ int maxNegativeArr(int arr[], int size)
 	
 	for (int i = 0; i < size; i++)
 	{
-		if (arr[i] < 0)
-		{
-			if (maxNegative < arr[i])
-				maxNegative = arr[i];
-		}
+		if (arr[i] < 0 && maxNegative < arr[i])
+			maxNegative = arr[i];
 	}
 	
 	return maxNegative >= 0 ? BAD : maxNegative;
@@ -131,9 +128,8 @@ void swap(int *i, int *y)
 void swap_negmax_last(int size, int arr[])
 {
 	int maxNeg = maxNegativeArr(arr, size);
-	int index = indexArr(arr, maxNeg, size);
 	if (maxNeg != BAD)
-		swap(&arr[index], &arr[size - 1]);
+		swap(&arr[indexArr(arr, maxNeg, size)], &arr[size - 1]);
 }
 
 /*
