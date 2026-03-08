@@ -43,6 +43,7 @@ void swap(int *i, int *y);
 int rsndomNumber(int limit);
 //Функция заполняющая массив случайными значениями в диапазоне от -limit/2 до limit/2
 int inputRandArr(int arr[], int size, int limit);
+//Функция функция возвращает колличество четных чисел в моссиве
 int numberEvenElementArr(int arr[], int size);
 //Функция копирует элементы массива arr в arr1 в колличестве size
 void copyArr(int arr[], int arr1[], int size);
@@ -51,7 +52,7 @@ int main(int argc, char **argv)
 {
 	srand(time(NULL));
 	
-	int arr[SIZE] = {0};//{20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1};
+	int arr[SIZE] = {0};
 	
 	inputRandArr(arr, SIZE, LIMIT);
 	outputArr(arr, SIZE);
@@ -118,6 +119,7 @@ void sortAscendingArr(int arr[], int size)
 	copyArr(arrNoEven, arr + numberEven, size - numberEven);
 }
 
+//Функция функция возвращает колличество четных чисел в моссиве
 int numberEvenElementArr(int arr[], int size)
 {
 	int numberEven = 0;
