@@ -24,29 +24,65 @@
 
 #include <stdio.h>
 
-void blackOrWhite(void);
+//Меньшая возможная буква в названии клетки
+#define LIM_LETTER_MIN		'A'
+//Большая возможная буква в названии клетки
+#define LIM_LETTER_MAX		'H'
+//Меньшая возможная цифра в названии клетки
+#define LIM_NUMBER_MIN		1
+//Большая возможная цифра в названии клетки
+#define LIM_NUMBER_MAX		8
+//Колличество клеток в в одной линии
+#define NUMBER_CELL_IN_LINE	8
+
+//Функция возвращает 1 если введенная клетка белая и ноль в противном случае
+int blackOrWhite(void);
+//Функция пропускает все символу в строке
+void skipString(void);
+//Функция проверяет является ли ввод корректным
+int isCorrectInput(char letter, int number);
 
 int main(int argc, char **argv)
 {
-	blackOrWhite();
+	if (blackOrWhite())
+		printf("WHITE\n");
+	else
+		printf("BLACK\n");
 	
 	return 0;
 }
 
-void blackOrWhite(void)
+//Функция возвращает 1 если введенная клетка белая и ноль в противном случае
+int blackOrWhite(void)
 {
-	char cell[3];
-	int later = 0, number = 0;
+	char letter = 0;
+	int number = 0;
 	
-	scanf("%s", cell);
-	later = cell[0] - 'A';
-	number = cell[1] - '0';
+	while((scanf("%c%d", &letter, &number) != 2) ||
+			!isCorrectInput(letter, number))
+	{
+		skipString();
+		printf("Enter correct volue.\n");
+	}
 	
-	if (later % 2 == 0)
+	letter -= 'A';
+	
+	if (letter % 2 == 0)
 		number++;
 	
-	if ((later * 8 + number) % 2)
-		printf("WHITE\n");
-	else
-		printf("BLACK\n");
+	return ((letter * NUMBER_CELL_IN_LINE + number) % 2);
+}
+
+//Функция пропускает все символу в строке
+void skipString(void)
+{
+	while (getchar() != '\n')
+		continue;
+}
+
+//Функция проверяет является ли ввод корректным
+int isCorrectInput(char letter, int number)
+{
+	return ((letter >= LIM_LETTER_MIN && letter <= LIM_LETTER_MAX) &&
+			(number >= LIM_NUMBER_MIN && number <= LIM_NUMBER_MAX));
 }

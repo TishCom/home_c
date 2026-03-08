@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <inttypes.h>
 
+//Размер массива
 #define SIZE 10
 
 //Псевдонимы стандартных систем счисления
@@ -36,7 +37,8 @@ enum NumberSystem
 	HEXADECIMAL = 16
 };
 
-void averageTraceMatrix(int arr[], int size);
+//Функция заменяет все четные или нечетные числа в массиве исходя из их соотношения
+void replaceEvenOddNumberArr(int arr[], int size);
 //Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size);
 //Функция возвращает число numberIN в степени power
@@ -51,10 +53,16 @@ uint32_t returnDigit(uint32_t number, uint32_t digit, uint32_t baseNumber);
  * При этом number имеет основание baseNumber.
  */
 uint32_t shiftDigitNumberRight(uint32_t number, uint32_t digit, uint32_t baseNumber);
+//Функция заменяет нечетное число на произведение нечетных цифр в его десятичной записи
 int multOddDigit(int number);
+//Функция заменяет четное число на произведение четных цифр в его десятичной записи
 int multEvenDigit(int number);
 //Функция выводит значения элементов массива в терминал
 int outputArr(int arr[], int size);
+//Функция заменяет все нечетноые числа в массиве на произведение нечетных цифр в его десятичной записи
+void replaceOddNumberArr(int arr[], int size);
+//Функция заменяет все четноые числа в массиве на произведение четных цифр в его десятичной записи
+void replaceEvenNumberArr(int arr[], int size);
 
 int main(int argc, char **argv)
 {
@@ -62,7 +70,7 @@ int main(int argc, char **argv)
 	
 	inputArr(arr, SIZE);
 	
-	averageTraceMatrix(arr, SIZE);
+	replaceEvenOddNumberArr(arr, SIZE);
 	
 	outputArr(arr, SIZE);
 	
@@ -89,7 +97,8 @@ int outputArr(int arr[], int size)
 	return i;
 }
 
-void averageTraceMatrix(int arr[], int size)
+//Функция заменяет все четные или нечетные числа в массиве исходя из их соотношения
+void replaceEvenOddNumberArr(int arr[], int size)
 {
 	int even = 0, odd = 0;;
 	
@@ -102,21 +111,9 @@ void averageTraceMatrix(int arr[], int size)
 	}
 	
 	if (even > odd)
-	{
-		for (int i = 0; i < size; i++)
-		{
-			if (arr[i] % 2)
-				arr[i] = multOddDigit(arr[i]);
-		}
-	}
+		replaceOddNumberArr(arr, size);
 	else
-	{
-		for (int i = 0; i < size; i++)
-		{
-			if (arr[i] % 2 == 0)
-				arr[i] = multEvenDigit(arr[i]);
-		}
-	}
+		replaceEvenNumberArr(arr, size);
 }
 
 /* 
@@ -148,6 +145,7 @@ uint32_t powerNumber(int32_t numberIN, int32_t power)
 	return numberOUT;
 }
 
+//Функция заменяет нечетное число на произведение нечетных цифр в его десятичной записи
 int multOddDigit(int number)
 {
 	int mult = 1, digit = 0;
@@ -164,6 +162,7 @@ int multOddDigit(int number)
 	return mult;
 }
 
+//Функция заменяет четное число на произведение четных цифр в его десятичной записи
 int multEvenDigit(int number)
 {
 	int mult = 1, digit = 0;
@@ -178,4 +177,24 @@ int multEvenDigit(int number)
 	}
 	
 	return mult;
+}
+
+//Функция заменяет все нечетноые числа в массиве на произведение нечетных цифр в его десятичной записи
+void replaceOddNumberArr(int arr[], int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		if (arr[i] % 2)
+			arr[i] = multOddDigit(arr[i]);
+	}
+}
+
+//Функция заменяет все четноые числа в массиве на произведение четных цифр в его десятичной записи
+void replaceEvenNumberArr(int arr[], int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		if (arr[i] % 2 == 0)
+			arr[i] = multEvenDigit(arr[i]);
+	}
 }

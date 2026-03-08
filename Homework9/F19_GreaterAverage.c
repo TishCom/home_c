@@ -24,12 +24,21 @@
 
 #include <stdio.h>
 
-#define SIZE 25
+//Колличество элементов в строке матрици
+#define NUMBER_STRING	5
+//Размер массива
+#define SIZE			NUMBER_STRING * NUMBER_STRING
 
-int averageTraceMatrix(int arr[], int size);
+//Функция возвращает среднее арифметическое главной диагонали.
+int averageTraceMatrix(int arr[], int numberString);
 //Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size);
-int numberGreaterAverageTraceMatrix(int arr[], int size);
+/*
+ * Функция возвращает количество положительных элементов квадратной
+ * матрицы, превышающих по величине среднее арифметическое всех
+ * элементов главной диагонали.
+ */
+int numberGreaterAverageTraceMatrix(int arr[], int numberString);
 
 int main(int argc, char **argv)
 {
@@ -37,7 +46,7 @@ int main(int argc, char **argv)
 	
 	inputArr(arr, SIZE);
 	
-	printf("%d\n", numberGreaterAverageTraceMatrix(arr, SIZE));
+	printf("%d\n", numberGreaterAverageTraceMatrix(arr, NUMBER_STRING));
 	
 	return 0;
 }
@@ -52,22 +61,28 @@ int inputArr(int arr[], int size)
 	return i;
 }
 
-int averageTraceMatrix(int arr[], int size)
+//Функция возвращает среднее арифметическое главной диагонали.
+int averageTraceMatrix(int arr[], int numberString)
 {
 	int trace = 0;
 	
-	for (int i = 0; i < size / 5; i++)
-		trace += arr[i * 6];
+	for (int i = 0; i < numberString; i++)
+		trace += arr[i * numberString + i];
 		
-	return trace / 5;
+	return trace / numberString;
 }
 
-int numberGreaterAverageTraceMatrix(int arr[], int size)
+/*
+ * Функция возвращает количество положительных элементов квадратной
+ * матрицы, превышающих по величине среднее арифметическое всех
+ * элементов главной диагонали.
+ */
+int numberGreaterAverageTraceMatrix(int arr[], int numberString)
 {
-	int average = averageTraceMatrix(arr, size);
+	int average = averageTraceMatrix(arr, numberString);
 	int greaterNumber = 0;
 	
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < numberString * numberString; i++)
 	{
 		if (arr[i] > average && arr[i] > 0)
 			greaterNumber++;

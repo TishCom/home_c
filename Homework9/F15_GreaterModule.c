@@ -27,9 +27,14 @@
 //Размер массива
 #define SIZE 10
 
+//Функция возвращает абсолютное значение числа number
 int module(int number);
 //Функция возвращающая элемент массива с максимальным значением
 int maxArr(int arr[], int size);
+/*
+ * Функцию возвращает колличество элементов массива
+ * превосходят по модулю максимальный элемент.
+*/
 int count_bigger_abs(int n, int a[]);
 //Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size);
@@ -55,6 +60,7 @@ int inputArr(int arr[], int size)
 	return i;
 }
 
+//Функция возвращает абсолютное значение числа number
 int module(int number)
 {
 	return number > 0 ? number : -number;
@@ -74,6 +80,10 @@ int maxArr(int arr[], int size)
 	return max;
 }
 
+/*
+ * Функцию возвращает колличество элементов массива
+ * превосходят по модулю максимальный элемент.
+*/
 int count_bigger_abs(int size, int a[])
 {
 	int max = maxArr(a, size), greaterMax = 0;

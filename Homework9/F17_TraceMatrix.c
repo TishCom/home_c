@@ -24,19 +24,23 @@
 
 #include <stdio.h>
 
-#define SIZE 25
+//Колличество элементов в строке матрици
+#define NUMBER_STRING	5
+//Размер массива
+#define SIZE				NUMBER_STRING * NUMBER_STRING
 
-int traceMatrix(int arr[], int size);
+//Функцию находит след матрицы в двумерном массиве.
+int traceMatrix(int arr[], int numberString);
 //Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size);
 
 int main(int argc, char **argv)
 {
-	int arr[25] = {0};//{1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5};
+	int arr[SIZE] = {0};
 	
 	inputArr(arr, SIZE);
 	
-	printf("%d\n", traceMatrix(arr, SIZE));
+	printf("%d\n", traceMatrix(arr, NUMBER_STRING));
 	
 	return 0;
 }
@@ -51,12 +55,13 @@ int inputArr(int arr[], int size)
 	return i;
 }
 
-int traceMatrix(int arr[], int size)
+//Функцию находит след матрицы в двумерном массиве.
+int traceMatrix(int arr[], int numberString)
 {
 	int trace = 0;
 	
-	for (int i = 0; i < size / 5; i++)
-		trace += arr[i * 6];
+	for (int i = 0; i < numberString; i++)
+		trace += arr[i * numberString + i];
 		
 	return trace;
 }

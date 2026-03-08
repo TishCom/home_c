@@ -29,7 +29,9 @@
 
 //Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size);
+//Функция возвращает сумму элементов на заданном отрезке [from, to] для массива.
 int sum_between_ab(int from, int to, int size, int a[]);
+//Функция меняет значения в переменных i и y местами
 void swap(int *i, int *y);
 
 int main(int argc, char **argv)
@@ -53,7 +55,7 @@ int inputArr(int arr[], int size)
 	return i;
 }
 
-
+//Функция возвращает сумму элементов на заданном отрезке [from, to] для массива.
 int sum_between_ab(int from, int to, int size, int a[])
 {
 	int sumNumber = 0;
@@ -70,6 +72,7 @@ int sum_between_ab(int from, int to, int size, int a[])
 	return sumNumber;
 }
 
+//Функция меняет значения в переменных i и y местами
 void swap(int *i, int *y)
 {
 	int temp = *i;

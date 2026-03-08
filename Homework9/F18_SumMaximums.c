@@ -24,23 +24,26 @@
 
 #include <stdio.h>
 
-#define SIZE 			100
-#define LENGTH_STRING 	10
+//Колличество элементов в строке матрици
+#define NUMBER_STRING	10
+//Размер массива
+#define SIZE			NUMBER_STRING * NUMBER_STRING
 
-int traceMatrix(int arr[], int size);
+
 //Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size);
-int sumMaximum(int arr[], int size);
+//Функция возвращает суммы максимальных элементов из каждой строки.
+int sumMaximum(int arr[], int numberString);
 //Функция возвращающая элемент массива с максимальным значением
 int maxArr(int arr[], int size);
 
 int main(int argc, char **argv)
 {
-	int arr[SIZE] = {0};//{1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5};
+	int arr[SIZE] = {0};
 	
 	inputArr(arr, SIZE);
 	
-	printf("%d\n", sumMaximum(arr, SIZE));
+	printf("%d\n", sumMaximum(arr, NUMBER_STRING));
 	
 	return 0;
 }
@@ -55,22 +58,13 @@ int inputArr(int arr[], int size)
 	return i;
 }
 
-int traceMatrix(int arr[], int size)
-{
-	int trace = 0;
-	
-	for (int i = 0; i < size / 5; i++)
-		trace += arr[i * 6];
-		
-	return trace;
-}
-
-int sumMaximum(int arr[], int size)
+//Функция возвращает суммы максимальных элементов из каждой строки.
+int sumMaximum(int arr[], int numberString)
 {
 	int sum = 0;
 	
-	for (int i = 0; i < size / LENGTH_STRING; i++)
-		sum += maxArr(arr + i * LENGTH_STRING, LENGTH_STRING);
+	for (int i = 0; i < numberString; i++)
+		sum += maxArr(arr + i * numberString, numberString);
 		
 	return sum;
 }

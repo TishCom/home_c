@@ -29,7 +29,10 @@
 
 //Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size);
+//Функция возвращает количество элементов на заданном отрезке [from, to] для массива.
 int count_between(int from, int to, int size, int a[]);
+//Функция меняет значения в переменных i и y местами
+void swap(int *i, int *y);
 
 int main(int argc, char **argv)
 {
@@ -52,9 +55,13 @@ int inputArr(int arr[], int size)
 	return i;
 }
 
+//Функция возвращает количество элементов на заданном отрезке [from, to] для массива.
 int count_between(int from, int to, int size, int a[])
 {
 	int number = 0;
+	
+	if (from > to)
+		swap(&from, &to);
 	
 	for (int i = 0; i < size; i++)
 	{
@@ -63,4 +70,12 @@ int count_between(int from, int to, int size, int a[])
 	}
 	
 	return number;
+}
+
+//Функция меняет значения в переменных i и y местами
+void swap(int *i, int *y)
+{
+	int temp = *i;
+	*i = *y;
+	*y = temp;
 }
