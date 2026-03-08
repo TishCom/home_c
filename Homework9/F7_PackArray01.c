@@ -96,7 +96,7 @@ int compression(int a[], int b[], int sizeA)
 	int number = 0, sizeB = 0;
 	for (int i = 0; i < sizeA; i++)
 	{
-		if((number && a[i - 1] != a[i]) || i == 0)
+		if((number && a[i - 1] != a[i]) || (i == 0 && a[i]))
 		{
 			b[sizeB++] = number;
 			number = 0;
