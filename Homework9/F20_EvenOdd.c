@@ -37,6 +37,13 @@ enum NumberSystem
 	HEXADECIMAL = 16
 };
 
+//Псевдонимы четности
+enum EvenOdd
+{
+	EVEN	= 0,
+	ODD		= 1
+};
+
 //Функция заменяет все четные или нечетные числа в массиве исходя из их соотношения
 void replaceEvenOddNumberArr(int arr[], int size);
 //Функция заполняющая массив значениями введнными пользователем
@@ -53,16 +60,12 @@ uint32_t returnDigit(uint32_t number, uint32_t digit, uint32_t baseNumber);
  * При этом number имеет основание baseNumber.
  */
 uint32_t shiftDigitNumberRight(uint32_t number, uint32_t digit, uint32_t baseNumber);
-//Функция заменяет нечетное число на произведение нечетных цифр в его десятичной записи
-int multOddDigit(int number);
-//Функция заменяет четное число на произведение четных цифр в его десятичной записи
-int multEvenDigit(int number);
+//Функция заменяет (не)четное число на произведение (не)четных цифр в его десятичной записи
+int multDigit(int number, int isOdd);
 //Функция выводит значения элементов массива в терминал
 int outputArr(int arr[], int size);
-//Функция заменяет все нечетноые числа в массиве на произведение нечетных цифр в его десятичной записи
-void replaceOddNumberArr(int arr[], int size);
-//Функция заменяет все четноые числа в массиве на произведение четных цифр в его десятичной записи
-void replaceEvenNumberArr(int arr[], int size);
+//Функция заменяет все (не)четноые числа в массиве на произведение (не)четных цифр в его десятичной записи
+void replaceNumberArr(int arr[], int size, int isOdd);
 
 int main(int argc, char **argv)
 {
@@ -111,9 +114,9 @@ void replaceEvenOddNumberArr(int arr[], int size)
 	}
 	
 	if (even > odd)
-		replaceOddNumberArr(arr, size);
+		replaceNumberArr(arr, size, ODD);
 	else
-		replaceEvenNumberArr(arr, size);
+		replaceNumberArr(arr, size, EVEN);
 }
 
 /* 
@@ -145,15 +148,15 @@ uint32_t powerNumber(int32_t numberIN, int32_t power)
 	return numberOUT;
 }
 
-//Функция заменяет нечетное число на произведение нечетных цифр в его десятичной записи
-int multOddDigit(int number)
+//Функция заменяет (не)четное число на произведение (не)четных цифр в его десятичной записи
+int multDigit(int number, int isOdd)
 {
 	int mult = 1, digit = 0;
 	while (number > 0)
 	{
 		digit = returnDigit(number, 0, DECIMAL);
 		
-		if (digit % 2)
+		if (digit % 2 == isOdd)
 			mult *= digit;
 			
 		number = shiftDigitNumberRight(number, 1, DECIMAL);
@@ -162,39 +165,12 @@ int multOddDigit(int number)
 	return mult;
 }
 
-//Функция заменяет четное число на произведение четных цифр в его десятичной записи
-int multEvenDigit(int number)
-{
-	int mult = 1, digit = 0;
-	while (number > 0)
-	{
-		digit = returnDigit(number, 0, DECIMAL);
-		
-		if (digit % 2 == 0)
-			mult *= digit;
-			
-		number = shiftDigitNumberRight(number, 1, DECIMAL);
-	}
-	
-	return mult;
-}
-
-//Функция заменяет все нечетноые числа в массиве на произведение нечетных цифр в его десятичной записи
-void replaceOddNumberArr(int arr[], int size)
+//Функция заменяет все (не)четноые числа в массиве на произведение (не)четных цифр в его десятичной записи
+void replaceNumberArr(int arr[], int size, int isOdd)
 {
 	for (int i = 0; i < size; i++)
 	{
-		if (arr[i] % 2)
-			arr[i] = multOddDigit(arr[i]);
-	}
-}
-
-//Функция заменяет все четноые числа в массиве на произведение четных цифр в его десятичной записи
-void replaceEvenNumberArr(int arr[], int size)
-{
-	for (int i = 0; i < size; i++)
-	{
-		if (arr[i] % 2 == 0)
-			arr[i] = multEvenDigit(arr[i]);
+		if (arr[i] % 2 == isOdd)
+			arr[i] = multDigit(arr[i], isOdd);
 	}
 }
