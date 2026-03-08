@@ -24,7 +24,9 @@
 
 #include <stdio.h>
 
+//Размер массива
 #define SIZE 	10
+//Возвращаемое значение функции maxNegativeArr если нет отрицательных чисел
 #define BAD  	'b'
 
 //Функция возвращающая элемент массива с минимальным значением
@@ -90,13 +92,16 @@ int maxNegativeArr(int arr[], int size)
 {
 	int maxNegative = minArr(arr, size);
 	
+	if (maxNegative >= 0)
+		return BAD;
+	
 	for (int i = 0; i < size; i++)
 	{
 		if (arr[i] < 0 && maxNegative < arr[i])
 			maxNegative = arr[i];
 	}
 	
-	return maxNegative >= 0 ? BAD : maxNegative;
+	return maxNegative;
 }
 
 //Функция возвращающая элемент массива с минимальным значением
