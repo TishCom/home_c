@@ -35,8 +35,6 @@
 int inputArr(int arr[], int size);
 //Функция выводит значения элементов массива в терминал
 int outputArr(int arr[], int size);
-//Функция выполняет сортировку массива по четности
-void sortEvenArr(int arr[], int size);
 //Функция меняет элементы местами
 void swap(int *i, int *y);
 //Функция возвращает случайное число от -limit/2 до limit/2
@@ -47,6 +45,10 @@ int inputRandArr(int arr[], int size, int limit);
 int numberEvenElementArr(int arr[], int size);
 //Функция копирует элементы массива arr в arr1 в колличестве size
 void copyArr(int arr[], int arr1[], int size);
+//Функция выполняет сортировку массива по четности
+void sort_even_odd(int size, int arr[]);
+//Функция выполняет сортировку массива по четности - второй вариант
+void sort_even_odd1(int size, int arr[]);
 
 int main(int argc, char **argv)
 {
@@ -57,7 +59,7 @@ int main(int argc, char **argv)
 	inputRandArr(arr, SIZE, LIMIT);
 	outputArr(arr, SIZE);
 	printf("\n");
-	sortEvenArr(arr, SIZE);
+	sort_even_odd(SIZE, arr);
 	outputArr(arr, SIZE);
 	
 	return 0;
@@ -101,7 +103,30 @@ int outputArr(int arr[], int size)
 }
 
 //Функция выполняет сортировку массива по четности
-void sortEvenArr(int arr[], int size)
+void sort_even_odd(int size, int arr[])
+{
+	int temp = 0, evenPos = 0;
+	
+    if (size <= 0)
+        return;
+
+    for (int i = 0; i < size; i++) 
+    {
+        if (arr[i] % 2 == 0)
+        {
+            temp = arr[i];
+
+            for (int j = i; j > evenPos; j--) 
+                arr[j] = arr[j - 1];
+
+            arr[evenPos] = temp;
+            evenPos++;
+        }
+    }
+}
+
+//Функция выполняет сортировку массива по четности - второй вариант
+void sort_even_odd1(int size, int arr[])
 {
 	int numberEven = numberEvenElementArr(arr, size);
 	int arrEven[numberEven];
