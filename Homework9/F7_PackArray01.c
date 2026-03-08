@@ -26,8 +26,10 @@
 #include <stdlib.h>
 #include <time.h>
 
+//Размер массива
 #define SIZE 20
 
+//Функция сжатия
 int compression(int a[], int b[], int sizeA);
 //Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size);
@@ -88,6 +90,7 @@ int inputArr(int arr[], int size)
 	return i;
 }
 
+//Функция сжатия
 int compression(int a[], int b[], int sizeA)
 {
 	int number = 0, sizeB = 0;

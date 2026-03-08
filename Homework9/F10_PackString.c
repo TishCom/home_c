@@ -24,24 +24,29 @@
 
 #include <stdio.h>
 
+//Размер массива
 #define SIZE 1000
 
-int compression(char a[], char c[], int b[], int sizeA);
+//Функция сжатия
+int compression(int a[], int b[], int sizeA);
 //Функция выводит значения элементов массива в терминал
 int outputArr(char arr[], int size);
 //Функция заполняющая массив значениями введнными пользователем
-int inputArr(char arr[], int size);
+int inputArr(int arr[], int size);
 
 int main(int argc, char **argv)
 {
-	char arr[SIZE] = {0}, arr1[SIZE] = {0};
-	int arr2[SIZE] = {0};
+	int arr[SIZE] = {0}, arr1[SIZE] = {0};
 	int size = inputArr(arr, SIZE);
-	int size1 = compression(arr, arr1, arr2, size);
+	int size1 = compression(arr, arr1, size);
 	
 	
 	for (int i = 0; i < size1; i++)
-		printf("%c%d", arr1[i], arr2[i]);
+	{
+		printf("%c", arr1[i]);
+		i++;
+		printf("%d", arr1[i]);
+	}
 		
 	return 0;
 }
@@ -57,31 +62,33 @@ int outputArr(char arr[], int size)
 }
 
 //Функция заполняющая массив значениями введнными пользователем
-int inputArr(char arr[], int size)
+int inputArr(int arr[], int size)
 {
-	int i;
-	for (i = 0; i < size && arr[i - 1] != '.'; i++)
-		scanf("%c", &arr[i]);
+	int i, ch = 0;
+	for (i = 0; i < size && (ch = getchar()) != '.'; i++)
+		arr[i] = ch;
 	
-	return i - 1;
+	return i;
 }
 
-int compression(char a[], char c[], int b[], int sizeA)
+//Функция сжатия
+int compression(int a[], int b[], int sizeA)
 {
 	int number = 0, sizeB = 0;
 	for (int i = 0; i < sizeA; i++)
 	{
 		if(number && a[i - 1] != a[i])
 		{
-			b[sizeB] = number;
-			c[sizeB++] = a[i - 1];
+			b[sizeB++] = a[i - 1];
+			b[sizeB++] = number;
 			number = 0;
 		}
 		number++;
 	}
 	
-	b[sizeB] = number;
-	c[sizeB++] = a[sizeA - 1];
+	b[sizeB++] = a[sizeA - 1];
+	b[sizeB++] = number;
 	
 	return sizeB;
 }
+
