@@ -35,8 +35,8 @@
 int inputArr(int arr[], int size);
 //Функция выводит значения элементов массива в терминал
 int outputArr(int arr[], int size);
-//Функция выполняет сортировку массива по возраствнию
-void sortAscendingArr(int arr[], int size);
+//Функция выполняет сортировку массива по четности
+void sortEvenArr(int arr[], int size);
 //Функция меняет элементы местами
 void swap(int *i, int *y);
 //Функция возвращает случайное число от -limit/2 до limit/2
@@ -57,7 +57,7 @@ int main(int argc, char **argv)
 	inputRandArr(arr, SIZE, LIMIT);
 	outputArr(arr, SIZE);
 	printf("\n");
-	sortAscendingArr(arr, SIZE);
+	sortEvenArr(arr, SIZE);
 	outputArr(arr, SIZE);
 	
 	return 0;
@@ -100,8 +100,8 @@ int outputArr(int arr[], int size)
 	return i;
 }
 
-//Функция выполняет сортировку массива по возраствнию
-void sortAscendingArr(int arr[], int size)
+//Функция выполняет сортировку массива по четности
+void sortEvenArr(int arr[], int size)
 {
 	int numberEven = numberEvenElementArr(arr, size);
 	int arrEven[numberEven];
