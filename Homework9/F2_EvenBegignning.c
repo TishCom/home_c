@@ -129,6 +129,10 @@ void sort_even_odd(int size, int arr[])
 void sort_even_odd1(int size, int arr[])
 {
 	int numberEven = numberEvenElementArr(arr, size);
+	
+	if (numberEven == 0 || numberEven == size || size <= 0)
+		return;
+		
 	int arrEven[numberEven];
 	int arrNoEven[size - numberEven];
 	
