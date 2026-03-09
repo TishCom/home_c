@@ -41,12 +41,8 @@ int main(int argc, char **argv)
 	int size1 = compression(arr, arr1, size);
 	
 	
-	for (int i = 0; i < size1; i++)
-	{
-		printf("%c", arr1[i]);
-		i++;
-		printf("%d", arr1[i]);
-	}
+	for (int i = 0; i < size1; i += 2)
+		printf("%c%d", arr1[i], arr1[i + 1]);
 		
 	return 0;
 }
