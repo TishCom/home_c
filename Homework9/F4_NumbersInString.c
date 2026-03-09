@@ -39,6 +39,12 @@ void printNumberDigit(char arr[], int size);
  * Цифра пробел сколько раз данная цифра встречается в числе.
 */
 void print_digit(char arr[]);
+/*
+ * Функция вывдит на экран цифры в порядке возрастания, входящие в строку. 
+ * Цифра пробел сколько раз данная цифра встречается в числе.
+ * Вариант 2
+*/
+void print_digit1(char arr[]);
 //Функция возвращает число равное колличеству вхождений цифр в строку arr
 int numberDigitInString(char arr[], int size);
 
@@ -49,7 +55,7 @@ int main(int argc, char **argv)
 	for (int i = 0; (ch = getchar()) != '\n'; i++)
 		 stringNumber[i] = ch;
 	
-	print_digit(stringNumber);
+	print_digit1(stringNumber);
 	
 	return 0;
 }
@@ -89,6 +95,28 @@ void print_digit(char arr[])
 	}
 	
 	printNumberDigit(number, strlen(number));
+}
+
+/*
+ * Функция вывдит на экран цифры в порядке возрастания, входящие в строку. 
+ * Цифра пробел сколько раз данная цифра встречается в числе.
+ * Вариант 2
+*/
+void print_digit1(char arr[])
+{
+	int digit[10] = {0};
+	
+	for (int i = 0; i < strlen(arr); i++)
+	{
+		if (arr[i] >= '0' && arr[i] <= '9')
+			digit[arr[i] - '0']++;
+	}
+		
+	for (int i = 0; i < 10; i++)
+	{
+		if (digit[i])
+			printf("%d %d\n", i, digit[i]);
+	}
 }
 
 //Функция возвращает число равное колличеству вхождений цифр в строку arr
