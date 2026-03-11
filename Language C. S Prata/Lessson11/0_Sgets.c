@@ -84,10 +84,14 @@ char* fgets1(char *str, int size)
 	char *retVal, *find;
 	
 	retVal = fgets(str, size, stdin);
-	find = strchr(str, '\n');
 	
-	if (retVal && find)
-		*find = '\0';
+	if (retVal)
+	{
+		find = strchr(str, '\n');
+		
+		if (find)
+			*find = '\0';
+	}
 	
 	return retVal;
 }
