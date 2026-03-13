@@ -33,7 +33,7 @@
  * входящие в десятичную запись натурального числа. 
  * Цифра пробел сколько раз данная цифра встречается в числе.
 */
-void printNumberDigit(char arr[], int size);
+void printNumberDigit(char arr[]);
 
 int main(int argc, char **argv)
 {
@@ -42,7 +42,7 @@ int main(int argc, char **argv)
 	fgets(stringNumber, SIZE, stdin);
 	*(strchr(stringNumber, '\n')) = '\0';
 	
-	printNumberDigit(stringNumber, strlen(stringNumber));
+	printNumberDigit(stringNumber);
 	
 	return 0;
 }
@@ -52,11 +52,11 @@ int main(int argc, char **argv)
  * входящие в десятичную запись натурального числа. 
  * Цифра пробел сколько раз данная цифра встречается в числе.
 */
-void printNumberDigit(char arr[], int size)
+void printNumberDigit(char arr[])
 {
 	int digit[10] = {0};
 	
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < strlen(arr); i++)
 		digit[arr[i] - '0']++;
 		
 	for (int i = 0; i < 10; i++)
