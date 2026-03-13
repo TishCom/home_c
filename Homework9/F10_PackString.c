@@ -29,32 +29,18 @@
 
 //Функция сжатия
 int compression(int a[], int b[], int sizeA);
-//Функция выводит значения элементов массива в терминал
-int outputArr(char arr[], int size);
 //Функция заполняющая массив значениями введнными пользователем
 int inputArr(int arr[], int size);
 
 int main(int argc, char **argv)
 {
 	int arr[SIZE] = {0}, arr1[SIZE] = {0};
-	int size = inputArr(arr, SIZE);
-	int size1 = compression(arr, arr1, size);
+	int size = compression(arr, arr1, inputArr(arr, SIZE));
 	
-	
-	for (int i = 0; i < size1; i += 2)
+	for (int i = 0; i < size; i += 2)
 		printf("%c%d", arr1[i], arr1[i + 1]);
 		
 	return 0;
-}
-
-//Функция выводит значения элементов массива в терминал
-int outputArr(char arr[], int size)
-{
-	int i;
-	for (i = 0; i < size; i++)
-		printf("%c ", arr[i]);
-	
-	return i;
 }
 
 //Функция заполняющая массив значениями введнными пользователем

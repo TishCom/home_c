@@ -37,10 +37,10 @@ void printNumberDigit(char arr[], int size);
 
 int main(int argc, char **argv)
 {
-	char stringNumber[SIZE] = {0}, ch = 0;;
-	
-	for (int i = 0; (ch = getchar()) != '\n'; i++)
-		 stringNumber[i] = ch;
+	char stringNumber[SIZE] = {0};
+		 
+	fgets(stringNumber, SIZE, stdin);
+	*(strchr(stringNumber, '\n')) = '\0';
 	
 	printNumberDigit(stringNumber, strlen(stringNumber));
 	

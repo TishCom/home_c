@@ -29,72 +29,23 @@
 #define SIZE 	1000
 
 /*
- * Функция вывдит на экран цифры в порядке возрастания,
- * входящие в десятичную запись натурального числа. 
- * Цифра пробел сколько раз данная цифра встречается в числе.
-*/
-void printNumberDigit(char arr[], int size);
-/*
  * Функция вывдит на экран цифры в порядке возрастания, входящие в строку. 
  * Цифра пробел сколько раз данная цифра встречается в числе.
 */
 void print_digit(char arr[]);
-/*
- * Функция вывдит на экран цифры в порядке возрастания, входящие в строку. 
- * Цифра пробел сколько раз данная цифра встречается в числе.
- * Вариант 2
-*/
-void print_digit1(char arr[]);
 //Функция возвращает число равное колличеству вхождений цифр в строку arr
 int numberDigitInString(char arr[], int size);
 
 int main(int argc, char **argv)
 {
-	char stringNumber[SIZE] = {0}, ch = 0;;
+	char stringNumber[SIZE] = {0};
 	
-	for (int i = 0; (ch = getchar()) != '\n'; i++)
-		 stringNumber[i] = ch;
+	fgets(stringNumber, SIZE, stdin);
+	*(strchr(stringNumber, '\n')) = '\0';
 	
-	print_digit1(stringNumber);
+	print_digit(stringNumber);
 	
 	return 0;
-}
-
-/*
- * Функция вывдит на экран цифры в порядке возрастания,
- * входящие в десятичную запись натурального числа. 
- * Цифра пробел сколько раз данная цифра встречается в числе.
-*/
-void printNumberDigit(char arr[], int size)
-{
-	int digit[10] = {0};
-	
-	for (int i = 0; i < size; i++)
-		digit[arr[i] - '0']++;
-		
-	for (int i = 0; i < 10; i++)
-	{
-		if (digit[i])
-			printf("%d %d\n", i, digit[i]);
-	}
-}
-
-/*
- * Функция вывдит на экран цифры в порядке возрастания, входящие в строку. 
- * Цифра пробел сколько раз данная цифра встречается в числе.
-*/
-void print_digit(char arr[])
-{
-	int size = strlen(arr);
-	char number[numberDigitInString(arr, size)];
-	
-	for (int i = 0, y = 0; i < size; i++)
-	{
-		if (arr[i] >= '0' && arr[i] <= '9')
-			number[y++] = arr[i];
-	}
-	
-	printNumberDigit(number, strlen(number));
 }
 
 /*
@@ -102,7 +53,7 @@ void print_digit(char arr[])
  * Цифра пробел сколько раз данная цифра встречается в числе.
  * Вариант 2
 */
-void print_digit1(char arr[])
+void print_digit(char arr[])
 {
 	int digit[10] = {0};
 	
