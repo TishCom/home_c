@@ -28,13 +28,17 @@
 char* sgets(char *str, int size);
 void skipString(void);
 char* fgets1(char *str, int size);
+char* sgets1(char *str, int size);
+int strlen1(char *str);
 
 int main(int argc, char **argv)
 {
 	char arr[40];
 	char arr1[60];
 	
-	sgets(arr, 40);
+	sgets1(arr, 40);
+	
+	printf("%d\n", strlen1(arr));
 	
 	printf("%s\n", arr);
 	fputs(arr, stdout);
@@ -76,6 +80,36 @@ char* sgets(char *str, int size)
 	}
 	
 	return retVal;
+}
+
+char* sgets1(char *str, int size)
+{
+	char *retVal;
+	
+	retVal = fgets(str, size, stdin);
+	
+	if (retVal)
+	{
+		while (*str != '\n' && *str != '\0')
+			str++;
+			
+		if (*str == '\n')
+			*str = '\0';
+		else
+			skipString();
+	}
+	
+	return retVal;
+}
+
+int strlen1(char *str)
+{
+	int length = 0;
+	
+	while (*str++)
+		length++;
+		
+	return length;
 }
 
 //Обычны fgets просто убирает '\n'
