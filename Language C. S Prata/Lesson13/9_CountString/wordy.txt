@@ -1,0 +1,16 @@
+1 Hello
+2 my
+3 name
+4 is
+5 Nickolay.
+6 Haw
+7 are
+8 you?
+9 You
+10 really
+11 pretty
+12 girl.
+13 What
+14 is
+15 your
+16 name?
