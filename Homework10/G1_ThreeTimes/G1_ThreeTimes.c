@@ -26,6 +26,9 @@ int main(int argc, char **argv)
         fprintf(pf_target, "%s, ", str);
     
     fprintf(pf_target, "%s %d", str, strlen(str));
+
+    fclose(pf_source);
+    fclose(pf_target);
     
 	return 0;
 }

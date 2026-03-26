@@ -37,6 +37,9 @@ int main(int argc, char **argv)
     str[number] = '\0';
 
     fprintf(pf_target, "%s", str);
+
+    fclose(pf_source);
+    fclose(pf_target);
     
 	return 0;
 }
