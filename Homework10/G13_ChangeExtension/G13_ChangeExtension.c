@@ -1,33 +1,31 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
+#include <ctype.h>
 
-//#define INPUT_FILE  "F:\\C_2026_MFTI\\Lesson10\\G3_LastCharacterNumbers\\input.txt"
-//#define OUTPUT_FILE "F:\\C_2026_MFTI\\Lesson10\\G3_LastCharacterNumbers\\output.txt"
+// #define INPUT_FILE  "F:\\C_2026_MFTI\\Lesson10\\G13_ChangeExtension\\input.txt"
+// #define OUTPUT_FILE "F:\\C_2026_MFTI\\Lesson10\\G13_ChangeExtension\\output.txt"
 #define INPUT_FILE  "input.txt"
 #define OUTPUT_FILE "output.txt"
-#define SIZE        1000
+#define COLUMN        100
 
 void fopen1(FILE **pf, char *fileName, char *mode);
 char* fgets1(char *str, int size, FILE *pf);
-int findNextIndex(char *str, char ch, int currentIndex);
+void expansionFile(char *file, char *expansion);
 
 int main(int argc, char **argv)
 {
 	FILE *pf_source, *pf_target;
-    int size = 0, index = 0;
-    char str[SIZE] = {0};
+    char str[COLUMN] = {0};
 
     fopen1(&pf_source, INPUT_FILE, "r");
     fopen1(&pf_target, OUTPUT_FILE, "w");
 
-    while (fgets1(str, SIZE, pf_source) == NULL)
-        printf("Try again.\n");
+    if (fgets1(str, COLUMN, pf_source) != NULL)
+        expansionFile(str, ".html");
 
-    size = strlen(str) - 1;
-    
-    while ((index = findNextIndex(str, str[size], index)) < size)
-        fprintf(pf_target, "%d ", index++);
+    fprintf(pf_target, "%s", str);
 
     fclose(pf_source);
     fclose(pf_target);
@@ -35,9 +33,21 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-int findNextIndex(char *str, char ch, int currentIndex)
+void expansionFile(char *file, char *expansion)
 {
-    return strchr(str + currentIndex, ch) - str;
+    for (int i = strlen(file) - 1; i >= 0; i--)
+    {
+        if (file[i] == '/')
+        {
+            strncat(file, expansion, 6);
+            break;
+        }
+        else if (file[i] == '.')
+        {
+            strncpy(file + i, expansion, 6);
+            break;
+        }
+    }
 }
 
 char* fgets1(char *str, int size, FILE *pf)

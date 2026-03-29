@@ -1,33 +1,32 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
-//#define INPUT_FILE  "F:\\C_2026_MFTI\\Lesson10\\G3_LastCharacterNumbers\\input.txt"
-//#define OUTPUT_FILE "F:\\C_2026_MFTI\\Lesson10\\G3_LastCharacterNumbers\\output.txt"
+//#define INPUT_FILE  "F:\\C_2026_MFTI\\Lesson10\\G5_ReplaceAB\\input.txt"
+//#define OUTPUT_FILE "F:\\C_2026_MFTI\\Lesson10\\G5_ReplaceAB\\output.txt"
 #define INPUT_FILE  "input.txt"
 #define OUTPUT_FILE "output.txt"
 #define SIZE        1000
 
 void fopen1(FILE **pf, char *fileName, char *mode);
 char* fgets1(char *str, int size, FILE *pf);
-int findNextIndex(char *str, char ch, int currentIndex);
+void replaceAB(char *str);
 
 int main(int argc, char **argv)
 {
 	FILE *pf_source, *pf_target;
-    int size = 0, index = 0;
     char str[SIZE] = {0};
 
     fopen1(&pf_source, INPUT_FILE, "r");
     fopen1(&pf_target, OUTPUT_FILE, "w");
 
     while (fgets1(str, SIZE, pf_source) == NULL)
-        printf("Try again.\n");
+        fprintf(stderr, "%s\n", "Try again!");
 
-    size = strlen(str) - 1;
-    
-    while ((index = findNextIndex(str, str[size], index)) < size)
-        fprintf(pf_target, "%d ", index++);
+    replaceAB(str);
+
+    fprintf(pf_target, "%s", str);
 
     fclose(pf_source);
     fclose(pf_target);
@@ -35,9 +34,25 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-int findNextIndex(char *str, char ch, int currentIndex)
+void replaceAB(char *str)
 {
-    return strchr(str + currentIndex, ch) - str;
+    for (int i = 0; i < strlen(str); i++)
+    {
+        switch (str[i])
+        {
+            case 'a':
+                str[i] = 'b';
+                break;
+            case 'b':
+                str[i] = 'a';
+                break;
+            case 'A':
+                str[i] = 'B';
+                break;
+            case 'B':
+                str[i] = 'A';
+        }
+    }
 }
 
 char* fgets1(char *str, int size, FILE *pf)

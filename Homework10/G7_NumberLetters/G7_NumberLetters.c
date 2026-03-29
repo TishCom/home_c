@@ -1,33 +1,34 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
+#include <ctype.h>
 
-//#define INPUT_FILE  "F:\\C_2026_MFTI\\Lesson10\\G3_LastCharacterNumbers\\input.txt"
-//#define OUTPUT_FILE "F:\\C_2026_MFTI\\Lesson10\\G3_LastCharacterNumbers\\output.txt"
+//#define INPUT_FILE  "F:\\C_2026_MFTI\\Lesson10\\G7_NumberLetters\\input.txt"
+//#define OUTPUT_FILE "F:\\C_2026_MFTI\\Lesson10\\G7_NumberLetters\\output.txt"
 #define INPUT_FILE  "input.txt"
 #define OUTPUT_FILE "output.txt"
-#define SIZE        1000
+#define SIZE        10000
+
+typedef int (*func)(int);
 
 void fopen1(FILE **pf, char *fileName, char *mode);
 char* fgets1(char *str, int size, FILE *pf);
-int findNextIndex(char *str, char ch, int currentIndex);
+int numberLetter(char *str, func f);
 
 int main(int argc, char **argv)
 {
 	FILE *pf_source, *pf_target;
-    int size = 0, index = 0;
     char str[SIZE] = {0};
 
     fopen1(&pf_source, INPUT_FILE, "r");
     fopen1(&pf_target, OUTPUT_FILE, "w");
 
     while (fgets1(str, SIZE, pf_source) == NULL)
-        printf("Try again.\n");
+        fprintf(stderr, "%s\n", "Try again!");
 
-    size = strlen(str) - 1;
-    
-    while ((index = findNextIndex(str, str[size], index)) < size)
-        fprintf(pf_target, "%d ", index++);
+    fprintf(pf_target, "%d ", numberLetter(str, islower));
+    fprintf(pf_target, "%d", numberLetter(str, isupper));
 
     fclose(pf_source);
     fclose(pf_target);
@@ -35,9 +36,16 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-int findNextIndex(char *str, char ch, int currentIndex)
+int numberLetter(char *str, func f)
 {
-    return strchr(str + currentIndex, ch) - str;
+    int number = 0;
+    for (int i = 0; i < strlen(str); i++)
+    {
+        if (f(str[i]))
+            number++;
+    }
+
+    return number;    
 }
 
 char* fgets1(char *str, int size, FILE *pf)
