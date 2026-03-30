@@ -52,10 +52,7 @@ bool is_palindrom(char *string)
             return false;
     }
 
-    if (number <= 1)
-        return true;
-
-    return false;
+    return true;
 }
 
 int pairChar(char ch, char *str)
