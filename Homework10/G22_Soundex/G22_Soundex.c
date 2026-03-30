@@ -21,6 +21,7 @@
 void fopen1(FILE **pf, char *fileName, char *mode);
 char* fgets1(char *str, int size, FILE *pf);
 void transform(char *str);
+char changeChar(char ch);
 
 int main(int argc, char **argv)
 {
@@ -43,56 +44,40 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+char changeChar(char ch)
+{
+    if (strchr("bfpv", ch) != NULL)
+        return DIGIT_CHAR1;
+    else if (strchr("cgjkqsxz", ch) != NULL)
+        return DIGIT_CHAR2;
+    else if (strchr("dt", ch) != NULL)
+        return DIGIT_CHAR3;
+    else if (strchr("l", ch) != NULL)
+        return DIGIT_CHAR4;
+    else if (strchr("mn", ch) != NULL)
+        return DIGIT_CHAR5;
+    else if (strchr("r", ch) != NULL)
+        return DIGIT_CHAR6;
+    
+    return 0;
+}
+
 void transform(char *str)
 {
-    char arr[100] = {str[0]};
     char ch = 0;
     int number = 0;
-    for (int i = 1; i < strlen(str); i++)
+    for (int i = 1; i < strlen(str) && number < 4; i++)
     {
-        switch (str[i])
-        {
-            case 'b':
-            case 'f':
-            case 'p':
-            case 'v':
-                ch = DIGIT_CHAR1;
-                break;
-            case 'c':
-            case 'g':
-            case 'j':
-            case 'k':
-            case 'q':
-            case 's':
-            case 'x':
-            case 'z':
-                ch = DIGIT_CHAR2;
-                break;
-            case 'd':
-            case 't':
-                ch = DIGIT_CHAR3;
-                break;
-            case 'l':
-                ch = DIGIT_CHAR4;
-                break;
-            case 'm':
-            case 'n':
-                ch = DIGIT_CHAR5;
-                break;
-            case 'r':
-                ch = DIGIT_CHAR6;
-                break;
-        }
+        ch = changeChar(str[i]);
         
-        if (arr[number] != ch && ch != 0)
-            arr[++number] = ch;
+        if (str[number] != ch && ch != 0)
+            str[++number] = ch;
     }
 
     while (number < 4)
-        arr[++number] = '0';
+        str[++number] = '0';
     
-    arr[4] = '\0';
-    strncpy(str, arr, 5);
+    str[4] = '\0';
 }
 
 char* fgets1(char *str, int size, FILE *pf)
