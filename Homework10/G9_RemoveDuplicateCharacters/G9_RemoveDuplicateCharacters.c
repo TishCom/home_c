@@ -15,8 +15,8 @@ typedef int (*func)(int);
 void fopen1(FILE **pf, char *fileName, char *mode);
 char* fgets1(char *str, int size, FILE *pf);
 void ciclicShiftLeftArr(char arr[], int size);
-int matching(char *str, int index, int size);
-void group(char *str, int size);
+int matching(char *str, int size);
+void group(char *str);
 
 int main(int argc, char **argv)
 {
@@ -29,7 +29,7 @@ int main(int argc, char **argv)
     while (fgets(str, SIZE, pf_source) == NULL)
         fprintf(stderr, "Tray again!\n");
 
-    group(str, strlen(str));
+    group(str);
     fprintf(pf_target, "%s", str);
 
     fclose(pf_source);
@@ -38,30 +38,31 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-void group(char *str, int size)
+void group(char *str)
 {
-    for (int index = 0, match = 0; index < size;)
+    int size = strlen(str);
+    for (int offset = 0, match = 0; offset < size;)
     {
-        if (str[index] == '\0')
+        if (str[offset] == '\0')
             return;
-        else if ((match = matching(str, index, size)) != index)
-            ciclicShiftLeftArr(str + match, size - match);
-        else if (str[index] == ' ')
-            ciclicShiftLeftArr(str + index, size - index);
+        else if ((match = matching(str + offset, size - offset)) != 0)
+            ciclicShiftLeftArr(str + match + offset, size - match - offset);
+        else if (str[offset] == ' ')
+            ciclicShiftLeftArr(str + offset, size - offset);
         else
-            index++;
+            offset++;
     } 
 }
 
-int matching(char *str, int index, int size)
+int matching(char *str, int size)
 {
     for (int i = 0; i < size; i++)
     {
-        if (str[index] == str[i] && i != index)
+        if (str[0] == str[i] && i != 0)
             return i;
     }
 
-    return index;
+    return 0;
 }
 
 void ciclicShiftLeftArr(char arr[], int size)

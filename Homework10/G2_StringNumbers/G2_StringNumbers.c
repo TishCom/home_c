@@ -8,6 +8,7 @@
 #define SIZE        40
 
 void fopen1(FILE **pf, char *fileName, char *mode);
+void makeString(char *str, int number);
 
 int main(int argc, char **argv)
 {
@@ -21,7 +22,19 @@ int main(int argc, char **argv)
     while (fscanf(pf_source, "%d", &number) != 1)
         printf("Try again.\n");
 
-    for (int i = 2, z = 0; z < number; z++)
+    makeString(str, number);
+
+    fprintf(pf_target, "%s", str);
+
+    fclose(pf_source);
+    fclose(pf_target);
+    
+	return 0;
+}
+
+void makeString(char *str, int number)
+{
+    for (int i = 2, z = 0; z < number && number < SIZE; z++)
     {
         if (z % 2 == 1)
         {
@@ -35,13 +48,6 @@ int main(int argc, char **argv)
             str[z] = z / 2 + 'A';
     }
     str[number] = '\0';
-
-    fprintf(pf_target, "%s", str);
-
-    fclose(pf_source);
-    fclose(pf_target);
-    
-	return 0;
 }
 
 void fopen1(FILE **pf, char *fileName, char *mode)
