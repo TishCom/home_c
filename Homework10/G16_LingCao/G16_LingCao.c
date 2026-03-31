@@ -40,6 +40,8 @@ void shiftLeftArr(char arr[], int size)
 {
 	for (int i = 0; i < size - 1; i++)
 		arr[i] = arr[i + 1];
+
+    arr[size - 1] = '\0';
 }
 
 void changeWord(char *str, int size, char *word1, char *word2)
@@ -53,7 +55,7 @@ void changeWord(char *str, int size, char *word1, char *word2)
         {
             shiftLeftArr(pch + sizeWord2, size - (pch - str) - sizeWord2);
             memcpy(pch, word2, sizeWord2);
-            i += sizeWord1 - 1;
+            i += sizeWord2 - 1;
         }
     }
 }

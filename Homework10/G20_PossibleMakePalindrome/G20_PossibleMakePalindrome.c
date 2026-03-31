@@ -8,19 +8,31 @@
 #define INPUT_FILE  "input.txt"
 
 #define SIZE        1100
+#define SIZE_ALF    30
+
+typedef struct
+{
+    int num;
+    char alf[SIZE_ALF];
+    int number[SIZE_ALF];
+}dictionary;
 
 void fopen1(FILE **pf, char *fileName, char *mode);
 char* fgets1(char *str, int size, FILE *pf);
 void skipSpace(char *str, int leave);
-void shiftLeftArr(char arr[], int size);
 void deleteSpace(char *str);
-bool is_palindrom(char *string);
-int pairChar(char ch, char *str);
+void shiftLeftArr(char arr[], int size);
+int readLetter(char *str, dictionary *string);
+void haveLetter(char *str, dictionary *string);
+bool isHaveNotLetter(char ch, dictionary *string);
+void numberLetter(char *str, dictionary *string);
+bool is_palindrom(char *str);
 
 int main(int argc, char **argv)
 {
 	FILE *pf_source, *pf_target;
     char str[SIZE] = {0};
+    dictionary string = {.alf = {0}, .num = 0, .number = {0}};
 
     fopen1(&pf_source, INPUT_FILE, "r");
 
@@ -37,17 +49,17 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-bool is_palindrom(char *string)
+bool is_palindrom(char *str)
 {
-    int number = 0;
+    dictionary string = {.alf = {0}, .num = 0, .number = {0}};
 
-    deleteSpace(string);
+    readLetter(str, &string);
 
-    for (int i = 0; i < strlen(string); i++)
+    for (int i = 0, number = 0; i < string.num; i++)
     {
-        if (pairChar(string[i], string) % 2 == 1)
+        if (string.number[i] % 2)
             number++;
-
+        
         if (number > 1)
             return false;
     }
@@ -55,17 +67,43 @@ bool is_palindrom(char *string)
     return true;
 }
 
-int pairChar(char ch, char *str)
+int readLetter(char *str, dictionary *string)
 {
-    int coincidence = 0;
+    deleteSpace(str);
+    haveLetter(str, string);
+    numberLetter(str, string);
+}
 
+void haveLetter(char *str, dictionary *string)
+{
     for (int i = 0; i < strlen(str); i++)
-	{
-		if (str[i] == ch)
-			coincidence++;
-	}
-	
-	return coincidence;
+    {
+        if (isHaveNotLetter(str[i], string))
+            string->alf[string->num++] = str[i];
+    }
+}
+
+bool isHaveNotLetter(char ch, dictionary *string)
+{
+    for (int i = 0; i < string->num; i++)
+    {
+        if (ch == string->alf[i])
+            return false;
+    }
+
+    return true;
+}
+
+void numberLetter(char *str, dictionary *string)
+{
+    for (int i = 0; i < string->num; i++)
+    {
+        for (int y = 0; y < strlen(str); y++)
+        {
+            if (str[y] == string->alf[i])
+                string->number[i]++;
+        }
+    }
 }
 
 void deleteSpace(char *str)
