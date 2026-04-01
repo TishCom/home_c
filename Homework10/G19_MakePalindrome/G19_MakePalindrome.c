@@ -4,124 +4,212 @@
 #include <stdbool.h>
 #include <ctype.h>
 
-#define INPUT_FILE  "F:\\C_2026_MFTI\\Lesson10\\G19_MakePalindrome\\input.txt"
-#define OUTPUT_FILE "F:\\C_2026_MFTI\\Lesson10\\G19_MakePalindrome\\output.txt"
-// #define INPUT_FILE  "input.txt"
-// #define OUTPUT_FILE "output.txt"
+// #define INPUT_FILE  "F:\\C_2026_MFTI\\Lesson10\\G19_MakePalindrome\\input.txt"
+// #define OUTPUT_FILE "F:\\C_2026_MFTI\\Lesson10\\G19_MakePalindrome\\output.txt"
+#define INPUT_FILE  "input.txt"
+#define OUTPUT_FILE "output.txt"
 
 #define SIZE        1100
+#define SIZE_ALF    30
+
+typedef struct
+{
+    int num;
+    char polindrom[SIZE];
+    char alf[SIZE_ALF];
+    int number[SIZE_ALF];
+}dictionary;
 
 void fopen1(FILE **pf, char *fileName, char *mode);
 char* fgets1(char *str, int size, FILE *pf);
+void deleteSpace(char *str);
 void skipSpace(char *str, int leave);
 void shiftLeftArr(char arr[], int size);
-void deleteSpace(char *str);
-bool is_palindrom(char *string);
-int pairChar(char ch, char *str);
-void makePalindrom(char *str);
+void shiftLeftArrInt(int arr[], int size);
+int readLetter(char *str, dictionary *string);
+void haveLetter(char *str, dictionary *string);
+bool isHaveNotLetter(char ch, dictionary *string);
+void numberLetter(char *str, dictionary *string);
+void makePolindrome(dictionary *string);
+int numberAsymmetricalLetter(int arr[], int size);
+void sortAscendingDictionary(dictionary *string);
+void swapInt(int *i, int *y);
+void swapChar(char *i, char *y);
+int numberCharacter(dictionary *string);
+char findSymbol(dictionary *string);
+void deleteAsymmetricalLetter(dictionary *string, int numberDelete);
 
 int main(int argc, char **argv)
 {
 	FILE *pf_source, *pf_target;
     char str[SIZE] = {0};
+    dictionary string = {.alf = {0}, .num = 0, .number = {0}, .polindrom = {0}};
 
     fopen1(&pf_source, INPUT_FILE, "r");
-    //fopen1(&pf_target, OUTPUT_FILE, "w");
+    fopen1(&pf_target, OUTPUT_FILE, "w");
 
     if (fgets1(str, SIZE, pf_source) == NULL)
         fprintf(stderr, "Fail read!\n");
 
-    printf("%s\n", str);
-    makePalindrom(str);
-    printf("%s\n", str);
+    readLetter(str, &string);
+    sortAscendingDictionary(&string);
+    deleteAsymmetricalLetter(&string, numberAsymmetricalLetter(string.number, string.num) - 1);
+    makePolindrome(&string);
+    fprintf(pf_target, "%s", string.polindrom);
 
     fclose(pf_source);
-    //fclose(pf_target);
+    fclose(pf_target);
     
 	return 0;
 }
 
-int comparator1 (const void *a, const void *b)
+void makePolindrome(dictionary *string)
 {
-    return *(char *)a - *(char *)b;
-}
-int comparator2 (const void *a, const void *b)
-{
-    return *(char *)b - *(char *)a;
+    int size = numberCharacter(string);
+    char ch = 0;
+    for (int i = 0, y = 0; i < string->num; i++)
+    {
+        while (string->number[i] > 1)
+        {
+            string->polindrom[y] = string->alf[i];
+            string->polindrom[size - y - 1] = string->alf[i];
+            string->number[i] -= 2;
+            y++;
+        }
+    }
+
+    if (ch = findSymbol(string))
+        string->polindrom[size / 2] = ch;
+
+    string->polindrom[size] = '\0';
 }
 
-void swap(char *i, char *y)
+char findSymbol(dictionary *string)
+{
+    for (int i = 0; i < string->num; i++)
+    {
+        if (string->number[i] == 1)
+            return string->alf[i];
+    }
+
+    return 0;
+}
+
+int numberCharacter(dictionary *string)
+{
+    int number = 0;
+
+    for (int i = 0; i < string->num; i++)
+        number += string->number[i];
+
+    return number;
+}
+
+void deleteAsymmetricalLetter(dictionary *string, int numberDelete)
+{
+    for (int i = string->num - 1; numberDelete > 0; i--)
+    {
+        if (string->number[i] % 2)
+        {
+            string->number[i]--;
+            numberDelete--;
+        }
+
+        if (string->number[i] == 0)
+        {
+            shiftLeftArr(string->alf + i, string->num - i);
+            shiftLeftArrInt(string->number + i, string->num - i);
+            string->num--;
+        }
+    }
+}
+
+void sortAscendingDictionary(dictionary *string)
+{
+	int sortingFinished;
+	
+	for (int i = 0; i < string->num - 1; i++)
+	{
+		sortingFinished = 1;
+		
+		for (int y = string->num - 1; y > i; y--)
+		{
+			if (string->alf[y] < string->alf[y - 1])
+			{
+				swapChar(&string->alf[y], &string->alf[y - 1]);
+                swapInt(&string->number[y], &string->number[y - 1]);
+				sortingFinished = 0;
+			}
+		}
+		
+		if (sortingFinished)
+			break;
+	}
+}
+
+void swapInt(int *i, int *y)
+{
+	int temp = *i;
+	*i = *y;
+	*y = temp;
+}
+
+void swapChar(char *i, char *y)
 {
 	char temp = *i;
 	*i = *y;
 	*y = temp;
 }
 
-void shiftRightArr(char arr[], int size)
-{
-	for (int i = size; i > 0; i--)
-    {
-        arr[i] = arr[i - 1];
-        arr[i - 1] = ' ';
-    }
-}
-
-void makePalindrom(char *str)
-{
-    char ch = 255;
-    for (int i = 0; i < strlen(str); )
-    {
-        if (pairChar(str[i], str) % 2 == 1)
-        {
-            if ((unsigned char)ch > (unsigned char)str[i])
-                ch = str[i];
-            
-            shiftLeftArr(str + i, strlen(str) - i);
-        }
-        else    
-            i++;
-    }
-    char arr[strlen(str) + 2];
-    strcpy(arr, str);
-    shiftRightArr((arr + strlen(arr) / 2), strlen(arr) / 2);
-    arr[strlen(arr) / 2] = ch;
-    printf("%s\n", arr);
-    qsort(arr, strlen(arr) / 2, sizeof (char), comparator1);
-    qsort(arr + strlen(arr) / 2 + strlen(arr) % 2, strlen(arr) / 2, sizeof (char), comparator2);
-    strncpy(str, arr, sizeof(arr));
-    printf("%s %s %c\n", arr, str, ch);
-}
-
-bool is_palindrom(char *string)
+int numberAsymmetricalLetter(int arr[], int size)
 {
     int number = 0;
-
-    deleteSpace(string);
-
-    for (int i = 0; i < strlen(string); i++)
+    for (int i = 0; i < size; i++)
     {
-        if (pairChar(string[i], string) % 2 == 1)
+        if (arr[i] % 2)
             number++;
+    }
+    
+    return number;
+}
 
-        if (number > 1)
+int readLetter(char *str, dictionary *string)
+{
+    deleteSpace(str);
+    haveLetter(str, string);
+    numberLetter(str, string);
+}
+
+void haveLetter(char *str, dictionary *string)
+{
+    for (int i = 0; i < strlen(str); i++)
+    {
+        if (isHaveNotLetter(str[i], string))
+            string->alf[string->num++] = str[i];
+    }
+}
+
+bool isHaveNotLetter(char ch, dictionary *string)
+{
+    for (int i = 0; i < string->num; i++)
+    {
+        if (ch == string->alf[i])
             return false;
     }
 
-    if (number <= 1)
-        return true;
+    return true;
 }
 
-int pairChar(char ch, char *str)
+void numberLetter(char *str, dictionary *string)
 {
-    int coincidence = 0;
-
-    for (int i = 0; i < strlen(str); i++)
-	{
-		if (str[i] == ch)
-			coincidence++;
-	}
-	
-	return coincidence;
+    for (int i = 0; i < string->num; i++)
+    {
+        for (int y = 0; y < strlen(str); y++)
+        {
+            if (str[y] == string->alf[i])
+                string->number[i]++;
+        }
+    }
 }
 
 void deleteSpace(char *str)
@@ -141,11 +229,17 @@ void skipSpace(char *str, int leave)
 
 void shiftLeftArr(char arr[], int size)
 {
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < size - 1; i++)
     {
         arr[i] = arr[i + 1];
         arr[i + 1] = '\0';
     }
+}
+
+void shiftLeftArrInt(int arr[], int size)
+{
+	for (int i = 0; i < size - 1; i++)
+        arr[i] = arr[i + 1];
 }
 
 char* fgets1(char *str, int size, FILE *pf)

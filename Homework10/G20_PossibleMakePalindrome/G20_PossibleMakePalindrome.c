@@ -32,7 +32,6 @@ int main(int argc, char **argv)
 {
 	FILE *pf_source, *pf_target;
     char str[SIZE] = {0};
-    dictionary string = {.alf = {0}, .num = 0, .number = {0}};
 
     fopen1(&pf_source, INPUT_FILE, "r");
 
