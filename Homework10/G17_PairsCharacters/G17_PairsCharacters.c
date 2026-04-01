@@ -16,7 +16,6 @@ char* fgets1(char *str, int size, FILE *pf);
 void swap(char *i, char *y);
 int nextIndexChar(char *str, int index);
 void changeCharacter(char *str);
-int skipSpace(char *str, int index);
 
 int main(int argc, char **argv)
 {
@@ -40,26 +39,15 @@ int main(int argc, char **argv)
 
 void changeCharacter(char *str)
 {
-    char ch;
-    for (int i = 0; i < strlen(str); i += 2)
+    for (int current = 0, previous = 0, i = 0; current < strlen(str); i++)
     {
-        i = skipSpace(str, i);
-        if (!str[i + 1])
-            break;
+        current = nextIndexChar(str, current);
+
+        if (i % 2)
+            swap(str + previous, str + current);
         
-        swap(str + nextIndexChar(str, i), str + nextIndexChar(str, i + 1));
+        previous = current++;
     }
-}
-
-int skipSpace(char *str, int index)
-{
-    while (isspace(str[index - 1]))
-        index++;
-
-    while (isspace(str[index]))
-        index++;
-    
-    return index;
 }
 
 int nextIndexChar(char *str, int index)
@@ -71,7 +59,7 @@ int nextIndexChar(char *str, int index)
             return i;
     }
 
-    return i - 1;
+    return i;
 }
 
 void swap(char *i, char *y)

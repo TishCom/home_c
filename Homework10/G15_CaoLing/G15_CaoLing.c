@@ -13,7 +13,7 @@
 
 void fopen1(FILE **pf, char *fileName, char *mode);
 char* fgets1(char *str, int size, FILE *pf);
-void changeWord(char *str, int size, char *word1, char *word2);
+void changeWord(char *str, char *word1, char *word2);
 void shiftRightArr(char arr[], int size);
 
 int main(int argc, char **argv)
@@ -27,7 +27,7 @@ int main(int argc, char **argv)
     if (fgets1(str, SIZE, pf_source) == NULL)
         fprintf(stderr, "Fail read!\n");
 
-    changeWord(str, SIZE, "Cao", "Ling");
+    changeWord(str, "Cao", "Ling");
     fprintf(pf_target, "%s", str);
 
     fclose(pf_source);
@@ -38,25 +38,20 @@ int main(int argc, char **argv)
 
 void shiftRightArr(char arr[], int size)
 {
-	for (int i = size - 1; i > 0; i--)
+	for (int i = size; i > 0; i--)
 		arr[i] = arr[i - 1];
-
-    arr[size] = '\0';
 }
 
-void changeWord(char *str, int size, char *word1, char *word2)
+void changeWord(char *str, char *word1, char *word2)
 {
     char *pch;
     int sizeWord1 = strlen(word1);
     int sizeWord2 = strlen(word2);
-    for (int i = 0; i < strlen(str); i++)
+    
+    while ((pch = strstr(str, word1)) != NULL)
     {
-        if ((pch = strstr(str + i, word1)) != NULL)
-        {
-            shiftRightArr(pch + sizeWord1, size - (pch - str) - sizeWord1);
-            memcpy(pch, word2, sizeWord2);
-            i += sizeWord2 - 1;
-        }
+        shiftRightArr(pch + sizeWord1, strlen(str) - (pch - str) - sizeWord1);
+        memcpy(pch, word2, sizeWord2);
     }
 }
 

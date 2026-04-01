@@ -38,10 +38,8 @@ int main(int argc, char **argv)
 
 void shiftLeftArr(char arr[], int size)
 {
-	for (int i = 0; i < size - 1; i++)
+	for (int i = 0; i < size; i++)
 		arr[i] = arr[i + 1];
-
-    arr[size - 1] = '\0';
 }
 
 void changeWord(char *str, int size, char *word1, char *word2)
@@ -49,14 +47,11 @@ void changeWord(char *str, int size, char *word1, char *word2)
     char *pch;
     int sizeWord1 = strlen(word1);
     int sizeWord2 = strlen(word2);
-    for (int i = 0; i < strlen(str); i++)
+
+    while ((pch = strstr(str, word1)) != NULL)
     {
-        if ((pch = strstr(str + i, word1)) != NULL)
-        {
-            shiftLeftArr(pch + sizeWord2, size - (pch - str) - sizeWord2);
-            memcpy(pch, word2, sizeWord2);
-            i += sizeWord2 - 1;
-        }
+        shiftLeftArr(pch + sizeWord2, strlen(str) - (pch - str) - sizeWord2);
+        memcpy(pch, word2, sizeWord2);
     }
 }
 
