@@ -7,6 +7,6 @@
 int main(int argc, char **argv)
 {
 	sensor_readings info[SIZE];
-    printf("Hello\n");
+    printf("Hello, Make!\n");
 	return 0;
 }

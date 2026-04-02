@@ -1,16 +1,16 @@
 #include "Sensor_Temperature.h"
 
-int averageMonthlyTemperature(sensor_readings info[], uint16_t year, uint8_t month)
+int averageMonthlyTemperature(sensor_readings info[], uint8_t month)
 {
     return 1;
 }
 
-int minimumMonthlyTemperature(sensor_readings info[], uint16_t year, uint8_t month)
+int minimumMonthlyTemperature(sensor_readings info[], uint8_t month)
 {
     return 1;
 }
 
-int maximumMonthlyTemperature(sensor_readings info[], uint16_t year, uint8_t month)
+int maximumMonthlyTemperature(sensor_readings info[], uint8_t month)
 {
     return 1;
 }
