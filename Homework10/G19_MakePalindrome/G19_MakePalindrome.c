@@ -25,15 +25,12 @@ char* fgets1(char *str, int size, FILE *pf);
 void deleteSpace(char *str);
 void skipSpace(char *str, int leave);
 void shiftLeftArr(char arr[], int size);
-void shiftLeftArrInt(int arr[], int size);
-int readLetter(char *str, dictionary *string);
 void haveLetter(char *str, dictionary *string);
 bool isHaveNotLetter(char ch, dictionary *string);
 void numberLetter(char *str, dictionary *string);
 void makePolindrome(dictionary *string);
 int numberAsymmetricalLetter(int arr[], int size);
-void sortAscendingDictionary(dictionary *string);
-void swapInt(int *i, int *y);
+int comparator (const void *a, const void *b);
 void swapChar(char *i, char *y);
 int numberCharacter(dictionary *string);
 char findSymbol(dictionary *string);
@@ -51,8 +48,10 @@ int main(int argc, char **argv)
     if (fgets1(str, SIZE, pf_source) == NULL)
         fprintf(stderr, "Fail read!\n");
 
-    readLetter(str, &string);
-    sortAscendingDictionary(&string);
+    deleteSpace(str);
+    haveLetter(str, &string);
+    qsort(string.alf, string.num, sizeof (char), comparator);
+    numberLetter(str, &string);
     deleteAsymmetricalLetter(&string, numberAsymmetricalLetter(string.number, string.num) - 1);
     makePolindrome(&string);
     fprintf(pf_target, "%s", string.polindrom);
@@ -82,6 +81,11 @@ void makePolindrome(dictionary *string)
         string->polindrom[size / 2] = ch;
 
     string->polindrom[size] = '\0';
+}
+
+int comparator (const void *a, const void *b)
+{
+    return *(char *)a - *(char *)b;
 }
 
 char findSymbol(dictionary *string)
@@ -114,44 +118,7 @@ void deleteAsymmetricalLetter(dictionary *string, int numberDelete)
             string->number[i]--;
             numberDelete--;
         }
-
-        if (string->number[i] == 0)
-        {
-            shiftLeftArr(string->alf + i, string->num - i);
-            shiftLeftArrInt(string->number + i, string->num - i);
-            string->num--;
-        }
     }
-}
-
-void sortAscendingDictionary(dictionary *string)
-{
-	int sortingFinished;
-	
-	for (int i = 0; i < string->num - 1; i++)
-	{
-		sortingFinished = 1;
-		
-		for (int y = string->num - 1; y > i; y--)
-		{
-			if (string->alf[y] < string->alf[y - 1])
-			{
-				swapChar(&string->alf[y], &string->alf[y - 1]);
-                swapInt(&string->number[y], &string->number[y - 1]);
-				sortingFinished = 0;
-			}
-		}
-		
-		if (sortingFinished)
-			break;
-	}
-}
-
-void swapInt(int *i, int *y)
-{
-	int temp = *i;
-	*i = *y;
-	*y = temp;
 }
 
 void swapChar(char *i, char *y)
@@ -171,13 +138,6 @@ int numberAsymmetricalLetter(int arr[], int size)
     }
     
     return number;
-}
-
-int readLetter(char *str, dictionary *string)
-{
-    deleteSpace(str);
-    haveLetter(str, string);
-    numberLetter(str, string);
 }
 
 void haveLetter(char *str, dictionary *string)
@@ -234,12 +194,6 @@ void shiftLeftArr(char arr[], int size)
         arr[i] = arr[i + 1];
         arr[i + 1] = '\0';
     }
-}
-
-void shiftLeftArrInt(int arr[], int size)
-{
-	for (int i = 0; i < size - 1; i++)
-        arr[i] = arr[i + 1];
 }
 
 char* fgets1(char *str, int size, FILE *pf)
