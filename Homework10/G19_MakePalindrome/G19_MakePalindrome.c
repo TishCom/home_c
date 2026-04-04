@@ -34,7 +34,7 @@ int comparator (const void *a, const void *b);
 void swapChar(char *i, char *y);
 int numberCharacter(dictionary *string);
 char findSymbol(dictionary *string);
-void deleteAsymmetricalLetter(dictionary *string, int numberDelete);
+void deleteAsymmetricalLetter(dictionary *string);
 
 int main(int argc, char **argv)
 {
@@ -52,7 +52,7 @@ int main(int argc, char **argv)
     haveLetter(str, &string);
     qsort(string.alf, string.num, sizeof (char), comparator);
     numberLetter(str, &string);
-    deleteAsymmetricalLetter(&string, numberAsymmetricalLetter(string.number, string.num) - 1);
+    deleteAsymmetricalLetter(&string);
     makePolindrome(&string);
     fprintf(pf_target, "%s", string.polindrom);
 
@@ -109,8 +109,9 @@ int numberCharacter(dictionary *string)
     return number;
 }
 
-void deleteAsymmetricalLetter(dictionary *string, int numberDelete)
+void deleteAsymmetricalLetter(dictionary *string)
 {
+    int numberDelete = numberAsymmetricalLetter(string->number, string->num) - 1;
     for (int i = string->num - 1; numberDelete > 0; i--)
     {
         if (string->number[i] % 2)
