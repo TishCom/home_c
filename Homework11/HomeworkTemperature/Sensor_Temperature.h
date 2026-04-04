@@ -14,11 +14,11 @@ typedef struct
     int8_t temperature;
 }sensor_readings;
 
-int averageMonthlyTemperature(sensor_readings info[], uint8_t month);
+float averageMonthlyTemperature(sensor_readings info[], uint8_t month);
 int minimumMonthlyTemperature(sensor_readings info[], uint8_t month);
 int maximumMonthlyTemperature(sensor_readings info[], uint8_t month);
-int averageYearTemperature(sensor_readings info[], uint16_t year);
-int minimumYearTemperature(sensor_readings info[], uint16_t year);
-int maximumYearTemperature(sensor_readings info[], uint16_t year);
+float averageYearTemperature(sensor_readings info[]);
+int minimumYearTemperature(sensor_readings info[]);
+int maximumYearTemperature(sensor_readings info[]);
 
 #endif
