@@ -157,7 +157,7 @@ int deleteData(int size, int amountAvailableData, sensor_readings info[])
 {
     amountAvailableData--;
 
-    if (amountAvailableData >= size)
+    if (amountAvailableData >= size || amountAvailableData < 0)
         return ERROR;
 
     shiftLeftArr(info + amountAvailableData, size - amountAvailableData);
