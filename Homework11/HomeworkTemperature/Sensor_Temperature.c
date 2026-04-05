@@ -1,31 +1,31 @@
 #include "Sensor_Temperature.h"
 
-float averageMonthlyTemperature(sensor_readings info[], uint8_t month)
+float averageMonthlyTemperature(int size, sensor_readings info[], uint8_t month)
 {
     return 1;
 }
 
-int minimumMonthlyTemperature(sensor_readings info[], uint8_t month)
+int minimumMonthlyTemperature(int size, sensor_readings info[], uint8_t month)
 {
     return 1;
 }
 
-int maximumMonthlyTemperature(sensor_readings info[], uint8_t month)
+int maximumMonthlyTemperature(int size, sensor_readings info[], uint8_t month)
 {
     return 1;
 }
 
-float averageYearTemperature(sensor_readings info[])
+float averageYearTemperature(int size, sensor_readings info[])
 {
     return 1;
 }
 
-int minimumYearTemperature(sensor_readings info[])
+int minimumYearTemperature(int size, sensor_readings info[])
 {
     return 1;
 }
 
-int maximumYearTemperature(sensor_readings info[])
+int maximumYearTemperature(int size, sensor_readings info[])
 {
     return 1;
 }
