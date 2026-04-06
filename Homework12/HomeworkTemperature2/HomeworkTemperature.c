@@ -40,7 +40,7 @@ void help(void)
 
 void fileParam(void)
 {
-	printf("File - \"f%s\".\n", optarg);
+	printf("File - \"%s\".\n", optarg);
 }
 
 void monthParam(void)
