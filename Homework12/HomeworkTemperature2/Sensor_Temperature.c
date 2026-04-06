@@ -11,10 +11,10 @@ int returnIndexMonth(sensor_readings info[], uint8_t month)
 
 void shiftLeftArr(sensor_readings arr[], int size)
 {
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < size - 1; i++)
         arr[i] = arr[i + 1];
 
-    arr[size] = (sensor_readings){.day = 0, .hour = 0, .minute = 0, .month = 0, .year = 0, .temperature = 0};
+    arr[size - 1] = (sensor_readings){.day = 0, .hour = 0, .minute = 0, .month = 0, .year = 0, .temperature = 0};
 }
 
 int compareDate(const void *pa, const void *pb)
