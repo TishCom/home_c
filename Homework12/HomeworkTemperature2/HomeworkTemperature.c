@@ -11,16 +11,23 @@ void monthParam(void);
 int main(int argc, char **argv)
 {
 	sensor_readings info[SIZE] ={0};
-	int rez=0;
+	char rez=0;
 
-    while ( (rez = getopt(argc,argv,"hf:m:")) != -1)
+    while ((rez = getopt(argc,argv,"hf:m:")) != -1)
     {
         switch (rez)
         {
-            case 'h': help(); break;
-            case 'f': fileParam(); break;
-            case 'm': monthParam(); break;
-            case '?': printf("Error found!\n");
+            case 'h':
+				help(); 
+				break;
+            case 'f':
+				fileParam();
+				break;
+            case 'm':
+				monthParam();
+				break;
+            case '?':
+				printf("Error found!\n");
         }
     }
 	
