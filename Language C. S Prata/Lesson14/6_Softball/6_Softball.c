@@ -11,7 +11,8 @@ struct gamer
 {
     char lastname[30];
     char firstname[30];
-    uint16_t score;
+    uint16_t receiving;
+    uint16_t blowsInflicted;
     uint16_t passage;
     uint16_t run;
     float average;
@@ -20,6 +21,8 @@ struct gamer
 
 void fopen1(FILE **pf, char *fileName, char *mode);
 void init(struct gamer *a);
+void read(FILE *pf, struct gamer *a);
+void average(struct gamer *a);
 
 int main(int argc, char **argv)
 {
@@ -33,16 +36,33 @@ int main(int argc, char **argv)
     fopen1(&pf, INPUT_FILE, "r");
 
     while (fscanf(pf, "%d", &number) == 1)
-    {
-        fscanf(pf, "%s%s%d%d%d%d", team[number].firstname, team[number].lastname, &tresh, &tresh, &team[number].passage, &team[number].run);
-    }
+        read(pf, &team[number]);
 
     for (int i = 0; i < SIZE; i++)
-    {
-        printf("%s %s - %d %d\n", team[i].firstname, team[i].lastname, team[i].passage, team[i].run);
-    }
+        average(&team[i]);
+
+    for (int i = 0; i < SIZE; i++)
+        printf("%s %s - %d %d %d %d %.2f\n", team[i].firstname, team[i].lastname, team[i].receiving, team[i].blowsInflicted, team[i].passage, team[i].run, team[i].average);
+    
+    fclose(pf);
     
 	return 0;
+}
+
+void average(struct gamer *a)
+{
+    a->average = (float)a->blowsInflicted / (float)a->receiving;
+}
+
+void read(FILE *pf, struct gamer *a)
+{
+    struct gamer player = {0};
+    fscanf(pf, "%s%s%d%d%d%d", a->firstname, a->lastname, &player.receiving, &player.blowsInflicted, &player.passage, &player.run);
+
+    a->receiving += player.receiving;
+    a->blowsInflicted += player.blowsInflicted;
+    a->passage += player.passage;
+    a->run += player.run;
 }
 
 void init(struct gamer *a)
@@ -52,7 +72,8 @@ void init(struct gamer *a)
     strcpy(a->lastname, "");
     a->passage = 0;
     a->run = 0;
-    a->score = 0;
+    a->receiving = 0;
+    a->blowsInflicted = 0;
 }
 
 void fopen1(FILE **pf, char *fileName, char *mode)
