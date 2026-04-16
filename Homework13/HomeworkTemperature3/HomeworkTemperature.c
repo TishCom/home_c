@@ -4,7 +4,8 @@
 // #include "DYNAMIC_ARRAY.h"
 
 #define SIZE 200
-#define INPUT_FILE "F:\\C_2026_MFTI\\Lesson13\\HomeworkTemperature3\\temperature_big.csv"
+// #define INPUT_FILE "F:\\C_2026_MFTI\\Lesson13\\HomeworkTemperature3\\temperature_big.csv"
+#define INPUT_FILE "F:\\C_2026_MFTI\\Lesson13\\HomeworkTemperature3\\temperature_big1.txt"
 
 void help(void);
 void fileParam(void);
@@ -15,16 +16,13 @@ void scanDA(FILE *ptemp, dynamicArr *da);
 int main(int argc, char **argv)
 {
 	dynamicArr info;
+	datatypeDA a;
 	FILE *ptemp;
 	char rez = 0;
 
 	initDynamicArr(&info);
 	fopen1(&ptemp, INPUT_FILE, "r");
 	scanDA(ptemp, &info);
-
-	datatypeDA a;
-	fscanf(ptemp, "%d;%d;%d;%d;%d;%d", &a.year, &a.month, &a.day, &a.hour, &a.minute, &a.temperature);
-	printf("\n123) %d %d %d %d %d %d\n", a.year, a.month, a.day, a.hour, a.minute, a.temperature);
 
     while ((rez = getopt(argc,argv,"hf:m:")) != -1)
     {
@@ -44,34 +42,30 @@ int main(int argc, char **argv)
         }
     }
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; info.sp > 0; i++)
 	{
-		printf("%d\n", i);
-		printf("%d %d %d %d %d %d\n", info.item[i].year, info.item[i].month, info.item[i].day, info.item[i].hour, info.item[i].minute, info.item[i].temperature);
-		// popDynamicArr(&info);
+		a = info.item[i];
+		printf("%d %d %d %d %d %d\n", a.year, a.month, a.day, a.hour, a.minute, a.temperature);
+		popDynamicArr(&info);
 	}
 
-	printf("YES\n");
-
-	if (ptemp == NULL) 
-		printf("fail ptemp\n");
 
 	if (fclose(ptemp) == EOF)
 		printf("fail close\n");
-
-	printf("YES1\n");
+	else
+		printf("norm close\n");
 	
 	return 0;
 }
 
 void scanDA(FILE *ptemp, dynamicArr *da)
 {
-	datatypeDA a;
+	datatypeDA a = {.day =7, .hour = 8, .minute = 7, .month = 9, .temperature = 78, .year = 87};
 	
-	for (int i = 0; i < 10; i++)
+	while (da->sp < 10)
 	{
-		// fscanf(ptemp, "%d;%d;%d;%d;%d;%d", &a.year, &a.month, &a.day, &a.hour, &a.minute, &a.temperature);
-		printf("1) %d %d %d %d %d %d\n", a.year, a.month, a.day, a.hour, a.minute, a.temperature);
+		fscanf(ptemp, "%d;%d;%d;%d;%d;%d", &a.year, &a.month, &a.day, &a.hour, &a.minute, &a.temperature);
+		printf("%d) %d %d %d %d %d %d\n", da->sp + 1, a.year, a.month, a.day, a.hour, a.minute, a.temperature);
 		pushDynamicArr(da, a);
 	}
 }
