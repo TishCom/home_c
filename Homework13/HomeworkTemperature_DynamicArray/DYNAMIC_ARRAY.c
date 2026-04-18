@@ -4,7 +4,7 @@ void initDynamicArr(dynamicArr *da)
 {
     da->size = 4;
     da->sp = 0;
-    da->item = malloc(da->size * sizeof(datatypeDA));
+    da->item = malloc((size_t)da->size * sizeof(datatypeDA));
 }
 
 void deleteDynamicArr(dynamicArr *da)
@@ -17,7 +17,11 @@ void pushDynamicArr(dynamicArr *da, datatypeDA value)
     if (da->sp == da->size - 1) 
     {
         da->size = da->size * 2;
-        da->item = realloc(da->item, da->size * sizeof(datatypeDA));
+        if ((da->item = realloc(da->item, (size_t)da->size * sizeof(datatypeDA))) == NULL)
+        {
+            printf("fail realloc\n");
+            return;
+        }
     }
     da->item[da->sp++] = value;
 }
@@ -26,7 +30,7 @@ datatypeDA popDynamicArr(dynamicArr *da)
 {
     if (emptyDynamicArr(da))
     {
-        printf("stack empty");
+        printf("array empty");
         exit(1);
     }
 

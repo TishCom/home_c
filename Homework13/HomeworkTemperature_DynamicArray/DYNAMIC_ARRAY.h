@@ -5,7 +5,7 @@
 #include <inttypes.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include "Sensor_Temperature.h"
+#include "Sencsor_Readings.h"
 
 typedef sensor_readings datatypeDA;
 
