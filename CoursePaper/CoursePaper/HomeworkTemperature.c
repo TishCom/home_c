@@ -31,8 +31,8 @@ typedef struct
 
 typedef struct
 {
-	uint32_t normalValue[DECEMBER];
-	uint32_t errValue[DECEMBER];
+	uint32_t normalValue[DECEMBER + 1];
+	uint32_t errValue[DECEMBER + 1];
 }myData;
 
 void help(void);
