@@ -24,9 +24,9 @@ typedef struct
 	uint8_t month;
 	uint32_t normalValue;
 	uint32_t errValue;
-	uint8_t monthAvg;
-	uint8_t monthMax;
-	uint8_t monthMin;
+	int8_t monthAvg;
+	int8_t monthMax;
+	int8_t monthMin;
 }printData;
 
 typedef struct
@@ -109,7 +109,7 @@ void scanDA(FILE *ptemp, dynamicArr *da, myData *data)
 	datatypeDA a;
 	char buffer[SIZE];
 	int month = JANUARY;
-	int normalData = 0;
+	uint32_t normalData = 0, allData = 0;
     
     for (int numberString = 0, scan = 0; fgets(buffer, sizeof(buffer), ptemp) != NULL; numberString++)
     {
@@ -117,10 +117,11 @@ void scanDA(FILE *ptemp, dynamicArr *da, myData *data)
 
 		if (a.month != month)
 		{
-			data->normalValue[month] = (uint32_t)normalData;
-			data->errValue[month] = (uint32_t)dayInMonth(da, (uint8_t)month) - (uint32_t)normalData;
+			data->normalValue[month] = normalData;
+			data->errValue[month] = allData - normalData;
 			month = a.month;
 			normalData = 0;
+			allData = 0;
 		}
 
 		if (scan == 6 && checkLimit(a))
@@ -130,10 +131,12 @@ void scanDA(FILE *ptemp, dynamicArr *da, myData *data)
 		}
 		else
 			printf("Fail read string №%d - %s\n", numberString, buffer);
+
+		allData++;
     }
 
-	data->normalValue[DECEMBER] = (uint32_t)normalData;
-	data->errValue[DECEMBER] = (uint32_t)dayInMonth(da, DECEMBER) - (uint32_t)normalData;
+	data->normalValue[DECEMBER] = normalData;
+	data->errValue[DECEMBER] = allData - normalData;
 }
 
 bool checkLimit(datatypeDA a)
@@ -152,9 +155,9 @@ void printDA(myData *readData, dynamicArr *da, int numberMonth)
 	data.errValue = readData->errValue[numberMonth];
 	data.year = da->item[da->sp - 1].year;
 	data.month = (uint8_t)numberMonth;
-	data.monthAvg = (uint8_t)averageMonthlyTemperature(da, (uint8_t)numberMonth);
-	data.monthMax = (uint8_t)maximumMonthlyTemperature(da, (uint8_t)numberMonth);
-	data.monthMin = (uint8_t)minimumMonthlyTemperature(da, (uint8_t)numberMonth);
+	data.monthAvg = (int8_t)averageMonthlyTemperature(da, (uint8_t)numberMonth);
+	data.monthMax = (int8_t)maximumMonthlyTemperature(da, (uint8_t)numberMonth);
+	data.monthMin = (int8_t)minimumMonthlyTemperature(da, (uint8_t)numberMonth);
 
 	printf("%2d %4d %9s %7d %7d %8d %8d %10d\n", data.month - 1, data.year, NAME_MONTH[data.month], data.normalValue,
 			data.errValue, data.monthAvg, data.monthMax, data.monthMin);
