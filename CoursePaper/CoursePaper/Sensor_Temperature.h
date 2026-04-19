@@ -33,11 +33,12 @@ int maximumMonthlyTemperature(dynamicArr *da, uint8_t month);
 float averageYearTemperature(dynamicArr *da);
 int minimumYearTemperature(dynamicArr *da);
 int maximumYearTemperature(dynamicArr *da);
-int addingData(dynamicArr *da, datatypeDA data);
+int addingData(dynamicArr *da, datatypeDA data); 
 int deleteData(int tergetDelete, dynamicArr *da);
 int fillArrSensor(dynamicArr *da); 
 void printArrSensor(dynamicArr *da);
 void sortDate(dynamicArr *da);
 void sortTemperature(dynamicArr *da);
+int dayInMonth(dynamicArr *da, uint8_t month);
 
 #endif
