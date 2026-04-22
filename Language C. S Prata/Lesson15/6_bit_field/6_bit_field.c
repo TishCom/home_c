@@ -16,7 +16,7 @@ char *alignment[3] = {"left", "center", "right"};
 
 char *onOff[2] = {"OFF", "ON"};
 
-char func(struct font a);
+char menu(struct font a);
 void changeSize(struct font *a);
 void changeFont(struct font *a);
 void changeAlignment(struct font *a);
@@ -28,7 +28,7 @@ int main(int argc, char **argv)
 	struct font myFont = {.id = 1, .size = 12, .alignment = 0, .fat = 0, .italics = 0, .underline = 0};
 	char ch = 0;
 	
-	while ((ch = func(myFont)) != 'g')
+	while ((ch = menu(myFont)) != 'g')
 	{
 		switch(ch)
 		{
@@ -42,13 +42,13 @@ int main(int argc, char **argv)
 				changeAlignment(&myFont);
 				break;
 			case 'd':
-				myFont.fat = (myFont.fat + 1) % 2;
+				myFont.fat ^= 1;
 				break;
 			case 'e':
-				myFont.italics = (myFont.italics + 1) % 2;
+				myFont.italics ^= 1;
 				break;
 			case 'f':
-				myFont.underline = (myFont.underline + 1) % 2;
+				myFont.underline ^= 1;
 		};
 	}
 	
@@ -57,7 +57,7 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-char func(struct font a)
+char menu(struct font a)
 {
 	printf(" ID  Size  Alignment  Fat  Italic  Underline\n");
 	printf("%3d %4d %8s %7s %5s %8s\n", a.id, a.size, alignment[a.alignment], onOff[a.fat],  onOff[a.italics],  onOff[a.underline]);

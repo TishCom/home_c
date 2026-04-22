@@ -2,33 +2,53 @@
 #include <ctype.h>
 #include <stdio.h>
 
-struct font
-{
-	unsigned int id 		: 8;
-	unsigned int size 		: 7;
-	unsigned int alignment 	: 2;
-	unsigned int fat 		: 1;
-	unsigned int italics 	: 1;
-	unsigned int underline 	: 1;
-};
+#define GET_UNDERLINE(x)	((x) & 1)
+#define SET_UNDERLINE(x)	((x) << 0)
+#define RESET_UNDERLINE		(~(1 << 0))
+#define INV_UNDERLINE(x)	((x) ^ (1 << 0))
+
+#define GET_ITALIC(x)		(((x) & 2) >> 1)
+#define SET_ITALIC(x)		((x) << 1)
+#define RESET_ITALIC		(~(1 << 1))
+#define INV_ITALIC(x)		((x) ^ (1 << 1))
+
+#define GET_FAT(x) 			(((x) & 4) >> 2)
+#define SET_FAT(x)			((x) << 2)
+#define RESET_FAT			(~(1 << 2))
+#define INV_FAT(x)			((x) ^ (1 << 2))
+
+#define ALIGNMENT 			3
+#define GET_ALIG(x)			(((x) & (3 << ALIGNMENT)) >> ALIGNMENT)
+#define SET_ALIG(x)			((x) << ALIGNMENT)
+#define RESET_ALIG			(~(3 << ALIGNMENT))
+
+#define SIZE 				5
+#define GET_SIZE(x)			(((x) & (127 << SIZE)) >> SIZE)
+#define SET_SIZE(x)			((x) << SIZE)
+#define RESET_SIZE			(~(127 << SIZE))
+
+#define ID	 				12
+#define GET_ID(x)			(((x) & (255 << ID)) >> ID)
+#define SET_ID(x)			((x) << ID)
+#define RESET_ID			(~(255 << ID))
 
 char *alignment[3] = {"left", "center", "right"};
 
 char *onOff[2] = {"OFF", "ON"};
 
-char func(struct font a);
-void changeSize(struct font *a);
-void changeFont(struct font *a);
-void changeAlignment(struct font *a);
 char myGetchar(void);
 void skipString(void);
+char menu(unsigned long myFont1);
+void changeAlignment(unsigned long *myFont1);
+void changeSize(unsigned long *myFont1);
+void changeFont(unsigned long *myFont1);
 
 int main(int argc, char **argv)
 {
-	struct font myFont = {.id = 1, .size = 12, .alignment = 0, .fat = 0, .italics = 0, .underline = 0};
 	char ch = 0;
+	unsigned long myFont = SET_ID(1) | SET_SIZE(12) | SET_ALIG(0) | SET_FAT(0) | SET_ITALIC(0) |  SET_UNDERLINE(0);
 	
-	while ((ch = func(myFont)) != 'g')
+	while ((ch = menu(myFont)) != 'g')
 	{
 		switch(ch)
 		{
@@ -42,13 +62,13 @@ int main(int argc, char **argv)
 				changeAlignment(&myFont);
 				break;
 			case 'd':
-				myFont.fat = (myFont.fat + 1) % 2;
+				myFont = INV_FAT(myFont);
 				break;
 			case 'e':
-				myFont.italics = (myFont.italics + 1) % 2;
+				myFont = INV_ITALIC(myFont);
 				break;
 			case 'f':
-				myFont.underline = (myFont.underline + 1) % 2;
+				myFont = INV_UNDERLINE(myFont);
 		};
 	}
 	
@@ -57,33 +77,7 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-char func(struct font a)
-{
-	printf(" ID  Size  Alignment  Fat  Italic  Underline\n");
-	printf("%3d %4d %8s %7s %5s %8s\n", a.id, a.size, alignment[a.alignment], onOff[a.fat],  onOff[a.italics],  onOff[a.underline]);
-	
-	printf("a)change font b)change size c)change alignment\n");
-	printf("d)bold        e)italic      f)underline\n");
-	printf("g)exit\n");
-	
-	return myGetchar();
-}
-
-void changeSize(struct font *a)
-{
-	int b = 0;
-	
-	do
-	{
-		printf("Enter the font size (0-127): ");
-		scanf("%d", &b);
-		skipString();
-	}while (b & ~0b01111111);
-	
-	a->size = (uint8_t)b;
-}
-
-void changeFont(struct font *a)
+void changeFont(unsigned long *myFont)
 {
 	int b = 0;
 	
@@ -94,10 +88,26 @@ void changeFont(struct font *a)
 		skipString();
 	}while (b & ~0b11111111);
 	
-	a->id = (uint8_t)b;
+	*myFont &= RESET_ID;
+	*myFont |= SET_ID(b);
 }
 
-void changeAlignment(struct font *a)
+void changeSize(unsigned long *myFont)
+{
+	int b = 0;
+	
+	do
+	{
+		printf("Enter the font size (0-127): ");
+		scanf("%d", &b);
+		skipString();
+	}while (b & ~0b01111111);
+	
+	*myFont &= RESET_SIZE;
+	*myFont |= SET_SIZE(b);
+}
+
+void changeAlignment(unsigned long *myFont)
 {
 	char ch = 0;
 	
@@ -109,7 +119,20 @@ void changeAlignment(struct font *a)
 		ch = myGetchar();
 	}while (ch != 'a' && ch != 'b' && ch != 'c');
 	
-	a->alignment = (ch - 'a') % 3;
+	*myFont &= RESET_ALIG;
+	*myFont |= SET_ALIG((ch - 'a') % 3);
+}
+
+char menu(unsigned long myFont)
+{
+	printf(" ID  Size  Alignment  Fat  Italic  Underline\n");
+	printf("%3d %4d %8s %7s %5s %8s\n", GET_ID(myFont), GET_SIZE(myFont), alignment[GET_ALIG(myFont)], onOff[GET_FAT(myFont)],  onOff[GET_ITALIC(myFont)],  onOff[GET_UNDERLINE(myFont)]);
+	
+	printf("a)change font b)change size c)change alignment\n");
+	printf("d)bold        e)italic      f)underline\n");
+	printf("g)exit\n");
+	
+	return myGetchar();
 }
 
 void skipString(void)
