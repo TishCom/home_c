@@ -1,16 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 #include <inttypes.h>
 
 #define SIZE 100
 
-int binaryToDecimal(int a);
+int stringToInt(char *str);
 void printBinary(uint32_t a);
 
 int main(int argc, char **argv)
 {
-    int arg1 = binaryToDecimal(atoi(argv[1])), arg2 = binaryToDecimal(atoi(argv[2]));
+    //int arg1 = stringToInt(argv[1]), arg2 = stringToInt(argv[2]);
+    int arg1 = stringToInt("10101010"), arg2 = stringToInt("01010101");
+    
+    printf("%d - %d\n", arg1, arg2);
 
     printBinary(arg1);
     printBinary(arg2);
@@ -23,17 +27,14 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-int binaryToDecimal(int a)
+int stringToInt(char *str)
 {
-    int b = 0;
+    int rez = 0;
 
-    for (int i = 0; a > 0; i++)
-    {
-        b += (a % 10) * pow(2, i);
-        a /= 10;
-    }
+    for (int i = 0, y = strlen(str) - 1; y >= 0; y--, i++)
+        rez += (str[y] - '0') * pow(2, i);
     
-    return b;
+    return rez;
 }
 
 void printBinary(uint32_t a)

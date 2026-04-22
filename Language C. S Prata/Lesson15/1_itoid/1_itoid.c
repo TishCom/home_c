@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <string.h>
 
 int stringToInt(char *str);
 
 int main(int argc, char **argv)
 {
-	printf("Hello world!\n");
     printf("%d\n", stringToInt("10101010"));
     printf("%d\n", stringToInt("01010101"));
     printf("%d\n", stringToInt("00000000"));
@@ -17,14 +17,10 @@ int main(int argc, char **argv)
 
 int stringToInt(char *str)
 {
-    int a = atoi(str);
-    int b = 0;
+    int rez = 0;
 
-    for (int i = 0; a > 0; i++)
-    {
-        b += (a % 10) * pow(2, i);
-        a /= 10;
-    }
+    for (int i = 0, y = strlen(str) - 1; y >= 0; y--, i++)
+        rez += (str[y] - '0') * pow(2, i);
     
-    return b;
+    return rez;
 }
