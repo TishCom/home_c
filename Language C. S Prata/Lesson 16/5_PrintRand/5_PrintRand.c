@@ -32,9 +32,9 @@ void printMas(int size, int arr[], int number)
     int n = 0;
     for (int i = 0; i < number; i++)
     {
-        n = randomNumber(size);
+        n = randomNumber(size - i);
         printf("%d ", arr[n]);
-        shiftLeftArr(arr + n, size - n);
+        shiftLeftArr(arr + n, size - n - i);
     }
 }
 
