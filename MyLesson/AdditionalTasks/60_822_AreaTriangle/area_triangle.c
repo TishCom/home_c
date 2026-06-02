@@ -12,19 +12,19 @@
 
 typedef struct 
 {
-    int x;
-    int y;
+    double x;
+    double y;
 } Point;
 
 static void open_file(FILE **pf, char *fileName, char *mode);
 static void fill_array(FILE *pf, Point arr[], int size);
-static float get_area_triangle(Point arr[], int size);
+static double get_area_triangle(Point arr[], int size);
+static double absolut(double number);
 
 int main(void)
 {
     FILE *pf_source, *pf_target;
     Point arr[SIZE];
-    double result = 0, cela = 0;
 
     open_file(&pf_source, INPUT_FILE, "r");
     open_file(&pf_target, OUTPUT_FILE, "w");
@@ -32,12 +32,7 @@ int main(void)
     // fscanf(pf, "%d %d", &arr[i].x, &arr[i].y);
     fill_array(pf_source, arr, SIZE);
 
-    result = get_area_triangle(arr, SIZE);
-
-    if ((modf(result, &cela)) <= 0)
-        fprintf(pf_target, "%d", (int)cela);
-    else
-        fprintf(pf_target, "%f", result);
+    fprintf(pf_target, "%lf", get_area_triangle(arr, SIZE));
 
     fclose(pf_source);
     fclose(pf_target);
@@ -55,11 +50,16 @@ static void open_file(FILE **pf, char *fileName, char *mode)
 static void fill_array(FILE *pf, Point arr[], int size)
 {
     for (size_t i = 0; i < size; i++)
-        fscanf(pf, "%d %d", &arr[i].x, &arr[i].y);
+        fscanf(pf, "%lf %lf", &arr[i].x, &arr[i].y);
 }
 
-static float get_area_triangle(Point arr[], int size)
+static double get_area_triangle(Point arr[], int size)
 {
-    return -(((arr[1].x - arr[0].x) * (arr[2].y - arr[0].y)
-                - (arr[2].x - arr[0].x) * (arr[1].y - arr[0].y)) / 2.0);
+    return absolut(((arr[1].x - arr[0].x) * (arr[2].y - arr[0].y)
+                - (arr[2].x - arr[0].x) * (arr[1].y - arr[0].y)) / (double)2.0);
+}
+
+static double absolut(double number)
+{
+    return number < 0 ? -number : number;
 }
