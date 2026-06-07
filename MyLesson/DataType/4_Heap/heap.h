@@ -12,41 +12,41 @@ typedef int ItemHeap;
 //     int processtime;  
 // } ItemHeap;
 
-typedef struct node
+typedef struct Node
 {
     ItemHeap item;
-    struct node *left;
-    struct node *right;
-    struct node *parent;
-} Node;
+    struct Node *left;
+    struct Node *right;
+    struct Node *parent;
+} NodeHeap;
 
 typedef struct heap
 {
-    Node *root;
+    NodeHeap *root;
     int items;
 } Heap;
 
 /*операция:     инициализация кучи                                              */
 /*предусловия:  ph указывает на кучу                                            */
 /*постусловия:  куча инициализирована пустым содержимым                         */
-void InitializeHeap(Heap *ph);
+void initializeHeap(Heap *ph);
 
 /*операция:     проверка, является ли куча полной                               */
 /*предусловия:  ph указывает на ранее инициализированную кучу                   */
 /*постусловия:  возвращает true если куча полна,                                */
 /*              в противном случае возвращает false                             */
-bool HeapIsFull(const Heap *ph);
+bool heapIsFull(const Heap *ph);
 
 /*операция:     проверка, является ли куча пустой                               */
 /*предусловия:  ph указывает на ранее инициализированную кучу                   */
 /*постусловия:  возвращает true если куча пуста,                                */
 /*              в противном случае возвращает false                             */
-bool HeapIsEmpty(const Heap *ph);
+bool heapIsEmpty(const Heap *ph);
 
 /*операция:     определяет количество элементов в куче                          */
 /*предусловия:  ph указывает на ранее инициализированную кучу                   */
 /*постусловия:  возвращает количество элементов в куче                          */
-int HeapItemCount(const Heap *ph);
+int heapItemCount(const Heap *ph);
 
 /*операция:     добовление элемента в кучу                                      */
 /*предусловия:  ph указывает на ранее инициализированную кучу,                  */
@@ -55,7 +55,7 @@ int HeapItemCount(const Heap *ph);
 /*              и функция возвращает значение true;                             */
 /*              в противном случае куча остается неизменной,                    */
 /*              а функция возвращает false                                      */
-bool PushHeap(const ItemHeap *item, Heap *ph);
+bool pushHeap(const ItemHeap *item, Heap *ph);
 
 /*операция:     удаление элемента из верхушки кучи                              */
 /*предусловия:  ph указывает на ранее инициализированную кучу,                  */
@@ -67,7 +67,7 @@ bool PushHeap(const ItemHeap *item, Heap *ph);
 /*              переустонавливается вы пустое состояние.                        */
 /*              если куча пуста с самого ночала, он остается                    */
 /*              неизменной, а функция возвращает false                          */
-bool PopHeap(ItemHeap *item, Heap *ph);
+bool popHeap(ItemHeap *item, Heap *ph);
 
 /*операция:     читает элемента из верхушки кучи не удаляя его                  */
 /*предусловия:  ph указывает на ранее инициализированную кучу,                  */
@@ -76,7 +76,7 @@ bool PopHeap(ItemHeap *item, Heap *ph);
 /*постусловия:  если куча не пуста, элемент в верхушке кучи копируется          */
 /*              в *pitem, а функция возвращает true;                            */
 /*              если куча пуста с самого ночала функция возвращает false        */
-bool PeekHeap(ItemHeap *item, const Heap *ph);
+bool peekHeap(ItemHeap *item, const Heap *ph);
 
 /*операция:     применение функции к каждому элементу кучи                      */
 /*предусловия:  ph указывает на ранее инициализированную кучу,                  */
@@ -84,11 +84,11 @@ bool PeekHeap(ItemHeap *item, const Heap *ph);
 /*              ItemHeap и не имеет возвращаемого значения                      */
 /*постусловия:  функция, указанная pfun, выполняется один раз                   */
 /*              для каждого элемента в куче                                     */
-void TraverseHeap(const Heap *ph, void (*pfun)(ItemHeap *item));
+void traverseHeap(const Heap *ph, void (*pfun)(ItemHeap *item));
 
 /*операция:     опустошение кучи                                                */
 /*предусловия:  ph указывает на ранее инициализированную кучу                   */
 /*постусловия:  куча опустошается и перестает занимать место в памяти           */
-void EmptyHeap(Heap *ph);
+void emptyHeap(Heap *ph);
 
 #endif
