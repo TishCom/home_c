@@ -61,7 +61,7 @@ bool addItemRing(ItemRing item, RingBuffer *prb);
 /*              в item будут записаны данные элемента кольцевого буфера         */
 /*постусловия:  если возможно функция удаляет элемент из кольцевого буфера      */
 /*              и возвращает значение true, в противном случае возвращает false */
-bool deleteItemRing(ItemRing *item, RingBuffer *prb);
+bool getItemRing(ItemRing *item, RingBuffer *prb);
 
 /*операция:     получить следующий элемент без извлечения(удаления)             */
 /*предусловия:  prb указывает на кольцевой буфер                                */
