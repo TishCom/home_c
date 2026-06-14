@@ -1,0 +1,202 @@
+#include <stdio.h>
+#include "fsm.h"
+
+/*--------------------------------------------*
+ * ПРИМЕР: ВЫЗЫВАЕМЫЕ АВТОМАТЫ
+ * 
+ * Автомат A вызывает автомат B (проверка датчиков),
+ * затем автомат C (таймер). Каждый вызываемый автомат
+ * работает до полного завершения, как подпрограмма.
+ *--------------------------------------------*/
+
+/*------------ АВТОМАТ C: ТАЙМЕР ------------*/
+
+// Состояния таймера
+typedef enum {
+    TIMER_IDLE = 0,
+    TIMER_COUNT1,
+    TIMER_COUNT2,
+    TIMER_COUNT3,
+    TIMER_DONE
+} timer_state_t;
+
+// Обработчики
+uint32_t timer_idle_handler(void)
+{
+    printf("      [TIMER C] Idle\n");
+    return TIMER_IDLE;
+}
+
+uint32_t timer_start_handler(void)
+{
+    printf("      [TIMER C] Starting 3-step timer...\n");
+    return TIMER_COUNT1;
+}
+
+uint32_t timer_count1_handler(void)
+{
+    printf("      [TIMER C] Step 1/3\n");
+    return TIMER_COUNT2;
+}
+
+uint32_t timer_count2_handler(void)
+{
+    printf("      [TIMER C] Step 2/3\n");
+    return TIMER_COUNT3;
+}
+
+uint32_t timer_count3_handler(void)
+{
+    printf("      [TIMER C] Step 3/3 - DONE!\n");
+    return TIMER_DONE;
+}
+
+uint32_t timer_done_handler(void)
+{
+    printf("      [TIMER C] Complete\n");
+    return TIMER_IDLE;
+}
+
+// Таблица переходов таймера
+const fsm_hierarchy_rule_t timer_c_table[] = {
+    {TIMER_IDLE,  0, timer_start_handler, TIMER_COUNT1, timer_idle_handler, NULL},
+    {TIMER_COUNT1,0, timer_count1_handler, TIMER_COUNT2, NULL, NULL},
+    {TIMER_COUNT2,0, timer_count2_handler, TIMER_COUNT3, NULL, NULL},
+    {TIMER_COUNT3,0, timer_count3_handler, TIMER_DONE,   NULL, NULL},
+    {TIMER_DONE,  0, timer_done_handler,   TIMER_IDLE,   NULL, NULL},
+};
+
+/*------------ АВТОМАТ B: ПРОВЕРКА ДАТЧИКОВ ------------*/
+
+typedef enum {
+    SENSOR_IDLE = 0,
+    SENSOR_CHECK1,
+    SENSOR_CHECK2,
+    SENSOR_DONE
+} sensor_state_t;
+
+uint32_t sensor_idle_handler(void)
+{
+    printf("    [SENSOR B] Idle\n");
+    return SENSOR_IDLE;
+}
+
+uint32_t sensor_start_handler(void)
+{
+    printf("    [SENSOR B] Checking sensors...\n");
+    return SENSOR_CHECK1;
+}
+
+uint32_t sensor_check1_handler(void)
+{
+    printf("    [SENSOR B] Sensor 1: OK\n");
+    return SENSOR_CHECK2;
+}
+
+uint32_t sensor_check2_handler(void)
+{
+    printf("    [SENSOR B] Sensor 2: OK\n");
+    return SENSOR_DONE;
+}
+
+uint32_t sensor_done_handler(void)
+{
+    printf("    [SENSOR B] All sensors passed!\n");
+    return SENSOR_IDLE;
+}
+
+const fsm_hierarchy_rule_t sensor_b_table[] = {
+    {SENSOR_IDLE,  0, sensor_start_handler, SENSOR_CHECK1, sensor_idle_handler, NULL},
+    {SENSOR_CHECK1,0, sensor_check1_handler, SENSOR_CHECK2, NULL, NULL},
+    {SENSOR_CHECK2,0, sensor_check2_handler, SENSOR_DONE,   NULL, NULL},
+    {SENSOR_DONE,  0, sensor_done_handler,   SENSOR_IDLE,   NULL, NULL},
+};
+
+/*------------ АВТОМАТ A: ГЛАВНЫЙ ПРОЦЕСС ------------*/
+
+typedef enum {
+    PROC_IDLE = 0,
+    PROC_CHECKING,
+    PROC_TIMING,
+    PROC_DONE
+} proc_state_t;
+
+uint32_t proc_idle_handler(void)
+{
+    printf("[PROCESS A] Idle\n");
+    return PROC_IDLE;
+}
+
+uint32_t proc_start_handler(void)
+{
+    printf("[PROCESS A] Starting sequence...\n");
+    return PROC_CHECKING;
+}
+
+uint32_t proc_checking_enter(void)
+{
+    printf("[PROCESS A] Entering CHECK state, calling sensor B...\n");
+    return PROC_CHECKING;
+}
+
+uint32_t proc_timing_enter(void)
+{
+    printf("[PROCESS A] Entering TIMING state, calling timer C...\n");
+    return PROC_TIMING;
+}
+
+uint32_t proc_done_handler(void)
+{
+    printf("[PROCESS A] Sequence complete!\n");
+    return PROC_IDLE;
+}
+
+const fsm_hierarchy_rule_t proc_a_table[] = {
+    {PROC_IDLE,    100, proc_start_handler, PROC_CHECKING, proc_idle_handler, NULL},
+    {PROC_CHECKING, 0,   NULL,              PROC_TIMING,   proc_checking_enter, NULL},
+    {PROC_TIMING,   0,   NULL,              PROC_DONE,     proc_timing_enter, NULL},
+    {PROC_DONE,     0,   proc_done_handler, PROC_IDLE,     NULL, NULL},
+};
+
+/*------------ ГЛАВНАЯ ФУНКЦИЯ ------------*/
+
+int main(void)
+{
+    fsm_hierarchy_t proc_a, sensor_b, timer_c;
+    submachine_context_t call_b, call_c;
+    
+    printf("=================================================\n");
+    printf("  CALLABLE FSM (BLOCKING) DEMO\n");
+    printf("  A calls B (sensor check), then A calls C (timer)\n");
+    printf("=================================================\n\n");
+    
+    // Инициализация всех автоматов
+    fsm_hierarchy_init(&proc_a, PROC_IDLE, proc_a_table, 4, NULL);
+    fsm_hierarchy_init(&sensor_b, SENSOR_IDLE, sensor_b_table, 4, NULL);
+    fsm_hierarchy_init(&timer_c, TIMER_IDLE, timer_c_table, 5, NULL);
+    
+    // Настройка контекстов вызовов
+    submachine_init(&call_b, &proc_a, &sensor_b,
+                    PROC_CHECKING, 0, SENSOR_DONE);
+    submachine_init(&call_c, &proc_a, &timer_c,
+                    PROC_TIMING, 0, TIMER_DONE);
+    
+    // Шаг 1: запуск процесса
+    printf("[STEP 1] Start process A\n");
+    fsm_hierarchy_dispatch(&proc_a, 100);
+    
+    // Шаг 2: A вызывает B (проверка датчиков)
+    printf("\n[STEP 2] A calls B (blocking call)\n");
+    submachine_call(&call_b, 0);
+    
+    // Шаг 3: A вызывает C (таймер)
+    printf("\n[STEP 3] A calls C (blocking call)\n");
+    submachine_call(&call_c, 0);
+    
+    // Шаг 4: завершение
+    printf("\n[STEP 4] A completes\n");
+    fsm_hierarchy_dispatch(&proc_a, 0);
+    
+    printf("\n=================================================\n");
+    return 0;
+}
