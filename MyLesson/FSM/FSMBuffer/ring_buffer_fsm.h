@@ -10,8 +10,6 @@
 *   В файле FSM тип Event определен как uint32_t,
 *   типы Event и ItemRingFSM должны иметь одинаковый тип в основе
 */
-// typedef uint32_t ItemRingFSM;
-
 typedef struct
 {
     uint32_t event;

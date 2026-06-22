@@ -139,6 +139,9 @@ bool pushEventQueue(FSM *machine, EventFSM event)
     if (machine == NULL || machine->event_queue == NULL)
         return false;
 
+    if (event.priority == 0)
+         return addItemRingFSM(event, machine->event_queue);
+         
     return addItemRingFSMWithPriority(event, machine->event_queue);
 }
 
