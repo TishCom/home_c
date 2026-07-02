@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <conio.h>
-#include "FSM.h"
+#include "fsm.h"
+#include "event_buffer_fsm.h"
 
 /* ============================================================
  * ОПРЕДЕЛЕНИЕ СОСТОЯНИЙ И СОБЫТИЙ
@@ -227,5 +228,12 @@ static bool init_coffee_machine(void)
 
 	const uint32_t kSizeQueueEvent = 20;
 
-	return initializeFSM(&coffee_machine, template_fsm, kSizeQueueEvent);
+	if (!initializeFSM(&coffee_machine, template_fsm))
+		return false;
+
+	coffee_machine.event_queue = initializeBufferFSM(kSizeQueueEvent);
+	if (coffee_machine.event_queue == NULL)
+		return false;
+
+	return true;
 }

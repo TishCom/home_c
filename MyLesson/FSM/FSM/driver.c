@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <conio.h>
-#include "FSM.h"
+#include "fsm.h"
 
 /* ============================================================
  * ОПРЕДЕЛЕНИЕ СОСТОЯНИЙ И СОБЫТИЙ
@@ -44,9 +44,20 @@ void returnRubl(FSMContext *context);
 void error(FSMContext *context);
 
 /* Вспомогательные функции */
-Event getEvent(void);
+EventFSM getEvent(void);
 void printChange(void);
 void printPrepare(void);
+static bool init_coffee_machine(void);
+
+/* ============================================================
+ * ТАБЛИЦА СОБЫТИЙ БЕЗ ПРИОРИТЕТОВ
+ * ============================================================ */
+const EventFSM event_table[] = 
+{
+    [RUBL_1] = {.event = RUBL_1},
+    [RUBL_2] = {.event = RUBL_2},
+	[CANCEL] = {.event = CANCEL},
+};
 
 /* ============================================================
  * ТАБЛИЦА ДЕЙСТВИЙ СОСТОЯНИЙ
@@ -71,12 +82,16 @@ const Transition trans_table[] =
 };
 
 /* ============================================================
+ * ОПРЕДЕЛЕНИЕ КРНЕЧНОГО АВТОМАТА
+ * ============================================================ */
+
+FSM coffee_machine;
+
+/* ============================================================
  * MAIN
  * ============================================================ */
 int main(void)
 {
-    FSM machine;
-
     printf("\n=== COFFEE MACHINE ===\n");
     printf("Commands:\n");
     printf("  '1' - Put 1 rubl\n");
@@ -84,12 +99,11 @@ int main(void)
     printf("  '0' - Cancel\n");
     printf("======================\n\n");
 
-    initializeFSM(&machine, READY, state_table, STATE_MAX,
-                    trans_table, sizeof(trans_table) / sizeof(Transition), (FSMContext){.number = 0});
+	init_coffee_machine();
 
     while(1) 
     {
-        if (dispatchFSM(&machine, getEvent())) 
+        if (dispatchFSM(&coffee_machine, getEvent())) 
             printf("\nEvent handled!\n\n");
         else 
             printf("\nEvent NOT handled (default_action called)\n\n");
@@ -154,7 +168,7 @@ void printPrepare(void)
 	printf("Prepare coffee\n");
 }
 
-Event getEvent(void)
+EventFSM getEvent(void)
 {
 	while(1)
     { 
@@ -163,14 +177,30 @@ Event getEvent(void)
 		switch(_getch())
         {
 			case USER_ENTER_RUBL_1:
-				return RUBL_1;
+				return event_table[RUBL_1];
 			case USER_ENTER_RUBL_2:
-				return RUBL_2;
+				return event_table[RUBL_2];
 			case USER_ENTER_CANCEL:
-				return CANCEL;
+				return event_table[CANCEL];
 			default:
 				printf("Enter the correct value.\n");
 				break;
         }
     }
+}
+
+static bool init_coffee_machine(void)
+{
+	// static const для экономии стека
+	static const FSMTemplateFill template_fsm = 
+	{
+		.current_state = READY,
+		.state_table = state_table,
+		.number_state = SIZE_TABLE(state_table),
+		.transition_table = trans_table,
+		.number_transition = SIZE_TABLE(trans_table),
+		.context = (FSMContext){.number = 0}
+	};
+
+	return initializeFSM(&coffee_machine, template_fsm);
 }

@@ -1,45 +1,35 @@
-#include "FSM.h"
-
-/*--------------------------------------------*
- * Локальные типы данных
- *--------------------------------------------*/
-
-
-/*--------------------------------------------*
- * Прототипы статических функций
- *--------------------------------------------*/
-
+#include "fsm.h"
 
 /*--------------------------------------------*
  * Публичные функции (внешний интерфейс)
  *--------------------------------------------*/
 
 /*инициализация конечного автомата*/
-bool initializeFSM(FSM *machine, State start_state,
-                    const StateAction *state_table, uint32_t number_state,
-                    const Transition *transition_table, uint32_t number_transition, 
-                    FSMContext context)
+bool initializeFSM(FSM *target_machine, FSMTemplateFill source_machine)
 {
-    if (machine == NULL || state_table == NULL || number_state < 1
-        || (transition_table == NULL && number_transition != 0) || start_state >= number_state
-        || (transition_table != NULL && number_transition == 0))
+    if (target_machine == NULL
+        || source_machine.state_table == NULL
+        || source_machine.number_state < 1
+        || source_machine.current_state >= source_machine.number_state
+        || (source_machine.transition_table == NULL && source_machine.number_transition != 0)
+        || (source_machine.transition_table != NULL && source_machine.number_transition == 0))
         return false;
 
-    machine->current_state = start_state;
-    machine->state_table = state_table;
-    machine->number_state = number_state;
-    machine->transition_table = transition_table;
-    machine->number_transition = number_transition;
-    machine->context = context;
+    target_machine->current_state = source_machine.current_state;
+    target_machine->state_table = source_machine.state_table;
+    target_machine->number_state = source_machine.number_state;
+    target_machine->transition_table = source_machine.transition_table;
+    target_machine->number_transition = source_machine.number_transition;
+    target_machine->context = source_machine.context;
 
-    if (machine->state_table[start_state].entry != NULL)
-        machine->state_table[start_state].entry(&machine->context);
+    if (target_machine->state_table[target_machine->current_state].entry != NULL)
+        target_machine->state_table[target_machine->current_state].entry(&target_machine->context);
 
     return true;
 }
 
 /*диспетчеризация конечного автомата*/
-bool dispatchFSM(FSM *machine, Event event)
+bool dispatchFSM(FSM *machine, EventFSM event)
 {
     if (machine == NULL)
         return false;
@@ -48,7 +38,7 @@ bool dispatchFSM(FSM *machine, Event event)
 
     for (uint32_t i = 0; i < machine->number_transition; i++)
     {
-        if (kTrans[i].current_state == machine->current_state && kTrans[i].event == event)
+        if (kTrans[i].current_state == machine->current_state && kTrans[i].event.event == event.event)
         {
             if (machine->state_table[machine->current_state].exit != NULL)
                 machine->state_table[machine->current_state].exit(&machine->context);
@@ -98,11 +88,3 @@ bool setStateFSM(FSM *machine, State set_state)
 
     return true;
 }
-
-/*--------------------------------------------*
- * Вспомогательные публичные функции(изменяемые пользователем)
- *--------------------------------------------*/
-
-/*--------------------------------------------*
- * Статические функции (реализация)
- *--------------------------------------------*/

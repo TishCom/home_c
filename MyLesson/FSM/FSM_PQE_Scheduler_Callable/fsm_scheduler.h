@@ -5,6 +5,7 @@
 #include <inttypes.h>
 #include "FSM.h"
 #include "fsm_scheduler_data.h"
+#include "event_buffer_fsm.h"
 
 /* ================================================================
  * РЕЖИМЫ ПЛАНИРОВЩИКА

@@ -354,7 +354,7 @@ static uint32_t max_priority_active_machine(FSMScheduler *sched)
 
     for (uint32_t i = 0; i < sched->count; i++)
     {
-        if (sched->process_only_if_events && ringFSMIsEmpty(sched->automata[i]->event_queue)
+        if (sched->process_only_if_events && queueEventIsEmpty(sched->automata[i])
             || !schedulerDataIsActive(sched->automata[i]->scheduler_data))
             continue;
 
@@ -372,7 +372,7 @@ static uint32_t max_priority_quota_active_machine(FSMScheduler *sched)
 
     for (uint32_t i = 0; i < sched->count; i++)
     {
-        if (sched->process_only_if_events && ringFSMIsEmpty(sched->automata[i]->event_queue)
+        if (sched->process_only_if_events && queueEventIsEmpty(sched->automata[i])
             || !schedulerDataIsActive(sched->automata[i]->scheduler_data))
             continue;
 
@@ -394,7 +394,7 @@ static uint32_t handler_scheduler_round_robin(FSMScheduler *sched)
     {
         index = sum_counter(sched->current_index + i, sched->count);
         
-        if ((!sched->process_only_if_events || !ringFSMIsEmpty(sched->automata[index]->event_queue))
+        if ((!sched->process_only_if_events || !queueEventIsEmpty(sched->automata[index]))
             && schedulerDataIsActive(sched->automata[index]->scheduler_data))
         {
             count_process_events = fsmProcessQueue(sched->automata[index]);
@@ -414,7 +414,7 @@ static uint32_t handler_scheduler_priority(FSMScheduler *sched)
     for (uint32_t i = 0; i < sched->count; i++)
     {
         if (schedulerDataIsActive(sched->automata[i]->scheduler_data)
-            && !ringFSMIsEmpty(sched->automata[i]->event_queue))
+            && !queueEventIsEmpty(sched->automata[i]))
             schedulerDataIncrementStarvation(sched->automata[i]->scheduler_data);
     }
 
@@ -424,7 +424,7 @@ static uint32_t handler_scheduler_priority(FSMScheduler *sched)
     {
         for (uint32_t i = 0; i < sched->count; i++)
         {
-            if (sched->process_only_if_events && ringFSMIsEmpty(sched->automata[i]->event_queue)
+            if (sched->process_only_if_events && queueEventIsEmpty(sched->automata[i])
                 || !schedulerDataIsActive(sched->automata[i]->scheduler_data))
                 continue;
 
@@ -470,7 +470,7 @@ static uint32_t handler_scheduler_priority_quota(FSMScheduler *sched)
     for (uint32_t i = 0; i < sched->count; i++)
     {
         if (schedulerDataIsActive(sched->automata[i]->scheduler_data)
-            && !ringFSMIsEmpty(sched->automata[i]->event_queue))
+            && !queueEventIsEmpty(sched->automata[i]))
         {
             schedulerDataIncrementStarvation(sched->automata[i]->scheduler_data);
             schedulerDataIncrementTickCounter((FSMSchedulerData*)sched->automata[i]->scheduler_data);
@@ -483,7 +483,7 @@ static uint32_t handler_scheduler_priority_quota(FSMScheduler *sched)
     {
         for (uint32_t i = 0; i < sched->count; i++)
         {
-            if (sched->process_only_if_events && ringFSMIsEmpty(sched->automata[i]->event_queue))
+            if (sched->process_only_if_events && queueEventIsEmpty(sched->automata[i]))
                 continue;
 
             if ((max_priority == schedulerDataGetEffectivePriority(sched->automata[i]->scheduler_data))

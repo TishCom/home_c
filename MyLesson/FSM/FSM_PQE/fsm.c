@@ -1,23 +1,11 @@
-#include "FSM.h"
-
-/*--------------------------------------------*
- * Локальные типы данных
- *--------------------------------------------*/
-
-
-/*--------------------------------------------*
- * Прототипы статических функций
- *--------------------------------------------*/
-
+#include "fsm.h"
 
 /*--------------------------------------------*
  * Публичные функции (внешний интерфейс)
  *--------------------------------------------*/
 
-/* РЕАЛИЗАЦИЯ ОСНОВНЫХ ФУНКЦИЙ КОНЕЧНОГО АВТОМАТА */
-
 /*инициализация конечного автомата*/
-bool initializeFSM(FSM *target_machine, FSMTemplateFill source_machine, uint32_t queue_size)
+bool initializeFSM(FSM *target_machine, FSMTemplateFill source_machine)
 {
     if (target_machine == NULL
         || source_machine.state_table == NULL
@@ -26,23 +14,6 @@ bool initializeFSM(FSM *target_machine, FSMTemplateFill source_machine, uint32_t
         || (source_machine.transition_table == NULL && source_machine.number_transition != 0)
         || (source_machine.transition_table != NULL && source_machine.number_transition == 0))
         return false;
-
-    target_machine->event_queue = NULL;
-
-    if (queue_size > 0)
-    {
-        target_machine->event_queue = (RingBufferFSM*)malloc(sizeof(RingBufferFSM));
-
-        if (target_machine->event_queue == NULL)
-            return false;
-
-        if (!initializeRingFSM(target_machine->event_queue, queue_size))
-        {
-            free(target_machine->event_queue);
-            target_machine->event_queue = NULL;
-            return false;
-        }
-    }
 
     target_machine->current_state = source_machine.current_state;
     target_machine->state_table = source_machine.state_table;
@@ -117,75 +88,3 @@ bool setStateFSM(FSM *machine, State set_state)
 
     return true;
 }
-
-/* РЕАЛИЗАЦИЯ ДОПОЛНИТЕЛЬНЫХ ФУНКЦИЙ */
-
-/*освобождение выделенной памяти если она есть*/
-void emptyTheFSM(FSM *machine)
-{
-    if (machine == NULL || machine->event_queue == NULL)
-        return;
-
-    emptyTheRingFSM(machine->event_queue);
-    free(machine->event_queue);
-    machine->event_queue = NULL;
-}
-
-/* РЕАЛИЗАЦИЯ ФУНКЦИЙ РАБОТЫ С ОЧЕРЕДЬЮ СОБЫТИЙ */
-
-/*добавить событие в очередь событий автомата*/
-bool pushEventQueue(FSM *machine, EventFSM event)
-{
-    if (machine == NULL || machine->event_queue == NULL)
-        return false;
-
-    if (event.priority == 0)
-         return addItemRingFSM(event, machine->event_queue);
-         
-    return addItemRingFSMWithPriority(event, machine->event_queue);
-}
-
-/*взять событие из очереди событий автомата*/
-bool popEventQueue(FSM *machine, EventFSM *event)
-{
-    if (machine == NULL || machine->event_queue == NULL || event == NULL)
-        return false;
-
-    return getItemRingFSM(event, machine->event_queue);
-}
-
-/*проверка, является ли очередь событий пустой*/
-bool queueEventIsEmpty(const FSM *machine)
-{
-    if (machine == NULL || machine->event_queue == NULL)
-        return true;
-
-    return ringFSMIsEmpty(machine->event_queue);
-}
-
-/*обработать все события из очереди автомата*/
-uint32_t fsmProcessQueue(FSM *machine)
-{
-    if (machine == NULL || machine->event_queue == NULL)
-        return 0;
-
-    uint32_t number_event_handled = 0;
-    EventFSM event;
-
-    while (!ringFSMIsEmpty(machine->event_queue))
-    {
-        getItemRingFSM(&event, machine->event_queue);
-        dispatchFSM(machine, event);
-        number_event_handled++;
-    }
-
-    return number_event_handled;
-}
-
-/*--------------------------------------------*
- * Вспомогательные публичные функции(изменяемые пользователем)
- *--------------------------------------------*/
-
-/*--------------------------------------------*
- * Статические функции (реализация)
- *--------------------------------------------*/

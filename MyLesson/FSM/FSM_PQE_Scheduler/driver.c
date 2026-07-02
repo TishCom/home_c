@@ -213,19 +213,19 @@ int main(void)
     while (1)
     {
         event = coffee_get_event();
-
+        
         if (++timer_tick_counter >= 4)
         {
             timer_tick_counter = 0;
             pushEventQueue(&led_indicator, led_event_table[LED_TIMER_TICK]);
             printf("[TIMER] JOB\n");
         }
-
+        
         if (!pushEventQueue(&coffee_machine, event))
             printf("Event NOT pushed to queue!\n");
-
+            
         schedulerStep(&scheduler);
-
+        
         printf("\n");
     }
 
@@ -319,7 +319,6 @@ static EventFSM coffee_get_event(void)
 
 static bool coffee_init(FSM *machine)
 {
-    bool is_initialize = false;
     static const FSMTemplateFill template_fsm =
     {
         .current_state = COFFEE_READY,
@@ -330,12 +329,18 @@ static bool coffee_init(FSM *machine)
         .context = (FSMContext){.number = 0}
     };
 
-    is_initialize = initializeFSM(machine, template_fsm, 20);
+    if (!initializeFSM(&coffee_machine, template_fsm))
+        return false;
 
-    if (is_initialize)
-        coffee_machine.scheduler_data = schedulerDataCreate(5, 3);
+    coffee_machine.event_queue = initializeBufferFSM(20);
+	if (coffee_machine.event_queue == NULL)
+		return false;
 
-    return is_initialize;
+    coffee_machine.scheduler_data = schedulerDataCreate(5, 3);    
+    if (coffee_machine.scheduler_data == NULL)
+        return false;
+
+    return true;
 }
 
 /* ============================================================
@@ -408,7 +413,6 @@ static void led_action_tick(FSMContext *context)
 
 static bool led_init(FSM *machine)
 {
-    bool is_initialize = false;
     static const FSMTemplateFill template_fsm =
     {
         .current_state = LED_OFF,
@@ -419,10 +423,16 @@ static bool led_init(FSM *machine)
         .context = (FSMContext){.number = 0}
     };
 
-    is_initialize = initializeFSM(machine, template_fsm, 10);
+    if (!initializeFSM(&led_indicator, template_fsm))
+		return false;
 
-    if (is_initialize)
-        led_indicator.scheduler_data = schedulerDataCreate(3, 1);
+    led_indicator.event_queue = initializeBufferFSM(10);
+	if (led_indicator.event_queue == NULL)
+		return false;
 
-    return is_initialize;
+    led_indicator.scheduler_data = schedulerDataCreate(3, 1);
+    if (led_indicator.scheduler_data == NULL)
+        return false;
+
+    return true;
 }
