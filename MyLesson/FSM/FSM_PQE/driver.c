@@ -32,15 +32,15 @@ enum User_Event
  * ПРОТОТИПЫ ФУНКЦИЙ
  * ============================================================ */
 /* Действия состояний */
-static void ready(FSMContext *context);
-static void wait(FSMContext *context);
-static void default_action(FSMContext *context);
+static void ready(void *context);
+static void wait(void *context);
+static void default_action(void *context);
 
 /* Действия на переходах */
-static void prepare(FSMContext *context);
-static void change(FSMContext *context);
-static void return_rubl(FSMContext *context);
-static void error(FSMContext *context);
+static void prepare(void *context);
+static void change(void *context);
+static void return_rubl(void *context);
+static void error(void *context);
 
 /* Вспомогательные функции */
 static void print_change(void);
@@ -140,17 +140,17 @@ int main(void)
  * РЕАЛИЗАЦИЯ ДЕЙСТВИЙ СОСТОЯНИЙ
  * ============================================================ */
 
-static void ready(FSMContext *context)
+static void ready(void *context)
 {
 	printf("Ready\n");
 }
 
-static void wait(FSMContext *context)
+static void wait(void *context)
 {
 	printf("Wait\n");
 }
 
-static void default_action(FSMContext *context)
+static void default_action(void *context)
 {
 	printf("Error, event dont handle!\n");
 }
@@ -158,23 +158,23 @@ static void default_action(FSMContext *context)
 /* ============================================================
  * РЕАЛИЗАЦИЯ ДЕЙСТВИЙ НА ПЕРЕХОДАХ
  * ============================================================ */
-static void prepare(FSMContext *context)
+static void prepare(void *context)
 {
 	print_prepare();
 }
 
-static void change(FSMContext *context)
+static void change(void *context)
 {
 	print_change();
     print_prepare();
 }
 
-static void return_rubl(FSMContext *context)
+static void return_rubl(void *context)
 {
 	print_change();
 }
 
-static void error(FSMContext *context)
+static void error(void *context)
 {
 	printf("Error signal CANCEL\n");
 }
@@ -223,7 +223,7 @@ static bool init_coffee_machine(void)
 		.number_state = SIZE_TABLE(state_table),
 		.transition_table = trans_table,
 		.number_transition = SIZE_TABLE(trans_table),
-		.context = (FSMContext){.number = 0}
+		.context = NULL
 	};
 
 	const uint32_t kSizeQueueEvent = 20;

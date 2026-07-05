@@ -7,14 +7,8 @@
 /* Макрос для определения колличества элементов в таблице */
 #define SIZE_TABLE(TABLE)	(sizeof(TABLE) / sizeof(TABLE[0]))
 
-/*Определение типа контекста для дествий в состояниях автомата - необходимо переопределять*/
-typedef struct
-{
-    uint32_t number;
-} FSMContext;
-
 /*Определение типа для функций которые отвечают за действия автомата*/
-typedef void (*ActionInStateFunc)(FSMContext *context);
+typedef void (*ActionInStateFunc)(void *context);
 
 /*Определение типа для состояний автомата*/
 typedef uint32_t State;
@@ -51,7 +45,7 @@ typedef struct
     uint32_t number_state;
     const Transition *transition_table;
     uint32_t number_transition;
-    FSMContext context;
+    void *context;
 } FSMTemplateFill;
 
 /*Определение типа для конечного автомата*/
@@ -63,7 +57,7 @@ typedef struct
     uint32_t number_state;
     const Transition *transition_table;
     uint32_t number_transition;
-    FSMContext context;
+    void *context;
 
     // Организация очереди событий - инициализировать опционально
     void *event_queue;

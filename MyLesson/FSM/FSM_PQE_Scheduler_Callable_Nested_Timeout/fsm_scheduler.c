@@ -1,4 +1,5 @@
 #include "fsm_scheduler.h"
+#include "fsm_timeout.h"
 
 /*--------------------------------------------*
  * Локальные типы данных
@@ -265,6 +266,9 @@ uint32_t schedulerStep(FSMScheduler *sched)
         return 0;
 
     uint32_t count_process_events = 0;
+
+    /* Проверка таймаутов*/
+    fsmTimerCheckAllTimeouts(sched);
 
     switch (sched->mode)
     {

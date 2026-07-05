@@ -51,14 +51,14 @@ typedef enum
 /* ============================================================
  * ПРОТОТИПЫ ФУНКЦИЙ (КОФЕМАШИНА)
  * ============================================================ */
-static void coffee_ready(FSMContext *context);
-static void coffee_wait(FSMContext *context);
-static void coffee_default_action(FSMContext *context);
+static void coffee_ready(void *context);
+static void coffee_wait(void *context);
+static void coffee_default_action(void *context);
 
-static void coffee_prepare(FSMContext *context);
-static void coffee_change(FSMContext *context);
-static void coffee_return_rubl(FSMContext *context);
-static void coffee_error(FSMContext *context);
+static void coffee_prepare(void *context);
+static void coffee_change(void *context);
+static void coffee_return_rubl(void *context);
+static void coffee_error(void *context);
 
 static void coffee_print_change(void);
 static void coffee_print_prepare(void);
@@ -68,14 +68,14 @@ static bool coffee_init(FSM *machine);
 /* ============================================================
  * ПРОТОТИПЫ ФУНКЦИЙ (ИНДИКАТОР)
  * ============================================================ */
-static void led_entry_off(FSMContext *context);
-static void led_entry_on(FSMContext *context);
-static void led_entry_blink_slow(FSMContext *context);
-static void led_entry_blink_fast(FSMContext *context);
-static void led_exit_blink(FSMContext *context);
-static void led_default_action(FSMContext *context);
+static void led_entry_off(void *context);
+static void led_entry_on(void *context);
+static void led_entry_blink_slow(void *context);
+static void led_entry_blink_fast(void *context);
+static void led_exit_blink(void *context);
+static void led_default_action(void *context);
 
-static void led_action_tick(FSMContext *context);
+static void led_action_tick(void *context);
 
 static bool led_init(FSM *machine);
 
@@ -235,21 +235,21 @@ int main(void)
 /* ============================================================
  * РЕАЛИЗАЦИЯ ДЕЙСТВИЙ СОСТОЯНИЙ (КОФЕМАШИНА)
  * ============================================================ */
-static void coffee_ready(FSMContext *context)
+static void coffee_ready(void *context)
 {
     (void)context;
     printf("[Coffee] READY - Please insert coins\n");
     pushEventQueue(&led_indicator, led_event_table[LED_SET_ON]);
 }
 
-static void coffee_wait(FSMContext *context)
+static void coffee_wait(void *context)
 {
     (void)context;
     printf("[Coffee] WAIT - Processing...\n");
     pushEventQueue(&led_indicator, led_event_table[LED_SET_BLINK_SLOW]);
 }
 
-static void coffee_default_action(FSMContext *context)
+static void coffee_default_action(void *context)
 {
     (void)context;
     printf("[Coffee] ERROR: Unknown event!\n");
@@ -258,26 +258,26 @@ static void coffee_default_action(FSMContext *context)
 /* ============================================================
  * РЕАЛИЗАЦИЯ ДЕЙСТВИЙ НА ПЕРЕХОДАХ (КОФЕМАШИНА)
  * ============================================================ */
-static void coffee_prepare(FSMContext *context)
+static void coffee_prepare(void *context)
 {
     (void)context;
     coffee_print_prepare();
 }
 
-static void coffee_change(FSMContext *context)
+static void coffee_change(void *context)
 {
     (void)context;
     coffee_print_change();
     coffee_print_prepare();
 }
 
-static void coffee_return_rubl(FSMContext *context)
+static void coffee_return_rubl(void *context)
 {
     (void)context;
     coffee_print_change();
 }
 
-static void coffee_error(FSMContext *context)
+static void coffee_error(void *context)
 {
     (void)context;
     printf("[Coffee] ERROR: Cancel signal received!\n");
@@ -326,7 +326,7 @@ static bool coffee_init(FSM *machine)
         .number_state = SIZE_TABLE(coffee_state_table),
         .transition_table = coffee_trans_table,
         .number_transition = SIZE_TABLE(coffee_trans_table),
-        .context = (FSMContext){.number = 0}
+        .context = NULL
     };
 
     if (!initializeFSM(&coffee_machine, template_fsm))
@@ -346,41 +346,41 @@ static bool coffee_init(FSM *machine)
 /* ============================================================
  * РЕАЛИЗАЦИЯ ДЕЙСТВИЙ СОСТОЯНИЙ (ИНДИКАТОР)
  * ============================================================ */
-static void led_entry_off(FSMContext *context)
+static void led_entry_off(void *context)
 {
     (void)context;
     led_state = false;
     printf("[LED] OFF\n");
 }
 
-static void led_entry_on(FSMContext *context)
+static void led_entry_on(void *context)
 {
     (void)context;
     led_state = true;
     printf("[LED] ON\n");
 }
 
-static void led_entry_blink_slow(FSMContext *context)
+static void led_entry_blink_slow(void *context)
 {
     (void)context;
     led_tick_counter = 0;
     printf("[LED] BLINK SLOW (period: 4 ticks)\n");
 }
 
-static void led_entry_blink_fast(FSMContext *context)
+static void led_entry_blink_fast(void *context)
 {
     (void)context;
     led_tick_counter = 0;
     printf("[LED] BLINK FAST (period: 2 ticks)\n");
 }
 
-static void led_exit_blink(FSMContext *context)
+static void led_exit_blink(void *context)
 {
     (void)context;
     led_tick_counter = 0;
 }
 
-static void led_default_action(FSMContext *context)
+static void led_default_action(void *context)
 {
     (void)context;
     printf("[LED] Unknown event received!\n");
@@ -389,7 +389,7 @@ static void led_default_action(FSMContext *context)
 /* ============================================================
  * РЕАЛИЗАЦИЯ ДЕЙСТВИЙ НА ПЕРЕХОДАХ (ИНДИКАТОР)
  * ============================================================ */
-static void led_action_tick(FSMContext *context)
+static void led_action_tick(void *context)
 {
     (void)context;
     led_tick_counter++;
@@ -420,7 +420,7 @@ static bool led_init(FSM *machine)
         .number_state = SIZE_TABLE(led_state_table),
         .transition_table = led_trans_table,
         .number_transition = SIZE_TABLE(led_trans_table),
-        .context = (FSMContext){.number = 0}
+        .context = NULL
     };
 
     if (!initializeFSM(&led_indicator, template_fsm))

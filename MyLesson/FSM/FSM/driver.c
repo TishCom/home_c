@@ -33,15 +33,15 @@ enum User_Event
  * ПРОТОТИПЫ ФУНКЦИЙ
  * ============================================================ */
 /* Действия состояний */
-void ready(FSMContext *context);
-void wait(FSMContext *context);
-void default_action(FSMContext *context);
+void ready(void *context);
+void wait(void *context);
+void default_action(void *context);
 
 /* Действия на переходах */
-void prepare(FSMContext *context);
-void change(FSMContext *context);
-void returnRubl(FSMContext *context);
-void error(FSMContext *context);
+void prepare(void *context);
+void change(void *context);
+void returnRubl(void *context);
+void error(void *context);
 
 /* Вспомогательные функции */
 EventFSM getEvent(void);
@@ -116,17 +116,17 @@ int main(void)
  * РЕАЛИЗАЦИЯ ДЕЙСТВИЙ СОСТОЯНИЙ
  * ============================================================ */
 
-void ready(FSMContext *context)
+void ready(void *context)
 {
 	printf("Ready\n");
 }
 
-void wait(FSMContext *context)
+void wait(void *context)
 {
 	printf("Wait\n");
 }
 
-void default_action(FSMContext *context)
+void default_action(void *context)
 {
 	printf("Error, event dont handle!\n");
 }
@@ -134,23 +134,23 @@ void default_action(FSMContext *context)
 /* ============================================================
  * РЕАЛИЗАЦИЯ ДЕЙСТВИЙ НА ПЕРЕХОДАХ
  * ============================================================ */
-void prepare(FSMContext *context)
+void prepare(void *context)
 {
 	printPrepare();
 }
 
-void change(FSMContext *context)
+void change(void *context)
 {
 	printChange();
     printPrepare();
 }
 
-void returnRubl(FSMContext *context)
+void returnRubl(void *context)
 {
 	printChange();
 }
 
-void error(FSMContext *context)
+void error(void *context)
 {
 	printf("Error signal CANCEL\n");
 }
@@ -199,7 +199,7 @@ static bool init_coffee_machine(void)
 		.number_state = SIZE_TABLE(state_table),
 		.transition_table = trans_table,
 		.number_transition = SIZE_TABLE(trans_table),
-		.context = (FSMContext){.number = 0}
+		.context = NULL
 	};
 
 	return initializeFSM(&coffee_machine, template_fsm);

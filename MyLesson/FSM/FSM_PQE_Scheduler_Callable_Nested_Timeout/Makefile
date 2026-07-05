@@ -1,7 +1,7 @@
 all: prog
 
-prog: driver.o fsm.o event_buffer_fsm.o fsm_scheduler_data.o fsm_scheduler.o fsm_callable.o fsm_callable_dispatcher.o
-	gcc -o prog driver.o fsm.o event_buffer_fsm.o fsm_scheduler_data.o fsm_scheduler.o fsm_callable.o fsm_callable_dispatcher.o
+prog: driver.o fsm.o event_buffer_fsm.o fsm_scheduler_data.o fsm_scheduler.o fsm_callable.o fsm_callable_dispatcher.o fsm_timeout.o
+	gcc -o prog driver.o fsm.o event_buffer_fsm.o fsm_scheduler_data.o fsm_scheduler.o fsm_callable.o fsm_callable_dispatcher.o fsm_timeout.o
 
 driver.o: driver.c
 	gcc -c -o driver.o driver.c
@@ -23,6 +23,9 @@ fsm_callable.o: fsm_callable.c
 
 fsm_callable_dispatcher.o: fsm_callable_dispatcher.c
 	gcc -c -o fsm_callable_dispatcher.o fsm_callable_dispatcher.c
+
+fsm_timeout.o: fsm_timeout.c
+	gcc -c -o fsm_timeout.o fsm_timeout.c
 
 clean:
 	rm -rf *.o prog
