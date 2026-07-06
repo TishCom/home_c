@@ -258,13 +258,23 @@ void fsmTimerCheckAllTimeouts(FSMScheduler *sched)
         return;
 
     FSM *machine;
+    FSMLocalTimer *timer;
 
     for (uint32_t i = 0; i < sched->count; i++)
     {
         machine = sched->automata[i];
+        timer = (FSMLocalTimer*)machine->timer_data;
 
         if (fsmTimerIsExpired(machine))
-            fsmTimerSetOccurred(machine);
+        {
+            timer->timeout_occurred = true;
+            
+            if (timer->on_timeout != NULL)
+                timer->on_timeout(&machine->context);
+
+            if (fsmIsCalled(machine))
+                fsmReturnWithTimeout(machine);
+        }
     }
 }
 

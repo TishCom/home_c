@@ -5,6 +5,7 @@
 #include <inttypes.h>
 #include "fsm.h"
 #include "fsm_scheduler.h"
+#include "fsm_callable.h"
 
 /* ================================================================
  * ТИП ДАННЫХ ДЛЯ ТАЙМАУТА

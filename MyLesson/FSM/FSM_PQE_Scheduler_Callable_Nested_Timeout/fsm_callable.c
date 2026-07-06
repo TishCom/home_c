@@ -227,6 +227,9 @@ void fsmReturn(FSM *machine)
     fsmCallableDataResetCalled(data);
     fsmCallableDataSetFinished(data);
 
+    if (fsmTimerIsInitialise((FSMLocalTimer*)machine->timer_data))
+        fsmTimerClearTimeout(machine);
+
     schedulerDataResetWaiting((FSMSchedulerData*)(data->caller->scheduler_data));
     setStateFSM(data->caller, data->return_state);
 
@@ -275,4 +278,41 @@ bool fsmNestedStep(FSM *machine)
     }
     
     return false;
+}
+
+/* РЕАЛИЗАЦИЯ ФУНКЦИИ ДЛЯ РАБОТЫ С ТАЙМАУТАМИ */
+
+/*вызвать автомат как подпрограмму с таймаутом*/
+bool fsmCallWithTimeout(FSM *callee, FSM *caller, State finish_state, State return_state,
+                        uint32_t timeout_ms, void (*on_timeout)(void *context))
+{
+    if (!fsmCall(callee, caller, finish_state, return_state))
+        return false;
+
+    if (timeout_ms > 0 && on_timeout != NULL)
+        fsmTimerSetTimeout(callee, timeout_ms, on_timeout);
+
+    return true;
+}
+
+/*принудительно завершить вызываемый автомат по таймауту*/
+void fsmReturnWithTimeout(FSM *machine)
+{
+    if (machine == NULL || !fsmCallableDataIsInitialise((FSMCallableData*)machine->callable_data))
+        return;
+
+    FSMCallableData *data = (FSMCallableData*)machine->callable_data;
+    EventFSM dummy;
+
+    fsmCallableDataResetCalled(data);
+    fsmCallableDataSetFinished(data);
+
+    if (fsmTimerIsInitialise((FSMLocalTimer*)machine->timer_data))
+        fsmTimerSetOccurred(machine);
+
+    schedulerDataResetWaiting((FSMSchedulerData*)(data->caller->scheduler_data));
+    setStateFSM(data->caller, data->return_state);
+
+    while (!queueEventIsEmpty(machine))
+        popEventQueue(machine, &dummy);
 }
