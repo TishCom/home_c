@@ -267,8 +267,7 @@ uint32_t schedulerStep(FSMScheduler *sched)
 
     uint32_t count_process_events = 0;
 
-    /* Проверка таймаутов*/
-    fsmTimerCheckAllTimeouts(sched);
+    fsmTimerCheckAllTimeouts((void*)sched);
 
     switch (sched->mode)
     {

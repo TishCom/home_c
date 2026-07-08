@@ -252,11 +252,12 @@ bool fsmTimerIsOccurred(const FSM *machine)
 /* РЕАЛИЗАЦИЯ ФУНКЦИЙ ОБРАБОТКИ ТАЙМАУТА В ПЛАНИРОВЩИКЕ */
 
 /*проверить таймауты всех автоматов в планировщике*/
-void fsmTimerCheckAllTimeouts(FSMScheduler *sched)
+void fsmTimerCheckAllTimeouts(void *sched_prt)
 {
-    if (sched == NULL)
+    if (sched_prt == NULL)
         return;
 
+    FSMScheduler *sched = (FSMScheduler*)sched_prt;
     FSM *machine;
     FSMLocalTimer *timer;
 
